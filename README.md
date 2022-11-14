@@ -55,3 +55,22 @@ You can then start to use Spack.
 spack list gromacs
 spack info --all gromacs
 ```
+
+See which compilers spack finds: does not look in our new `/opt/rh/devtoolset-11`.
+
+```
+spack compilers
+==> Available compilers
+-- gcc rhel7-x86_64 ---------------------------------------------
+gcc@4.9.2  gcc@4.8.5
+```
+
+So tell it to look for the new one.
+
+```
+spack compiler add /opt/rh/devtoolset-11/root/usr/bin/
+==> Added 1 new compiler to /home/cceahke/.spack/linux/compilers.yaml
+    gcc@11.2.1
+==> Compilers are defined in the following files:
+    /home/cceahke/.spack/linux/compilers.yaml
+```
