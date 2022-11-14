@@ -1,0 +1,58 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+
+# outline of a general build all needed on our system - only token packages included so far
+# other spack environments could have slected spack specs e.g. for generating modules of one directory on MODULEPATH
+# those would use the object codes built here and so would not cause extra building
+# another use for an environment is a bundle (in the sense of our modules) - see loads mechanism of spack, also there is a bundle system  for a spack build system - what is that 
+
+spack:
+  # these definitions could be shared, either by importing if spack has a mechanism or by scripts wrtitten by us to include them in our spack.yaml files.
+  definitions:
+  # which compliers would we actually want
+  - compilers: [gcc@11.2.1, gcc@4.9.2, intel@18.0.3]  # spack info does not note a runtime dependency on gcc libs! 
+  - build_tools: [automake@1.16.5, autoconf@2.69, cmake@3.24.2]
+  
+# library version sets - may include here spack 'variants' i.e. options within the build
+  - apr_vers: [apr@1.5.2, apr@1.7.0] 
+  - fftw_vers: [fftw@3.3.8]
+  - libs: [$apr_vers, $fftw_vers]
+  
+# application version sets - may include here spack 'variants' i.e. options within the build
+  - abinit_vers: [abinit@9.6.1]  # ver 9.6.2 not known to spack
+  - adf_vers: [adf@2017.113] # ver 2014.10 not known to spack
+  - apps: [$abinit_vers, $adf_vers]
+  
+# python versions - may include here spack 'variants' i.e. options within the build
+  - python_vers: [python@2.7.9, python@2.7.12, python@3.4.3, python@3.5.2, python@3.6.1,
+      python@3.6.3, python@3.7.0, python@3.7.2, python@3.7.4, python@3.8.0, python@3.8.6,
+      python@3.9.0, python@3.9.1, python@3.9.6, python@3.9.10]
+  - python_compilers: [gcc@11.2.1]
+  
+  # do we want specified versions of python packages in next line?
+  - python_bundle_items: [py-numpy, py-matplotlib]
+  specs:
+  - $compilers
+  - $build_tools
+  # build libs with all the compilers
+  - matrix:
+    - [$libs]
+    - [$%compilers]
+  # build apps will all the compilers  
+  - matrix:
+    - [$apps]
+    - [$%compilers]    
+  # build all the python versions with just one compiler
+  - matrix:
+    - [$python_vers]
+    - [$%python_compilers]
+  # build all the python packages for each python version - is that needed? expected by users?
+  - matrix:
+    - [$python_bundle_items]
+    - [$^python_vers]
+    - [$%python_compilers]
+  view: true
+  concretizer:
+    unify: false
