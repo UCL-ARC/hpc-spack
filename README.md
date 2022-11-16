@@ -77,4 +77,5 @@ spack compiler add /opt/rh/devtoolset-11/root/usr/bin/
 
 ## Other setups
 
-- LLNL: https://www.trex-coe.eu/sites/default/files/TREX%20Build-systems%20Hackathon%20-%20Nov%202021/TREX%20-%20Spack%20presentation.pdf
+- LLNL, 2021, TREX Hackathon, Intro to Spack: https://www.trex-coe.eu/sites/default/files/TREX%20Build-systems%20Hackathon%20-%20Nov%202021/TREX%20-%20Spack%20presentation.pdf
+- EPCC, 2020, Software Packages in HPC with Spack and EasyBuild: https://www.archer2.ac.uk/training/courses/200617-spack-easybuild/
