@@ -80,3 +80,6 @@ spack compiler add /opt/rh/devtoolset-11/root/usr/bin/
 - LLNL, 2021, TREX Hackathon, Intro to Spack: https://www.trex-coe.eu/sites/default/files/TREX%20Build-systems%20Hackathon%20-%20Nov%202021/TREX%20-%20Spack%20presentation.pdf
 - LLNL, 2022, Software Deployment Process at NERSC: Deploying the Extreme-scale Scientific Software Stack (E4S) Using Spack at the National Energy Research Scientific Computing Center (NERSC): https://escholarship.org/uc/item/5zh5z08q
 - EPCC, 2020, Software Packages in HPC with Spack and EasyBuild (brief overview): https://www.archer2.ac.uk/training/courses/200617-spack-easybuild/
+
+May be of use if we have more AMD and need to build with AOCC/AOCL.
+- AMD, Spack support of HPC applications https://developer.amd.com/spack/
