@@ -74,3 +74,7 @@ spack compiler add /opt/rh/devtoolset-11/root/usr/bin/
 ==> Compilers are defined in the following files:
     /home/cceahke/.spack/linux/compilers.yaml
 ```
+
+## Other setups
+
+- LLNL: https://www.trex-coe.eu/sites/default/files/TREX%20Build-systems%20Hackathon%20-%20Nov%202021/TREX%20-%20Spack%20presentation.pdf
