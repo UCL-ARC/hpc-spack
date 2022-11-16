@@ -87,5 +87,8 @@ spack compiler add /opt/rh/devtoolset-11/root/usr/bin/
 
 ### Additional
 
+E4S as mentioned above uses Spack and provides a build cache and containers. Attempts to put together an interoperable set of packages. "The Extreme-Scale Scientific Software Stack (E4S) is a community effort supported by the Exascale Computing Project (ECP) to provide an ecosystem of open source software packages for developing, deploying and running scientific applications on HPC platforms."
+- https://e4s-project.github.io/
+
 May be of use if we have more AMD and need to build with AOCC/AOCL.
 - AMD, Spack support of HPC applications https://developer.amd.com/spack/
