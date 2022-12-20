@@ -39,6 +39,13 @@ class Chicken(MakefilePackage):
 
     # FIXME: Add dependencies if required.
     # depends_on("foo")
+    # TODO does this depends_on() line cause build to fail?
+    # yes it does:
+    # ==> Error: ProcessError: Command exited with status 2:
+    # '/lustre/scratch/scratch/ucapcjg/AHS-5_spack_investigations/spack/spack/opt/spack/linux-rhel7-skylake_avx512/gcc-12.2.0/gmake-4.3-25soqj2mzxkgy7o7oncgkrws47ubuta4/bin/make' '-j6' 'PLATFORM=linux' 'PREFIX=/lustre/scratch/scratch/ucapcjg/AHS-5_spack_investigations/spack/spack/opt/spack/linux-rhel7-skylake_avx512/gcc-12.2.0/chicken-5.3.0-aru7jku42nm2xte67wxrbcb4i6qt73r4' 'install'
+    # 492    install: cannot stat 'libchicken.so': No such file or directory
+    # conclusion: there is a -j6 in the make, so loading gmake causes   parallel = False   to be ignored
+    # depends_on('gmake', type='build')  # TODO to understand whether / how this forces make to use gmake versions - this is answered in th gmake../.../ make command above
 
     def edit(self, spec, prefix):
         # FIXME: Edit the Makefile if necessary
