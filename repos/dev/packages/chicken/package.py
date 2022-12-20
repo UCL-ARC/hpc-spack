@@ -34,6 +34,8 @@ class Chicken(MakefilePackage):
     # maintainers = ["github_user1", "github_user2"]
 
     version("5.3.0", sha256="c3ad99d8f9e17ed810912ef981ac3b0c2e2f46fb0ecc033b5c3b6dca1bdb0d76")
+    
+    parallel = False 
 
     # FIXME: Add dependencies if required.
     # depends_on("foo")
@@ -45,16 +47,20 @@ class Chicken(MakefilePackage):
         # makefile.filter("CC = .*", "CC = cc")
         pass
 
+# build instructions are at https://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=blob;f=README;h=1f2302753f827e5893ada45cb9ff0f2d1991f7c1;hb=e31bbee51ae2b892d624ad2736c624111c15ca9c
 # this is indeed just a make - GNU make is specified by README
 # so gmake is a build dependency
 # make and make install requires setting of variables 
 # (which appear after make so are parsed by make, so not environment vars):
 # PLATFORM=linux PREFIX=${INSTALL_PREFIX}
+# "Note that parallel builds (using the "-j" make(1) option) are *not* supported."
+# So how to fix that?
+# https://spack.readthedocs.io/en/latest/packaging_guide.html#package-level-build-parallelism indicates set parallel = False at the class level
+# and that fixed it - i.e. apparently builds
+# TODO any tests?
+# TODO declare dependencies
 
-    def setup_build_environment(self, env):
-        env.set('PLATFORM', 'linux')
-        print('Setting ENVIRONMENT PREFIX = {}'.format( self.prefix))
-        env.set('PREFIX', self.prefix)
+# the two properties below implement the build instruction of  make PLATFORM=<platform> PREFIX=<destination>
 
     @property
     def build_targets(self):
