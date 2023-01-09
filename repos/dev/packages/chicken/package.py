@@ -64,7 +64,7 @@ class Chicken(MakefilePackage):
 # So how to fix that?
 # https://spack.readthedocs.io/en/latest/packaging_guide.html#package-level-build-parallelism indicates set parallel = False at the class level
 # and that fixed it - i.e. apparently builds
-# TODO any tests?
+# TODO any tests? There is a make <same vars again> check
 # TODO declare dependencies
 
 # the two properties below implement the build instruction of  make PLATFORM=<platform> PREFIX=<destination>
