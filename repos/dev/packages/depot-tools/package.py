@@ -35,12 +35,12 @@ class DepotTools(Package):
     # notify when the package is updated.
     # maintainers = ["github_user1", "github_user2"]
 
-    # FIXME: Add proper versions and checksums here.
+    # Add proper versions and checksums here.
     version("4147", branch='chrome/4147')
     
 
-    # FIXME: Add dependencies if required.
-    # FIXME: https://chromium.googlesource.com/chromium/tools/depot_tools says python 3.8 required 
+    # Add dependencies if required.
+    # https://chromium.googlesource.com/chromium/tools/depot_tools says python 3.8 required 
     # (but https://chromium.googlesource.com/chromium/tools/depot_tools/+/refs/heads/chrome/4147/README.md does not mention python3) 
     # depends_on("foo")
     depends_on('python@3.8', type='run')
@@ -49,7 +49,8 @@ class DepotTools(Package):
         # FIXME: Unknown build system
         #make()
         #make("install")
-        # FIXME: Hmmm: rcps script seems to put all tools in a directory 'depot_tools' inside the prefix dir ???? is prefixing coammands with depot_tools/<command> standard usage for this package?
+        #  Hmmm: rcps script seems to put all tools in a directory 'depot_tools' inside the prefix dir ???? is prefixing coammands with depot_tools/<command> standard usage for this package?
+        # No ! rcps build script module PATH=/shared/ucl/apps/depot_tools/c03a9cf/depot_tools
         shutil.copytree('.', prefix, dirs_exist_ok=True)  # requries python3.8
 
     # run env will need: DEPOT_TOOLS_UPDATE=0, i.e. to stops install updating itself, which will fail with user permissions    
