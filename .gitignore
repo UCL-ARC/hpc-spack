@@ -1,4 +1,1 @@
-repos/dev/packages/chicken/__pycache__/package.cpython-39.pyc
-repos/dev/packages/chicken/package.pyc
-repos/dev/packages/clojure/__pycache__/package.cpython-39.pyc
-repos/dev/packages/depot-tools/__pycache__/package.cpython-39.pyc
+repos/dev/packages/**/*.pyc
