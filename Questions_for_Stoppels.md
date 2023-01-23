@@ -19,3 +19,10 @@ There is a suggestion for a periodic workflow at:  [Slack link](https://ucl-arc.
 - What does Harmen think of the packages in this repo at hpc-spack/repos/dev/packages?
 
 ?? ANY QUESTIONS ARISING FROM THESE???
+
+- some of our own build scripts require the module gcc-libs/4.9.2. What is the equivalent, if any, in the spack framework?
+
+- The generic package class has 
+``` make()
+    make("install") ```
+are these just suggestions of things the packager might provide so can be deleted, or are in fact essential functions?
