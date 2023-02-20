@@ -15,7 +15,7 @@ if [[ "$1" == "-h"  || "$1" == "--help" ]]; then
 fi
 # set the environment
 THIS_SCRIPTS_DIR=$(dirname $0)
-source "$THIS_SCRIPTS_DIR/spd"
+source "$THIS_SCRIPTS_DIR/spack-deps.sh"
 # call the command from the command line
 echo "Have set spacks's dependencies - now calling $@"
 $@

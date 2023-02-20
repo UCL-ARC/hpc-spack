@@ -1,1 +1,4 @@
-repos/dev/packages/**/*.pyc
+**/*.pyc
+arcspack/__pycache__/__init__.cpython-39.pyc
+.venv/*
+.vscode/launch.json
