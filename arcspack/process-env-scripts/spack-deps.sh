@@ -7,7 +7,7 @@
 # (1) Python - spack is written in Python
 # (2) a gcc compiler - spack needs a system compiler at least to bootstrap itself
 #
-# This script is symlinked as spe 
+# This script is symlinked as spd 
 #
 # This code was contributed by Owain Kenway
 

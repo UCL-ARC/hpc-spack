@@ -22,7 +22,7 @@ class Site():
         
         # clone spack from github
         current_dir = os.getcwd()
-        os.chdir(os.path.dirname(self.dir))
+        os.chdir(self.dir)
         subprocess.run(['git', 'clone', '-c', 'feature.manyFiles=true', 
                         '--branch', spack_version, 'https://github.com/spack/spack.git'])
         os.chdir(current_dir)
@@ -38,10 +38,8 @@ class Site():
         # spdsper - adds spacks dependencies to process and sets up spack in it
         # TODO fix TypeError: spdsper() takes 1 positional argument but 2 were given
         # why is this interpreted as 2 args - is command wrong type (supposed to be a list)
-        c = command.insert(0, self.spack_setup_env)
-        print(c)
-        
-        Scripts.spdsper(c)
+        command.insert(0, self.spack_setup_env)        
+        Scripts.spdsper(command)
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
     # and not the shell environment in which spack commands are run.

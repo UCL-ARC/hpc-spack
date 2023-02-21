@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# A script to run a command, form the command line, in the standard working environment for spack 
+# A script to run a command, from the command line, in the standard working environment for spack 
+# so with the intention that command will be a spack command
 #
-# This script is symlinked as spe 
+# This script is symlinked as spdsper
 #
 
 if [[ "$1" == "-h"  || "$1" == "--help" ]]; then

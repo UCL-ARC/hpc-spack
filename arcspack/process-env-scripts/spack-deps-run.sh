@@ -2,7 +2,7 @@
 
 # A script to run a command, from the command line, in the standard working environment for spack 
 #
-# This script is symlinked as spe 
+# This script is symlinked as spdr 
 #
 
 if [[ "$1" == "-h"  || "$1" == "--help" ]]; then

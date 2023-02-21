@@ -18,7 +18,10 @@ class AppConfig():
         config.sections()
         config.read(self.ini_file)
         self.config = config
-        self.spack_sites_root = os.path.abspath(config['general']['sites_root'])
+        sites_root_setting = config['general']['sites_root']
+        if '{hpc_spack_root}' in sites_root_setting:
+            sites_root_setting = sites_root_setting.format(hpc_spack_root=os.path.dirname(arcspack_dir()))
+        self.spack_sites_root = os.path.abspath(sites_root_setting)
         self.spack_version = config['general']['spack_version']
         # TODO add the other scipts in process-env-scripts if they get used
         self.spdsper_script = config['process_env_scripts']['spdsper']
