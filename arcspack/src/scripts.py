@@ -1,9 +1,20 @@
 import os
 import subprocess
+from  arcspack.src.helpers import arcspack_dir
 
 class Scripts():
-    # TODO copy shell scripts to a dir env-scripts in arcpack/
-    dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'process-env-scripts')
+    # TODO copy shell scripts to a dir env-scripts in arcpack/  - why??? superseded??
+    dir = os.path.join(arcspack_dir(), 'process-env-scripts')
+    
+    @classmethod
+    def make_links(cls, spd_script):
+        target = os.path.join(Scripts.dir, spd_script)
+        spd_link = os.path.join(Scripts.dir, 'spd')
+        try:
+            os.remove(spd_link)
+        except FileNotFoundError:
+            pass  # not a problem
+        os.symlink(target, spd_link)
     
     @classmethod
     def spdsper(cls, args):

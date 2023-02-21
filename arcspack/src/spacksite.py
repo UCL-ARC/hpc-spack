@@ -14,7 +14,8 @@ class Site():
         if not os.path.exists(dir):
             assert spack_version is not None
             self._create(spack_version)
-            
+    
+    # TODO split into  directories, clone spack, basic spack config, identify compiler (or just set conig)        
     def _create(self, spack_version):
         os.makedirs(self.dir)
         os.mkdir(self.build_stage)
@@ -32,7 +33,7 @@ class Site():
         # 6 is a conservative number (for make -j), for testing on login nodes
         self.run_command(['spack', 'config', '--scope=site', 
                               'add', 'config:build_jobs:{}'.format(6)])
-        # TODO add more site config for build caches, mirrors(source caches), ready for installing specs
+        # TODO add more site config for build caches, mirrors(source caches), ready for installing specs, but first identify the compiler
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it

@@ -13,8 +13,9 @@ if [[ "$1" == "-h"  || "$1" == "--help" ]]; then
     exit
 fi
 # set the environment that spack should use, e.g. python and compiler versions 
+# the file spd is a symlink to a script for the particular os in use
 THIS_SCRIPTS_DIR=$(dirname $0)
-source "$THIS_SCRIPTS_DIR/spack-deps.sh"
+source "$THIS_SCRIPTS_DIR/spd"
 
 # set up spack in the current environment
 source $1

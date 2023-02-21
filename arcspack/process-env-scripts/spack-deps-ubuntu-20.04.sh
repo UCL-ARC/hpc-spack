@@ -10,7 +10,8 @@
 # This script is symlinked as spd 
 #
 
-# this code is intentionally blank - it is for an unknown os  
+# this is the ubuntu file
+# this code is intentionally blank - but could load python and gcc compiler modules here 
 
 
 

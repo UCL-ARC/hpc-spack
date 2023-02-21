@@ -14,6 +14,7 @@ import argparse
 from arcspack.src.spacksite import Site
 from arcspack.src.helpers import arcspack_dir
 from arcspack.src.appconfig import AppConfig
+from arcspack.src.scripts import Scripts
 
 # for debuging
 import inspect
@@ -24,6 +25,7 @@ import inspect
 def site_create(args):
     print(inspect.stack()[0][3])
     config = AppConfig(args.config_file)
+    Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
     # TODO allow for sites outside spack_sites_root e.g. by testing site name for being an absolute path
     # TODO consider site_name in the form abc/def
     # TODO validate characters in site_name
@@ -34,6 +36,7 @@ def site_create(args):
 def site_install_env(args):
     print(inspect.stack()[0][3])
     config = AppConfig(args.config_file)
+    Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
     # TODO same as TODOs in site_create() above
     site = Site(os.path.join(config.spack_sites_root, args.site_name), config.spack_version)
     # TODO install the spack specs in the site 
@@ -45,6 +48,7 @@ def site_spack_setup_env_script(args):
 def sites_list(args):
     print(inspect.stack()[0][3])
     config = AppConfig(args.config_file)
+    Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
     site_names = [dir for dir in os.listdir(config.spack_sites_root) if os.path.isdir(os.path.join(config.spack_sites_root, dir))]
     print(' '.join(site_names))
 
