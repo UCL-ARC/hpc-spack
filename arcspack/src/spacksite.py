@@ -16,7 +16,7 @@ class Site():
             self._create(spack_version)
             
     def _create(self, spack_version):
-        os.mkdir(self.dir)
+        os.makedirs(self.dir)
         os.mkdir(self.build_stage)
         os.mkdir(self.provenance)
         
