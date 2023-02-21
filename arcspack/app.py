@@ -44,9 +44,11 @@ def site_spack_setup_env_script(args):
 
 def sites_list(args):
     print(inspect.stack()[0][3])
-    pass 
+    config = AppConfig(args.config_file)
+    site_names = [dir for dir in os.listdir(config.spack_sites_root) if os.path.isdir(os.path.join(config.spack_sites_root, dir))]
+    print(' '.join(site_names))
 
-def site_create_test_message(args):
+def site_test_message(args):
     print('This is a test message - so the cli parser works to get this far!')
 
 def run_with_cli_args():
@@ -60,12 +62,12 @@ def run_with_cli_args():
 
     # arcspack site test-message
     site_test_message_parser = site_subparsers.add_parser('test-message') 
-    site_test_message_parser.set_defaults(func=site_create_test_message)
+    site_test_message_parser.set_defaults(func=site_test_message)
         
     # arcspack site create ...
     site_create_parser = site_subparsers.add_parser('create')
     site_create_parser.add_argument('site_name')
-    site_create_parser.add_argument('-p', '--path', required=False)
+    # site_create_parser.add_argument('-p', '--parent-path', required=False) # TODO if exists create a simlink to new site in spack sites root
     site_create_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
     site_create_parser.set_defaults(func=site_create)
 
@@ -90,7 +92,8 @@ def run_with_cli_args():
 
     # arcspack sites list ...
     sites_list_parser = sites_subparsers.add_parser('list')
-    sites_list_parser.add_argument('-l', '-long')
+    # sites_list_parser.add_argument('-l', '-long') # TODO implement a long format
+    sites_list_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
     sites_list_parser.set_defaults(func=sites_list)
 
     # arcspack sites remove-deleted
