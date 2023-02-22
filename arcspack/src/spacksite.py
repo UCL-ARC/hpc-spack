@@ -6,7 +6,10 @@ class Site():
     # if not using the default, user code should update Scripts.dir 
     # before instantiating any Site objects
         
-    def __init__(self, dir, spack_version=None):
+    def __init__(self, dir, spack_version=None, error_if_non_existent=False):
+        if  error_if_non_existent:
+            if not os.path.exists(dir):
+                raise FileNotFoundError
         self.dir = dir
         self.build_stage = os.path.join(dir, 'build_stage')
         self.provenance = os.path.join(dir, 'provenance')
