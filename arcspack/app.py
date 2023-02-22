@@ -6,7 +6,7 @@ import os, sys
 # which might be of help when pointing a debugger at it.
 if __name__ == '__main__':
     # TODO test next line - does it need parent of parent?
-    print('Adding ',  os.path.dirname(os.path.abspath('__FILE__')), ' to PYTHONPATH')
+    print('# ARCHPACK: Adding ',  os.path.dirname(os.path.abspath('__FILE__')), ' to PYTHONPATH', file=sys.stderr)
     sys.path.append(os.path.dirname(os.path.abspath('__FILE__')))
 
 import argparse
@@ -70,6 +70,7 @@ def site_test_message(args):
 def run_with_cli_args():
     parser = argparse.ArgumentParser(prog='arcspack', description='Creates new spack sites and installs ARC software stack therein.')
     subparsers = parser.add_subparsers()
+    parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')  # TODO check that this applies the said config file
     # parser.add_help = True
 
     # arcspack site
@@ -84,13 +85,13 @@ def run_with_cli_args():
     site_create_parser = site_subparsers.add_parser('create')
     site_create_parser.add_argument('site_name')
     # site_create_parser.add_argument('-p', '--parent-path', required=False) # TODO if exists create a simlink to new site in spack sites root
-    site_create_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
+    # site_create_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
     site_create_parser.set_defaults(func=site_create)
 
     # arcspack site site-name spack ....
     site_spack_parser = site_subparsers.add_parser('spack')
     site_spack_parser.add_argument('site_name')
-    site_spack_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')  # TODO move thsi up if possble to earlier in the command syntax
+    # site_spack_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
     site_spack_parser.add_argument('spack_args', type=str, nargs='+')
     site_spack_parser.set_defaults(func=site_spack)
 
@@ -118,7 +119,7 @@ def run_with_cli_args():
     # arcspack sites list ...
     sites_list_parser = sites_subparsers.add_parser('list')
     # sites_list_parser.add_argument('-l', '-long') # TODO implement a long format
-    sites_list_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
+    # sites_list_parser.add_argument('-c', '--config-file', required=False, default='FIND_RELATIVE')
     sites_list_parser.set_defaults(func=sites_list)
 
     # arcspack sites remove-deleted
