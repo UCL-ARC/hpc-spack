@@ -5,12 +5,10 @@ from configparser import ConfigParser
 
 class AppConfig():
     def __init__(self, config_file):
-        # TODO refactor parameter args to config_file
         if config_file == 'FIND_RELATIVE':
             self.ini_file = os.path.join(arcspack_dir(), 'settings/spack_sites.ini')
         else:
             self.ini_file = os.path.abspath(config_file)
-        # DEBUG print(ini_file)
         self.read_ini_file()
         
     def read_ini_file(self):

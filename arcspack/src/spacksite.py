@@ -11,29 +11,40 @@ class Site():
         self.build_stage = os.path.join(dir, 'build_stage')
         self.provenance = os.path.join(dir, 'provenance')
         self.spack_setup_env = os.path.join(dir, 'spack', 'share', 'spack', 'setup-env.sh')
+        self.spack_version = spack_version
         if not os.path.exists(dir):
-            assert spack_version is not None
-            self._create(spack_version)
+            self.make_dirs()
+        if not os.path.exists(os .path.join(dir,'spack', 'README.md')):
+            self.clone_spack()
+            self.configure_spack()
+        # TODO test that spack's dependency compiler(s) have been configured
+        # if not configure them
     
     # TODO split into  directories, clone spack, basic spack config, identify compiler (or just set conig)        
-    def _create(self, spack_version):
+    # def _create(self, spack_version):
+    
+    def make_dirs(self):
         os.makedirs(self.dir)
         os.mkdir(self.build_stage)
         os.mkdir(self.provenance)
         
+    def clone_spack(self):
         # clone spack from github
         current_dir = os.getcwd()
         os.chdir(self.dir)
         subprocess.run(['git', 'clone', '-c', 'feature.manyFiles=true', 
-                        '--branch', spack_version, 'https://github.com/spack/spack.git'])
+                        '--branch', self.spack_version, 'https://github.com/spack/spack.git'])
         os.chdir(current_dir)
 
+    def configure_spack(self):
         # set site config
         self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_stage:{}'.format(self.build_stage)])
         # 6 is a conservative number (for make -j), for testing on login nodes
-        self.run_command(['spack', 'config', '--scope=site', 
-                              'add', 'config:build_jobs:{}'.format(6)])
+        self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_jobs:{}'.format(6)])
         # TODO add more site config for build caches, mirrors(source caches), ready for installing specs, but first identify the compiler
+    
+    def configure_spack_dependency_compiler():
+        pass
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it

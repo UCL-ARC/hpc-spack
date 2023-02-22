@@ -32,10 +32,3 @@ def spd_setting_key():
     else:
         return 'spd_' + '_'.join(my_os)
 
-"""
-.system(), .release()
-WSL Ubuntu = 'Linux', '5.15.79.1-microsoft-standard-WSL2'
-Windows 11 = 'Windows', '10'
-"""
-
-

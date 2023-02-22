@@ -1,9 +1,9 @@
 import os
+import sys
 import subprocess
-from  arcspack.src.helpers import arcspack_dir
+from arcspack.src.helpers import arcspack_dir
 
 class Scripts():
-    # TODO copy shell scripts to a dir env-scripts in arcpack/  - why??? superseded??
     dir = os.path.join(arcspack_dir(), 'process-env-scripts')
     
     @classmethod
@@ -18,8 +18,7 @@ class Scripts():
     
     @classmethod
     def spdsper(cls, args):
-        # TODO update path used here to pick up the scritps config from AppConfig
-        print("Scripts.dir", Scripts.dir)
-        _ = args.insert(0, os.path.join(Scripts.dir, 'spack-deps-spack-env-run.sh'))# debug
+        _ = args.insert(0, os.path.join(Scripts.dir, 'spack-deps-spack-env-run.sh'))
+        print('# ARCKPSACK: Now calling: ', ' '.join(args), file=sys.stderr)
         subprocess.run(args)
         
