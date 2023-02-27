@@ -1,6 +1,6 @@
 import os
 import subprocess
-from arcspack.src.scripts import Scripts
+from spacksites.src.scripts import Scripts
 
 class Site():
     # if not using the default, user code should update Scripts.dir 

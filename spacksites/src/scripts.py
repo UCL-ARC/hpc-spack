@@ -1,10 +1,10 @@
 import os
 import sys
 import subprocess
-from arcspack.src.helpers import arcspack_dir
+from spacksites.src.helpers import spacksites_dir
 
 class Scripts():
-    dir = os.path.join(arcspack_dir(), 'process-env-scripts')
+    dir = os.path.join(spacksites_dir(), 'process-env-scripts')
     
     @classmethod
     def make_links(cls, spd_script):
@@ -19,6 +19,6 @@ class Scripts():
     @classmethod
     def spdsper(cls, args):
         _ = args.insert(0, os.path.join(Scripts.dir, 'spack-deps-spack-env-run.sh'))
-        print('# ARCKPSACK: Now calling: ', ' '.join(args), file=sys.stderr)
+        print('# SPACKSITES: Now calling: ', ' '.join(args), file=sys.stderr)
         subprocess.run(args)
         

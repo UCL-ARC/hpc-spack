@@ -17,5 +17,5 @@ fi
 THIS_SCRIPTS_DIR=$(dirname $0)
 source "$THIS_SCRIPTS_DIR/spd"
 # call the command from the command line
-echo "# ARCSPACK: Have set spacks's external compiler and python dependencies - now calling $@" >&2
+echo "# SPACKSITES: Have set spacks's external compiler and python dependencies - now calling $@" >&2
 $@

@@ -22,6 +22,6 @@ source $1
 
 # call the command from rest of the command line
 shift 
-echo "# ARCSPACK: Have set spacks's external compiler and python dependencies - now calling $@" >&2
+echo "# SPACKSITES: Have set spacks's external compiler and python dependencies - now calling $@" >&2
 
 $@
