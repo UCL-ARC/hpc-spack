@@ -1,0 +1,3 @@
+config:
+  build_stage: {{build_stage}}
+  build_jobs: 6

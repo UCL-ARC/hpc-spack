@@ -1,6 +1,6 @@
 import os
 
-from spacksites.src.helpers import spacksites_dir, spd_setting_key
+from spacksites.src.helpers import spacksites_dir, spd_setting_key, packages_setting_key
 from configparser import ConfigParser
 
 class AppConfig():
@@ -24,5 +24,9 @@ class AppConfig():
         # TODO add the other scipts in process-env-scripts if they get used
         self.spdsper_script = config['process_env_scripts']['spdsper']
         self.spd_script = config['process_env_scripts'][spd_setting_key()]
-
-        
+        self.initial_site_config_yaml = config['initial_site_configs']['config_default']
+        if not os.path.isabs(self.initial_site_packages_yaml):
+            self.initial_site_config_yaml = os.path.join(spacksites_dir(),'settings', self.initial_site_config_yaml)
+        self.initial_site_packages_yaml = config['initial_site_configs'][packages_setting_key()]
+        if not os.path.isabs(self.initial_site_packages_yaml):
+            self.initial_site_packages_yaml = os.path.join(spacksites_dir(),'settings', self.initial_site_packages_yaml)

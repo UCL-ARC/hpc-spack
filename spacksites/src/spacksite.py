@@ -1,4 +1,4 @@
-import os
+import os, shutil
 import subprocess
 from spacksites.src.scripts import Scripts
 
@@ -6,25 +6,23 @@ class Site():
     # if not using the default, user code should update Scripts.dir 
     # before instantiating any Site objects
         
-    def __init__(self, dir, spack_version=None, error_if_non_existent=False):
-        if  error_if_non_existent:
+    def __init__(self, dir, initial_config_yaml, initial_packages_yaml, 
+                 spack_version=None, error_if_non_existent=False):
+        if error_if_non_existent:
             if not os.path.exists(dir):
                 raise FileNotFoundError
         self.dir = dir
         self.build_stage = os.path.join(dir, 'build_stage')
+        self.yaml_dir = os.path.join(self.dir, 'spack', 'etc', 'spack')
         self.provenance = os.path.join(dir, 'provenance')
         self.spack_setup_env = os.path.join(dir, 'spack', 'share', 'spack', 'setup-env.sh')
         self.spack_version = spack_version
         if not os.path.exists(dir):
             self.make_dirs()
-        if not os.path.exists(os .path.join(dir,'spack', 'README.md')):
+        if not os.path.exists(os.path.join(dir,'spack', 'README.md')):
             self.clone_spack()
-            self.configure_spack()
-        # TODO test that spack's dependency compiler(s) have been configured
-        # if not configure them
-    
-    # TODO split into  directories, clone spack, basic spack config, identify compiler (or just set conig)        
-    # def _create(self, spack_version):
+            self.configure_spack(initial_config_yaml, initial_packages_yaml)
+            self.find_system_compilers()
     
     def make_dirs(self):
         os.makedirs(self.dir)
@@ -39,20 +37,43 @@ class Site():
                         '--branch', self.spack_version, 'https://github.com/spack/spack.git'])
         os.chdir(current_dir)
 
-    def configure_spack(self):
-        # set site config
-        self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_stage:{}'.format(self.build_stage)])
-        # 6 is a conservative number (for make -j), for testing on login nodes
-        self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_jobs:{}'.format(6)])
-        # TODO add more site config for build caches, mirrors(source caches), ready for installing specs, but first identify the compiler
+    def configure_spack(self, initial_config_yaml, initial_packages_yaml):
+        with open(initial_config_yaml, 'r') as f1:
+            lines = f1.readlines()
+        # substitue for {{build_stage}}
+        for line in lines:
+            if '{{build_stage}}' in line:
+                line.replace('{{build_stage}}', self.build_stage)
+        with open(os.path.join(self.yaml_dir, 'config.yaml'), 'w') as f2:
+            f2.writelines(lines)
+        # TODO copy the packages yaml
+        shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
+        
+        # # TODO just make this a copy of config.yaml from template folder (settings/) to $(site prefix)/etc/spack/ and subst in any placeholders 
+        # # template config.yaml file chosen per OS etc to allow easy development? yes packages.
+        # # TODO repeat for other config files - e.g. packages 
+        # # set site config
+        # self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_stage:{}'.format(self.build_stage)])
+        # # 6 is a conservative number (for make -j), for testing on login nodes
+        # self.run_command(['spack', 'config', '--scope=site', 'add', 'config:build_jobs:{}'.format(6)])
+        # # TODO add more site config for build caches, mirrors(source caches), ready for installing specs, but first identify the compiler
     
-    def configure_spack_dependency_compiler():
+    def find_system_compilers(self):
+        self.run_command(['spack', 'compiler', 'find'])
+
+    def add_upstream_sites(self, site_names):
+        # use std spack commands but work out paths to them based on site names.
         pass
+
+    def show_upstream_sites(self): # <- this function does not belong on a site object - move to app
+        pass # follow the links a print a dot graph
+
+    def build_first_complier():
+        pass # pick compiler as first in packages default and build that - chat to user about what you are doing.  
+        # or chat includes info that first compiler could be built by installing an env
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
-        # TODO fix TypeError: spdsper() takes 1 positional argument but 2 were given
-        # why is this interpreted as 2 args - is command wrong type (supposed to be a list)
         command.insert(0, self.spack_setup_env)        
         Scripts.spdsper(command)
     

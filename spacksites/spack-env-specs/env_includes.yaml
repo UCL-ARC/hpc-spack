@@ -1,6 +1,0 @@
-# intended as includes for files of specs defining spack environments
-# e.g. compiler choice  - 
-# e.g. spec dependency solver settings
-
-
-# name of such files no restricted, just use them as includes in other files

@@ -32,3 +32,9 @@ def spd_setting_key():
     else:
         return 'spd_' + '_'.join(my_os)
 
+def packages_setting_key():
+    my_os = os_ver()
+    if my_os[0] == 'default':
+        return 'packages_default'
+    else:
+        return 'packages_' + '_'.join(my_os)

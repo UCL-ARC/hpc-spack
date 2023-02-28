@@ -1,0 +1,3 @@
+packages:
+  all:
+    compiler: [gcc@9.4.0]
