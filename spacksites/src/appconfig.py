@@ -25,8 +25,8 @@ class AppConfig():
         self.spdsper_script = config['process_env_scripts']['spdsper']
         self.spd_script = config['process_env_scripts'][spd_setting_key()]
         self.initial_site_config_yaml = config['initial_site_configs']['config_default']
-        if not os.path.isabs(self.initial_site_packages_yaml):
-            self.initial_site_config_yaml = os.path.join(spacksites_dir(),'settings', self.initial_site_config_yaml)
+        if '{hpc_spack_root}' in self.initial_site_config_yaml:
+            self.initial_site_config_yaml = self.initial_site_config_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
         self.initial_site_packages_yaml = config['initial_site_configs'][packages_setting_key()]
-        if not os.path.isabs(self.initial_site_packages_yaml):
-            self.initial_site_packages_yaml = os.path.join(spacksites_dir(),'settings', self.initial_site_packages_yaml)
+        if '{hpc_spack_root}' in self.initial_site_packages_yaml:
+            self.initial_site_packages_yaml = self.initial_site_packages_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
