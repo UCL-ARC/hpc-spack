@@ -14,6 +14,7 @@ import argparse
 from spacksites.src.spacksite import Site
 from spacksites.src.appconfig import AppConfig
 from spacksites.src.scripts import Scripts
+from spacksites.src.helpers import spacksites_dir
 
 # for debuging
 import inspect
@@ -51,15 +52,23 @@ def install_env(args):
     # TODO same as TODOs in site_create() above
     site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, 
          config.initial_site_packages_yaml, spack_version=config.spack_version, error_if_non_existent=True)
-    # TODO install the spack specs in the site 
+    specs_file = args.specs_file
+    if not os.path.isabs(specs_file):
+        if specs_file == 'first_compiler.yaml':
+            specs_file = os.path.join(spacksites_dir(),'spack_env_specs', specs_file)
+        else:
+            specs_file = os.path.join(spacksites_dir(),'spack_env_specs', 'build', specs_file)
+    site.install_spack_env(args.env_name, specs_file)
 
 def spack_setup_env_script(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
     config = AppConfig(args.config_file)
     site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, 
          config.initial_site_packages_yaml, spack_version=config.spack_version, error_if_non_existent=True)
-    print('# SPACKSITES: to setup spack in your shell use: eval $(arcpack site site-name',  file=sys.stderr)
-    print(site.spack_setup_env)
+    print('# SPACKSITES: to setup spack in your shell use: eval $(spacksites spack-setup-env site-name)',  file=sys.stderr)
+    print('# SPACKSITES: now issuing commands to set up your environment',  file=sys.stderr)
+    print('# SPACKSITES: - these are not seen if you have eval\'ed them.',  file=sys.stderr)
+    print(site.)
         # TODO echo the shells script that a shell user would need to issue spack commands through an eval - will have to silence other chat (or affix # to chat output) or maybe issue chat to std error 
      # - does eval consume stderr? or user could drop stderr in the eval   eval $(spacksites site t2 spack_setup-env 2> /dev/null)
 
@@ -103,8 +112,8 @@ def run_with_cli_args():
     # spacksites install-env site-name env-name specs-file
     install_env_parser = subparsers.add_parser('install-env') 
     install_env_parser.add_argument('site_name')
-    install_env_parser.add_argument('env-name')
-    install_env_parser.add_argument('specs-file')
+    install_env_parser.add_argument('env_name')
+    install_env_parser.add_argument('specs_file')
     install_env_parser.set_defaults(func=install_env)
 
     # spacksites spack-setup-env site-name

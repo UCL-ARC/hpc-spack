@@ -24,4 +24,4 @@ of which: 1. installs the compiler specified in spacksites/settings/first_compil
 - `spacksites/spacksites list` - shows the names of the spack sites that you have created. These live in the root directory specified in - `spacksites/settings/spack_sites.ini`. The names returned are those of the subdirectories of the sites root directory.
 - `spacksites/spacksites spack <site_name> <spack-args>` - executes a spack command on the named site. You do not have to activate the spack environment, which is done for you, for the duration of the command, in a subshell.
 
-- `bash` then `source spacksites/spacksites spack-setup-env <site_name>` - this sets up your environment to run subsequent ordinary spack commands on the named one of your sites. `bash` first because setting the environment is hard to undo, and you may want to switch to another one of your sites. 
+- `bash` then `source $(spacksites/spacksites spack-setup-env <site_name>)` - this sets up your environment to run subsequent ordinary spack commands on the named one of your sites. `bash` first because setting the environment is hard to undo, and you may want to switch to another one of your sites. 

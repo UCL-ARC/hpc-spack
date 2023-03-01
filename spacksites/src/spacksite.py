@@ -12,6 +12,7 @@ class Site():
             if not os.path.exists(dir):
                 raise FileNotFoundError
         self.dir = dir
+        self.name = os.path.basename(dir)
         self.build_stage = os.path.join(dir, 'build_stage')
         self.yaml_dir = os.path.join(self.dir, 'spack', 'etc', 'spack')
         self.provenance = os.path.join(dir, 'provenance')
@@ -57,7 +58,7 @@ class Site():
         # # TODO add more site config for build caches, mirrors(source caches), ready for installing specs, but first identify the compiler
     
     def find_system_compilers(self):
-        self.run_command(['spack', 'compiler', 'find'])
+        self.run_command(['spack', 'compiler', 'find', '--scope=site'])
 
     def add_upstream_sites(self, site_names):
         # use std spack commands but work out paths to them based on site names.
@@ -66,13 +67,14 @@ class Site():
     def show_upstream_sites(self): # <- this function does not belong on a site object - move to app
         pass # follow the links a print a dot graph
 
-    def build_first_complier():
+    def build_default_complier():
         pass # pick compiler as first in packages default and build that - chat to user about what you are doing.  
         # or chat includes info that first compiler could be built by installing an env
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
-        command.insert(0, self.spack_setup_env)        
+        command.insert(0, self.spack_setup_env) 
+        command.insert(0, 'SPACK_DISABLE_LOCAL_CONFIG=1')  # this disables the users own config       
         Scripts.spdsper(command)
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
@@ -84,5 +86,12 @@ class Site():
     def create_modules(self, module_dir, spack_env, spack_specs_filename):
         # TODO
         pass
+    
+    def spack_setup_env_commands(self):
+        prompt_command = 'export PS1="(spacksite: {}) $PS1"'.format(self.name)
+        disable_user_config_command = 'export SPACK_DISABLE_LOCAL_CONFIG=1'  # so that the operator's personal user scope spack config is ignored
+        spack_setup_env_command = 'source {}\n'.format(self.spack_setup_env)
+        return ';'.join([prompt_command, disable_user_config_command, spack_setup_env_command])
+
     
     
