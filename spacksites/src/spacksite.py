@@ -41,9 +41,7 @@ class Site():
         with open(initial_config_yaml, 'r') as f1:
             lines = f1.readlines()
         # substitue for {{build_stage}}
-        for line in lines:
-            if '{{build_stage}}' in line:
-                line.replace('{{build_stage}}', self.build_stage)
+        lines = [line.replace('{{build_stage}}', self.build_stage) if '{{build_stage}}' in line else line for line in lines]
         with open(os.path.join(self.yaml_dir, 'config.yaml'), 'w') as f2:
             f2.writelines(lines)
         # TODO copy the packages yaml
