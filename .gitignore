@@ -1,2 +1,11 @@
 repos/dev/packages/**/*.pyc
-spacksites/__pycache__/*.pyc
+spacksites/__pycache__/**/*.pyc
+.vscode/launch.json
+.vscode/settings.json
+spacksites/src/__pycache__/spacksite.cpython-38.pyc
+spacksites/src/__pycache__/scripts.cpython-38.pyc
+spacksites/src/__pycache__/helpers.cpython-38.pyc
+spacksites/src/__pycache__/appconfig.cpython-38.pyc
+spacksites/src/__pycache__/__init__.cpython-38.pyc
+spacksites/process-env-scripts/spd
+spd
