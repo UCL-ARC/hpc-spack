@@ -18,6 +18,7 @@ THIS_SCRIPTS_DIR=$(dirname $0)
 source "$THIS_SCRIPTS_DIR/spd"
 
 # set up spack in the current environment
+export SPACK_DISABLE_LOCAL_CONFIG=1
 source $1
 
 # call the command from rest of the command line
