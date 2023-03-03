@@ -6,7 +6,7 @@ class Site():
     # if not using the default, user code should update Scripts.dir 
     # before instantiating any Site objects
         
-    def __init__(self, dir, initial_config_yaml, initial_packages_yaml, 
+    def __init__(self, dir, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, 
                  spack_version=None, error_if_non_existent=False):
         if error_if_non_existent:
             if not os.path.exists(dir):
@@ -15,14 +15,14 @@ class Site():
         self.name = os.path.basename(dir)
         self.build_stage = os.path.join(dir, 'build_stage')
         self.yaml_dir = os.path.join(self.dir, 'spack', 'etc', 'spack')
-        self.provenance = os.path.join(dir, 'provenance')
+        self.provenance = os.path.join(dir, 'provenance')  # TODO make some records in here 
         self.spack_setup_env = os.path.join(dir, 'spack', 'share', 'spack', 'setup-env.sh')
         self.spack_version = spack_version
         if not os.path.exists(dir):
             self.make_dirs()
         if not os.path.exists(os.path.join(dir,'spack', 'README.md')):
             self.clone_spack()
-            self.configure_spack(initial_config_yaml, initial_packages_yaml)
+            self.configure_spack(initial_config_yaml, initial_modules_yaml, initial_packages_yaml)
             self.find_system_compilers()
     
     def make_dirs(self):
@@ -38,14 +38,15 @@ class Site():
                         '--branch', self.spack_version, 'https://github.com/spack/spack.git'])
         os.chdir(current_dir)
 
-    def configure_spack(self, initial_config_yaml, initial_packages_yaml):
-        with open(initial_config_yaml, 'r') as f1:
-            lines = f1.readlines()
-        # substitue for {{build_stage}}
-        lines = [line.replace('{{build_stage}}', self.build_stage) if '{{build_stage}}' in line else line for line in lines]
-        with open(os.path.join(self.yaml_dir, 'config.yaml'), 'w') as f2:
-            f2.writelines(lines)
-        # TODO copy the packages yaml
+    def configure_spack(self, initial_config_yaml, initial_modules_yaml, initial_packages_yaml):
+        # with open(initial_config_yaml, 'r') as f1:
+        #     lines = f1.readlines()
+        # # substitue for {{build_stage}}  # this has been superseded by use of variables in spack config file
+        # lines = [line.replace('{{build_stage}}', self.build_stage) if '{{build_stage}}' in line else line for line in lines]
+        # with open(os.path.join(self.yaml_dir, 'config.yaml'), 'w') as f2:
+        #     f2.writelines(lines)
+        shutil.copy(initial_config_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
+        shutil.copy(initial_modules_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
         shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
         
         # # TODO just make this a copy of config.yaml from template folder (settings/) to $(site prefix)/etc/spack/ and subst in any placeholders 
@@ -74,7 +75,6 @@ class Site():
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
         command.insert(0, self.spack_setup_env) 
-        command.insert(0, 'SPACK_DISABLE_LOCAL_CONFIG=1')  # this disables the users own config       
         Scripts.spdsper(command)
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
