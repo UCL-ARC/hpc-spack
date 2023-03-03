@@ -9,3 +9,6 @@ spacksites/src/__pycache__/appconfig.cpython-38.pyc
 spacksites/src/__pycache__/__init__.cpython-38.pyc
 spacksites/process-env-scripts/spd
 spd
+stack_versions_workflow/spd
+stack_versions_workflow/spdr
+stack_versions_workflow/spdsper
