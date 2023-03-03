@@ -1,0 +1,3 @@
+spack:
+  specs:
+    - gcc@12.2.0

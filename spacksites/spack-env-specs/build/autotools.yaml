@@ -1,0 +1,10 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs: [automake@1.16.5, autoconf@2.69]
+  view: true
+  concretizer:
+    unify: true

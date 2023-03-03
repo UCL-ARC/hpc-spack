@@ -1,0 +1,8 @@
+modules:
+  default:
+    roots:
+      tcl: $spack/../modules/$env
+    tcl:
+      hash_length: 0
+      projections:
+        all: '{name}/{version}/{compiler.name}-{compiler.version}'
