@@ -4,9 +4,12 @@
 # configuration settings.
 spack:
   # add package specs to the `specs` list
-  # it seems that specs can be left blank for an environment to be used for modules
+  specs: [automake@1.16.5, autoconf@2.69]
+  view: false
   modules:
     default:
+      roots:
+        tcl: $spack/../modules/autotools
       tcl:
         include: [automake, autoconf]
         # TODO find a more general exclude rule - omitting this line however causes all installed specs to be included in the module set

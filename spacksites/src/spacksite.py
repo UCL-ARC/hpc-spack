@@ -39,12 +39,6 @@ class Site():
         os.chdir(current_dir)
 
     def configure_spack(self, initial_config_yaml, initial_modules_yaml, initial_packages_yaml):
-        # with open(initial_config_yaml, 'r') as f1:
-        #     lines = f1.readlines()
-        # # substitue for {{build_stage}}  # this has been superseded by use of variables in spack config file
-        # lines = [line.replace('{{build_stage}}', self.build_stage) if '{{build_stage}}' in line else line for line in lines]
-        # with open(os.path.join(self.yaml_dir, 'config.yaml'), 'w') as f2:
-        #     f2.writelines(lines)
         shutil.copy(initial_config_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
         shutil.copy(initial_modules_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
         shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
@@ -60,17 +54,6 @@ class Site():
     
     def find_system_compilers(self):
         self.run_command(['spack', 'compiler', 'find', '--scope=site'])
-
-    def add_upstream_sites(self, site_names):
-        # use std spack commands but work out paths to them based on site names.
-        pass
-
-    def show_upstream_sites(self): # <- this function does not belong on a site object - move to app
-        pass # follow the links a print a dot graph
-
-    def build_default_complier():
-        pass # pick compiler as first in packages default and build that - chat to user about what you are doing.  
-        # or chat includes info that first compiler could be built by installing an env
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
@@ -79,11 +62,13 @@ class Site():
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
     # and not the shell environment in which spack commands are run.
-    def install_spack_env(self, spack_env, spack_specs_filename):        
-        self.run_command(['spack', 'env', 'create', spack_env, spack_specs_filename])
-        self.run_command(['spack', '-e', spack_env, 'install'])
+    def install_spack_env(self, spack_env_name, spack_env_filename):        
+        self.run_command(['spack', 'env', 'create', spack_env_name, spack_env_filename])
+        self.run_command(['spack', '-e', spack_env_name, 'install'])
         
-    def create_modules(self, module_dir, spack_env, spack_specs_filename):
+    def create_modules(self, spack_env_filename):
+        self.run_command(['spack', 'module', 'tcl', 'refresh', '--delete-tree'])
+        
         # TODO
         pass
     
