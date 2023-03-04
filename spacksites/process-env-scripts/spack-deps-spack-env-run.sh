@@ -19,6 +19,9 @@ source "$THIS_SCRIPTS_DIR/spd"
 
 # set up spack in the current environment
 export SPACK_DISABLE_LOCAL_CONFIG=1
+echo "# SPACKSITES: have set SPACK_DISABLE_LOCAL_CONFIG=$SPACK_DISABLE_LOCAL_CONFIG"
+export HPC_SPACK_ROOT=$(dirname $(dirname $(dirname $(realpath ${BASH_SOURCE:-$0}))))
+echo "# SPACKSITES: have set HPC_SPACK_ROOT=$HPC_SPACK_ROOT"
 source $1
 
 # call the command from rest of the command line

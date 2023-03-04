@@ -33,15 +33,15 @@ def create(args):
     # the new site object is dropped here because this is the end of the command
     # if a REPL is added to the project will need to pick it up for the REPL's state
     Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, 
-         config.initial_site_modules_yaml, config.initial_site_packages_yaml, 
+         config.initial_site_modules_yaml, config.initial_site_packages_yaml, config.initial_site_repos_yaml, 
          spack_version=config.spack_version)
 
 def spack(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
     config = AppConfig(args.config_file)
     Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
-    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml,
-         config.initial_site_packages_yaml, spack_version=config.spack_version, error_if_non_existent=True)  # TODO fix: if this fn called before site created it will create it - refactor Site object not to auto create when missing
+    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, config.initial_site_modules_yaml,
+         config.initial_site_packages_yaml, config.initial_site_repos_yaml, spack_version=config.spack_version, error_if_non_existent=True)  # TODO fix: if this fn called before site created it will create it - refactor Site object not to auto create when missing
     spack_args = args.spack_args
     spack_args.insert(0, 'spack')
     site.run_command(spack_args)
@@ -51,8 +51,8 @@ def install_env(args):
     config = AppConfig(args.config_file)
     Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
     # TODO same as TODOs in site_create() above
-    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, 
-         config.initial_site_packages_yaml, spack_version=config.spack_version, error_if_non_existent=True)
+    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, config.initial_site_modules_yaml,
+         config.initial_site_packages_yaml, config.initial_site_repos_yaml, spack_version=config.spack_version, error_if_non_existent=True)
     specs_file = args.specs_file
     if not os.path.isabs(specs_file):
         if specs_file == 'first_compiler.yaml':
@@ -65,7 +65,7 @@ def spack_setup_env_script(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
     config = AppConfig(args.config_file)
     site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, config.initial_site_modules_yaml,
-         config.initial_site_packages_yaml, spack_version=config.spack_version, error_if_non_existent=True)
+         config.initial_site_packages_yaml, config.initial_site_repos_yaml, spack_version=config.spack_version, error_if_non_existent=True)
     print('# SPACKSITES: to setup spack in your shell use: eval $(spacksites spack-setup-env site-name)',  file=sys.stderr)
     print('# SPACKSITES: now issuing commands to set up your environment',  file=sys.stderr)
     print('# SPACKSITES: - these are not seen if you have eval\'ed them.',  file=sys.stderr)
