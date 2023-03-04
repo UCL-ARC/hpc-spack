@@ -40,3 +40,11 @@ class AppConfig():
         self.initial_site_packages_yaml = config['initial_site_configs'][packages_setting_key()]
         if '{hpc_spack_root}' in self.initial_site_packages_yaml:
             self.initial_site_packages_yaml = self.initial_site_packages_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
+
+        self.templates_active_set = config['spack_env_templates']['active_set']
+        if '{hpc_spack_root}' in self.templates_active_set:
+            self.templates_active_set = self.templates_active_set.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
+
+        self.site_archive_root = config['spack_env_templates']['archive_root']
+        if '{hpc_spack_root}' in self.site_archive_root:
+            self.site_archive_root = self.site_archive_root.format(hpc_spack_root=os.path.dirname(spacksites_dir()))

@@ -56,11 +56,11 @@ def install_env(args):
     specs_file = args.specs_file
     if not os.path.isabs(specs_file):
         if specs_file == 'first_compiler.yaml':
-            specs_file = os.path.join(spacksites_dir(),'spack-env-specs', specs_file)
+            specs_file = os.path.join(spacksites_dir(), config.templates_active_set, specs_file)
         else:
-            specs_file = os.path.join(spacksites_dir(),'spack-env-specs', 'build', specs_file)
+            specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
     site.install_spack_env(args.env_name, specs_file)
-    if not os.path.isabs(specs_file):
+    if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
         site.find_system_compilers()
 
 def spack_setup_env_script(args):
