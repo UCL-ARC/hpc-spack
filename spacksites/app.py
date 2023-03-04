@@ -60,6 +60,8 @@ def install_env(args):
         else:
             specs_file = os.path.join(spacksites_dir(),'spack-env-specs', 'build', specs_file)
     site.install_spack_env(args.env_name, specs_file)
+    if not os.path.isabs(specs_file):
+        site.find_system_compilers()
 
 def spack_setup_env_script(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)

@@ -12,8 +12,6 @@ These steps should be carried out in order.
     4. have spack identify the compilers already on your system (including that from a devtoolset if such is in the script for your system in `spacksites/process-env-scripts`). One of these will be used to build an up to date compiler inside spack - see the next step below.
 3. __Install your first compiler into the spack site__: use `spacksites/spacksites install-env test_site1 first_compiler first_compiler.yaml`, where `first_compiler` is the name for the spack environment that will contain the new compiler. `first_compiler.yaml` is found at `spacksites/spack-env-specs/<template /first_compiler.yaml`. It makes sense to specify the same compiler there and in the `intial_site_packages_*.yaml` files. 
 
-***TODO ???*** after the first compiler is built in spack, do you need to run `spack compiler find` again??
-
 ## Optional steps 
 Some things you might want to do between steps 1 and 2 above:
   - 1A.	__Optional__: Switch to the git branch of this repo that is of interest, if that is not `main`.
