@@ -1,8 +1,6 @@
 # Using sitepack – a spack wrapper to set up sibling spack sites
 ## Main steps
 
-***TODO consequent code changes to tree change in environments stores***
-
 These steps should be carried out in order.  
 1.	__Clone this repo__: `git clone https://github.com/UCL-ARC/hpc-spack.git`
 2.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
@@ -46,8 +44,8 @@ Template spack environments are also to be found in the `spack-env-archive` dire
 __TODO Implement this:__ 
 `spacksties create-env test_site1 mpi mpi.yaml`  This allows you just to create a spack site from the template. You may then inspect it, e.g. to see how it concretizes, and change the configuration before installing the packages it has defined, using ordinary spack commands.
 
-_TODO for 5. wrap: spack module tcl refresh --delete-tree
-_TODO use expected paths for finding env yaml files (for  5.)_
+___TODO for 5. wrap: spack module tcl refresh --delete-tree___
+___TODO use expected paths for finding env yaml files (for  5.)___
 
 5. __Generate module files__: ___TODO NOT YET IMPLEMENTED___ This again uses spack environment yaml files. These, however, do not have specs for packages but do have filters to select packages to include in a module set, and these do not have to be the same sets of packages as in the environments that were used to install them! An example command is: `spacksites/spacksites make-modules test_site1 <section>`. This will generate the specified set of modules and put them at `site-name/modules/<section>`, for example, (unless some other path is specified in the yaml file at `spacksites/spack-env-templates/modules/<section>` with `roots: \ tcl: <path e.g. $spack/../modules/<section>>`).
 
@@ -61,7 +59,10 @@ If you want to add the environment defining the modules permanently to the site,
 - `spacksites/spacksites -h` - view the spacksite command help: 
 
 ## Personal spack config - ignored
-Spack has config settings at several priorty level. Personal, user, config overrides that in a site. Our sites will be administered by several operators, so for clarity and avoiding mistakes, user congfiguration files are ignored by spacksites and also when activating spack in your shell with `spacksites spack-set-up-env ...`. This is done by setting the environment variable `SPACK_DISABLE_LOCAL_CONFIG`; this does not happen if you set up spack in the shell yourself without that - so be aware. The setting also overrides the system scope spack config.
+`spack` has config settings at several priorty level. Personal, user, config overrides that in a site. Our sites will be administered by several operators, so for clarity and avoiding mistakes, user congfiguration files are ignored by spacksites and also when activating spack in your shell with `spacksites spack-set-up-env ...`. This is done by setting the environment variable `SPACK_DISABLE_LOCAL_CONFIG`; this does not happen if you set up spack in the shell yourself without that - so be aware. The setting also overrides the system scope spack config.
+
+## Other shell environment variables
+`spacksites` passes `HPC_SPACK_ROOT` to spack. This is a reference to the root of this git repo and allows its use in paths in `spack` config files to point to items in this repo. In particular repos.yaml copied to new sites uses it to point to the `spack` package repo in this git repo. Use of ordinary `spack` commands without this variable being set may cause an error when trying to access our homebuilt `spack` packages in `hpc-spack/repos`. 
 
 ## Shell environment scripts at `spacksites/process-env-scripts`
 These scripts relate to the environment of the process/shell in which spacksite and spack commands are run. This environment is not to be confused with a spack environment. The scripts put in place spack's dependencies. Those are a system compiler that it can use to compile its first compiler and a sensible version of python to run spack and spacksites. The suffices of hte filenames of these scripts identifying the operating system are there to help spacksites work out of the box. Rhel-7.8 is for UCL ARC clusters and Ubuntu-20.04 is to allow development on a laptop, in particular the author's, using WSL. Extra scripts may have to be provided for other operating systems / the base of installed system packages, in particular if they are lacking in the aforementioned dependencies. 
