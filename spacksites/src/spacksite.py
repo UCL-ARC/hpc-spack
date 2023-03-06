@@ -40,7 +40,7 @@ class Site():
         os.chdir(current_dir)
 
     def configure_spack(self, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml):
-        shutil.copy(initial_config_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
+        shutil.copy(initial_config_yaml, os.path.join(self.yaml_dir, 'config.yaml'))
         shutil.copy(initial_modules_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
         shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
         shutil.copy(initial_repos_yaml, os.path.join(self.yaml_dir, 'repos.yaml'))
