@@ -5,7 +5,6 @@ import os, sys
 # this PYTHONPATH manipulation allows this file to be run directly 
 # which might be of help when pointing a debugger at it.
 if __name__ == '__main__':
-    # TODO test next line - does it need parent of parent?
     print('# SPACKSITES: Adding ',  os.path.dirname(os.path.abspath('__FILE__')), ' to PYTHONPATH', file=sys.stderr)
     sys.path.append(os.path.dirname(os.path.abspath('__FILE__')))
 
@@ -83,8 +82,6 @@ def spack_setup_env_script(args):
     print('# SPACKSITES: now issuing commands to set up your environment',  file=sys.stderr)
     print('# SPACKSITES: - these are not seen if you have eval\'ed them.',  file=sys.stderr)
     print(site.spack_setup_env_commands())
-        # TODO echo the shells script that a shell user would need to issue spack commands through an eval - will have to silence other chat (or affix # to chat output) or maybe issue chat to std error 
-     # - does eval consume stderr? or user could drop stderr in the eval   eval $(spacksites site t2 spack_setup-env 2> /dev/null)
 
 def list(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
