@@ -1,0 +1,11 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs: [apr@1.7.0, apr-util@1.6.1, argtable@2-13, armadillo@10.5.0, atlas@3.10.3, cfitsio@4.1.0, cgal@5.4.1,
+         cppunit@1.14.1]
+  view: true
+  concretizer:
+    unify: true
