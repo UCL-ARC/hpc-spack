@@ -8,16 +8,19 @@ class Site():
     # before instantiating any Site objects
         
     def __init__(self, dir, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml,
+                 spd_script, spdsper_script,
                  spack_version=None, error_if_non_existent=False):
         if error_if_non_existent:
             if not os.path.exists(dir):
                 raise FileNotFoundError
         self.dir = dir
+        self.spd_script = spd_script
+        self.spdsper_script = spdsper_script
         self.name = os.path.basename(dir)
-        self.build_stage = os.path.join(dir, 'build_stage')
+        self.build_stage = os.path.join(dir, 'build_stage')  # TODO this is out of date it is now in site's config.yaml; it os only used below for the making dirs but does the build stage dir need to exist before spack uses it?
         self.yaml_dir = os.path.join(self.dir, 'spack', 'etc', 'spack')
         self.provenance = os.path.join(dir, 'provenance')  # TODO make some records in here 
-        self.spack_setup_env = os.path.join(dir, 'spack', 'share', 'spack', 'setup-env.sh')
+        self.spack_setup_env_script = os.path.join(dir, 'spack', 'share', 'spack', 'setup-env.sh')
         self.spack_version = spack_version
         if not os.path.exists(dir):
             self.make_dirs()
@@ -45,12 +48,21 @@ class Site():
         shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
         shutil.copy(initial_repos_yaml, os.path.join(self.yaml_dir, 'repos.yaml'))
     
-    def find_system_compilers(self):
+    def find_system_compilers(self, compiler_specs=[]):
+        # TODO
+        # for compiler_spec in compiler_specs:
+            # check that this exists as an installed package 
+            
+            # find the compiler path from the installed package
+            
+            # do a spack compiler find using  
+        
+        # and a general pickup
         self.run_command(['spack', 'compiler', 'find', '--scope=site'])
     
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
-        command.insert(0, self.spack_setup_env) 
+        command.insert(0, self.spack_setup_env_script) 
         Scripts.spdsper(command)
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
@@ -69,8 +81,9 @@ class Site():
         prompt_command = 'export PS1="(spacksite: {}) $PS1"'.format(self.name)
         disable_user_config_command = 'export SPACK_DISABLE_LOCAL_CONFIG=1'  # so that the operator's personal user scope spack config is ignored
         environment_variable_command = 'export HPC_SPACK_ROOT={}'.format(os.path.dirname(spacksites_dir()))  # this environment variable is used in spack config files (repos.yaml) to point to objects in this git repo
-        spack_setup_env_command = 'source {}\n'.format(self.spack_setup_env)
-        return ';'.join([prompt_command, disable_user_config_command, environment_variable_command, spack_setup_env_command])
+        spack_deps_command = 'source {}\n'.format(os.path.join(Scripts.dir, self.spd_script))
+        spack_setup_env_command = 'source {}\n'.format(self.spack_setup_env_script)
+        return ';'.join([prompt_command, disable_user_config_command, environment_variable_command, spack_deps_command, spack_setup_env_command])
 
     
     
