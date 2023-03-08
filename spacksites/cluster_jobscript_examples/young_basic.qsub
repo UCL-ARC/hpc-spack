@@ -1,0 +1,30 @@
+#!/bin/bash -l
+
+# Batch script to run an MPI parallel job under SGE with Intel MPI.
+
+# Request ten minutes of wallclock time (format hours:minutes:seconds).
+#$ -l h_rt=0:10:0
+
+# Request 1 gigabyte of RAM per process (must be an integer followed by M, G, or T)
+#$ -l mem=1G
+
+
+# Set the name of the job.
+#$ -N MadScience_1_16
+
+# Select the MPI parallel environment and 16 processes.
+#$ -pe mpi 80
+
+# Set the working directory to somewhere in your scratch space.
+# Replace "<your_UCL_id>" with your UCL user ID :
+#$ -wd /home/<your_UCL_id>/Scratch/output
+
+
+# ******************************** #
+# This job is intended to be run as csspapp, so submit it after becomi
+
+
+
+
+# Run our MPI job.  GERun is a wrapper that launches MPI jobs on our clusters.
+gerun $HOME/src/science/simulate
