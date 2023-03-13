@@ -67,18 +67,6 @@ If you want to add the environment defining the modules permanently to the site,
 ## Shell environment scripts at `spacksites/process-env-scripts`
 These scripts relate to the environment of the process/shell in which spacksite and spack commands are run. This environment is not to be confused with a spack environment. The scripts put in place spack's dependencies. Those are a system compiler that it can use to compile its first compiler and a sensible version of python to run spack and spacksites. The suffices of the filenames of these scripts identifying the operating system are there to help spacksites work out of the box. Rhel-7.8 is for UCL ARC clusters and Ubuntu-20.04 is to allow development on a laptop, in particular the author's, using WSL. Extra scripts may have to be provided for other operating systems / the base of installed system packages, in particular if they are lacking in the aforementioned dependencies. 
 
-## Logging into Young 
-A typical sequence of commands to work on an existing site.
-
-```
-ssh young 
-become ccspapp
-cd Scratch/hpc-spack
-bash
-module load python3/recommended
-alias sps=spacksites/spacsites
-eval $(sps spack-setup-env site1)
-```
 ## Spack environment development tips
 To be able to divide efforts and to make testing more finite we can split our packages into separate environments. There seems to be many ways to upset a spack site so to develop the definition of an environment it may be better to develop it in its own separate spack site - use this spacksites tool to create it. When these work they can be combined (at the cost perhaps of then finding more conflicts?)  TODO - need build cache working to allow quick import of gcc12
 
