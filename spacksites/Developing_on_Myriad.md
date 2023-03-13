@@ -22,3 +22,5 @@ The later commands are for working on a particular spack site, `site1`. You may 
 
 ## Contributing envrionments back to the hpc-spack repo
 When you create an environment on one of your test sites on Myriad the definition of the environment, including tweaks made with `spack config edit` are part of the spack site and not the local copy of the hpc-spack code repo. When you are happy with the defintion of a spack environment copy it to a spack environment definition .yaml file (aka a "template" in hpc-spac speak) in the directory `/home/james/hpc-spack/spacksites/spack-env-templates/dev1/build`. There it is in the local code repo copy, so you can (1) commit it adn then (2) push it to github. For (2) you will need to set up a personal key for github /lustre/home/ccspapp/.ssh.
+
+You may well not want to develop and push file `spacksites/settings/spack_sites.ini` because this has a local path value edited to point to the spack sites on Myriad. 
