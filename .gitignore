@@ -15,3 +15,4 @@ stack_versions_workflow/spdsper
 test/__pycache__/test_pytest.cpython-39-pytest-7.2.0.pyc
 spacksites/spack-env-specs/**/modules/**/.spack-env/*
 spacksites/spack-env-specs/**/modules/**/spack.lock
+spacksites/src/__pycache__/*
