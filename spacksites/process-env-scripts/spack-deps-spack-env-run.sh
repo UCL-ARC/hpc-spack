@@ -23,7 +23,9 @@ echo "# SPACKSITES: have set SPACK_DISABLE_LOCAL_CONFIG=$SPACK_DISABLE_LOCAL_CON
 export HPC_SPACK_ROOT=$(dirname $(dirname $(dirname $(realpath ${BASH_SOURCE:-$0}))))
 echo "# SPACKSITES: have set HPC_SPACK_ROOT=$HPC_SPACK_ROOT"
 source $1
-
+# Temporary while spack fix this issue of buildcaches using /tmp - which it fills on Myriad
+export TMPDIR=$SPACK_ROOT/../build_stage
+mkdir -p $TMPDIR
 # call the command from rest of the command line
 shift 
 echo "# SPACKSITES: Have set spacks's external compiler and python dependencies - now calling $@" >&2

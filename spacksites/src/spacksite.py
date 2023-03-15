@@ -80,10 +80,12 @@ class Site():
     def spack_setup_env_commands(self):
         prompt_command = 'export PS1="(spacksite: {}) $PS1"'.format(self.name)
         disable_user_config_command = 'export SPACK_DISABLE_LOCAL_CONFIG=1'  # so that the operator's personal user scope spack config is ignored
+        # This next line is temporary, while spack fix location of temp dir for building buildcaches items - their intent is to use the build cache for ordinaryitems
+        tmp_dir_command = 'export TMPDIR={}'.format(self.build_stage)
         environment_variable_command = 'export HPC_SPACK_ROOT={}'.format(os.path.dirname(spacksites_dir()))  # this environment variable is used in spack config files (repos.yaml) to point to objects in this git repo
         spack_deps_command = 'source {}\n'.format(os.path.join(Scripts.dir, self.spd_script))
         spack_setup_env_command = 'source {}\n'.format(self.spack_setup_env_script)
-        return ';'.join([prompt_command, disable_user_config_command, environment_variable_command, spack_deps_command, spack_setup_env_command])
+        return ';'.join([prompt_command, disable_user_config_command, environment_variable_command, tmp_dir_command, spack_deps_command, spack_setup_env_command])
 
     
     
