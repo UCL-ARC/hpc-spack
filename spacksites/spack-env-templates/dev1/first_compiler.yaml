@@ -1,3 +1,26 @@
 spack:
   specs:
     - gcc@12.2.0
+    - autoconf@2.6
+    - bzip2@1.0.8
+    - gdbm@1.23
+    - libtool@2.4.7
+    - ncurses@6.3
+    - texinfo@6.5
+    - autoconf-archive@2022.02.11
+    - diffutils@3.8
+    - gmp@6.2.1
+    - m4@1.4.19
+    - perl@5.36.0
+    - zlib@1.2.13
+    - automake@1.16.5
+    - gawk@5.1.1
+    - libiconv@1.16
+    - mpc@1.2.1
+    - pkgconf@1.8.0
+    - zstd@1.5.2
+    - berkeley-db@18.1.40
+    - gcc@12.2.0
+    - libsigsegv@2.13
+    - mpfr@4.1.0
+    - readline@8.1.2
