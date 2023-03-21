@@ -1,4 +1,6 @@
 config:
   build_stage: $spack/../build_stage
   build_jobs: 6
+  install_tree:
+    padded_length: 256
  

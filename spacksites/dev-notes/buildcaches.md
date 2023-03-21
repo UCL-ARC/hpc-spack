@@ -162,6 +162,6 @@ spack buildcache update-index --keys <mirror>
 
 
 TODO - add the 2(or3?) commands to link in the buildcache spacksites - mirror add and keys
-- need a setting for the path to the buildcache - no, do with mirrors.yaml
+- need a setting for the path to the buildcache - no, do with mirrors.yaml  DONE
 
 TODO add a spacksites command to push buildcache items to the buildcache 
