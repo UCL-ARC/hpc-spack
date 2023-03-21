@@ -37,6 +37,10 @@ class AppConfig():
         if '{hpc_spack_root}' in self.initial_site_repos_yaml:
             self.initial_site_repos_yaml = self.initial_site_repos_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
 
+        self.initial_site_mirrors_yaml = config['initial_site_configs']['mirrors_default']
+        if '{hpc_spack_root}' in self.initial_site_mirrors_yaml:
+            self.initial_site_mirrors_yaml = self.initial_site_mirrors_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
+
         self.initial_site_packages_yaml = config['initial_site_configs'][packages_setting_key()]
         if '{hpc_spack_root}' in self.initial_site_packages_yaml:
             self.initial_site_packages_yaml = self.initial_site_packages_yaml.format(hpc_spack_root=os.path.dirname(spacksites_dir()))
