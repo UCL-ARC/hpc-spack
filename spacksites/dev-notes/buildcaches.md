@@ -113,13 +113,13 @@ gcc@12.2.0  gmp@6.2.1  mpc@1.2.1  mpfr@4.1.0  zlib@1.2.13  zstd@1.5.2
 
 did it cache run deps and not build deps? Need to add build deps to things to download from cache
 
-TODO rebuild cache items with --unsigned
+DONE rebuild cache items with --unsigned
 OR download the keys from the buildcache mirror (there are spack commands) and trust the keys 
 
 
-TODO - add gcc deps (both kinds) to first_complier.yaml so that they get pulled from the cache.
+DONE - add gcc deps (both kinds) to first_complier.yaml so that they get pulled from the cache.
 
-TODO - add command to link site to another (e.g. buildcache) and to download and trust its keys - if the latter is the step to take (see TODOs above)
+DONE - add command to link site to another (e.g. buildcache) and to download and trust its keys - if the latter is the step to take (see DONEs above)
 
 ## 20 March 2023
 tried spack buildcache keys --install --trust  but then gcc install gave 
@@ -161,7 +161,7 @@ perhaps these should all be in first_compliler.yaml to avoid ambiguity
 spack buildcache update-index --keys <mirror>
 
 
-TODO - add the 2(or3?) commands to link in the buildcache spacksites - mirror add and keys
+DONE - add the 2(or3?) commands to link in the buildcache spacksites - mirror add and keys
 - need a setting for the path to the buildcache - no, do with mirrors.yaml  DONE
 
 TODO add a spacksites command to push buildcache items to the buildcache 

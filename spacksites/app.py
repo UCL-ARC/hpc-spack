@@ -65,10 +65,6 @@ def install_env(args):
             specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
     site.install_spack_env(args.env_name, specs_file)
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
-        # TODO need to load the said first compiler with spack 
-        # spack find needs to have it loaded before it will find it/.
-        # first step retrieve the spack spec of the first compiler from the first_compiler yaml file
-        
         site.find_system_compilers()
 
 def spack_setup_env_script(args):

@@ -15,7 +15,7 @@ spack load gcc@12.2.0
 spack compiler find --scope=site
 spack unload gcc@12.2.0
 ```
-tells spack that it can use gcc12 as one of its compilers - TODO integrate this step to the sps install-env first_compiler first_compiler.yaml command
+tells spack that it can use gcc12 as one of its compilers - DONE integrate this step to the sps install-env first_compiler first_compiler.yaml command
 
 # exploring it 
 
