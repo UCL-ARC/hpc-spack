@@ -13,6 +13,15 @@ cd Scratch/hpc-spack
 module load python3/recommended
 alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites
 sps list  # To verify operation - this just shows a list of spacksites available to work on
+
+The above is abbreviated and improved on (uses system python38 to run spacksites):
+```
+ssh myriad
+become ccspapp
+source /home/ccspapp/Scratch/hpc-spack/spacksites/process-env-scripts/init-spacksites-on-myriad.sh
+```
+
+
 # To work on a particular site, e.g. site1
 bash
 alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites
