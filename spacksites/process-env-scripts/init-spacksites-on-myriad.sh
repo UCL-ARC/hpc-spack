@@ -12,8 +12,7 @@ if [[ "$USER" == "ccspapp" ]]; then
     echo "       alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites"
     echo "This will disappear if you use 'bash' to get another shell, e.g. prior to entering a particular spack site."
     echo "This script has called spack-deps-rhel-7.8.sh to load gcc from RHEL's devtoolset 11 and python32 also from RHEL to run spacksites."
-    echo "now calling 'spacksites find' to test."
-    sps list
+    echo "Do an 'sps list' to test."
 
 else
 
