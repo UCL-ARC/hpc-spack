@@ -2,7 +2,7 @@
 # this is to use the installation of hpc spack on Myriad as user ccspapp
 
 
-if [[ "$SUSER" == "ccspapp"]] then
+if [[ "$SUSER" == "ccspapp" ]]; then
 
     cd /home/ccspapp/Scratch/hpc-spack
     alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites
