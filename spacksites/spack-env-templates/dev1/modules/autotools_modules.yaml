@@ -11,6 +11,8 @@ spack:
       roots:
         tcl: $spack/../modules/autotools
       tcl:
+        all:
+          prerequisites: direct
         include: [automake, autoconf]
         # TODO find a more general exclude rule - omitting this line however causes all installed specs to be included in the module set
-        exclude: ['%gcc@9.4.0']
+        # exclude: ['%gcc@9.4.0']

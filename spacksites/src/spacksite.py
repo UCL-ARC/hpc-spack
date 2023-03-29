@@ -2,6 +2,7 @@ import os, shutil
 import subprocess
 from spacksites.src.scripts import Scripts
 from spacksites.src.helpers import spacksites_dir
+import random, string
 
 class Site():
     # if not using the default, user code should update Scripts.dir 
@@ -76,11 +77,14 @@ class Site():
         self.run_command(['spack', 'env', 'create', spack_env_name, spack_env_filename])
         self.run_command(['spack', '-e', spack_env_name, 'install'])
         
-    def create_modules(self, spack_env_filename):
-        self.run_command(['spack', 'module', 'tcl', 'refresh', '--delete-tree'])
+    def refresh_modules(self, spack_env_filename):
+        choices = string.ascii_uppercase
+        tmp_env_name = 'MODENV_' + ''.join(random.choice(choices) for _ in range(6))
+        self.run_command(['spack', 'env', 'create', tmp_env_name, spack_env_filename])
+        self.run_command(['spack', '-e', tmp_env_name, 'concretize'])
+        self.run_command(['spack', '-e', tmp_env_name, 'module', 'tcl', 'refresh', '-y', '--delete-tree'])
+        self.run_command(['spack', 'env', 'remove', '-y', tmp_env_name])      
         
-        # TODO
-        pass
     
     def spack_setup_env_commands(self):
         prompt_command = 'export PS1="(spacksite: {}) $PS1"'.format(self.name)

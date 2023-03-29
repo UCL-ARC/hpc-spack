@@ -67,6 +67,17 @@ def install_env(args):
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
         site.find_system_compilers()
 
+def refresh_modules(args):
+    print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
+    config = AppConfig(args.config_file)
+    Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
+    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, config.initial_site_modules_yaml,
+         config.initial_site_packages_yaml, config.initial_site_repos_yaml, config.initial_site_mirrors_yaml,
+         config.spd_script, config.spdsper_script,
+         spack_version=config.spack_version, error_if_non_existent=True)
+    module_specs_file = args.modules_env_file
+    site.refresh_modules(module_specs_file)  
+
 def spack_setup_env_script(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
     config = AppConfig(args.config_file)
@@ -122,13 +133,17 @@ def run_with_cli_args():
     install_env_parser.add_argument('env_name')
     install_env_parser.add_argument('specs_file')
     install_env_parser.set_defaults(func=install_env)
-
+    
+    # spacksites refresh-modules site-name modules-env-file
+    refresh_modules_parser = subparsers.add_parser('refresh-modules')
+    refresh_modules_parser.add_argument('site_name')
+    refresh_modules_parser.add_argument('modules_env_file')
+    refresh_modules_parser.set_defaults(func=refresh_modules)
+    
     # spacksites spack-setup-env site-name
     spack_setup_env_parser = subparsers.add_parser('spack-setup-env')
     spack_setup_env_parser.add_argument('site_name')
     spack_setup_env_parser.set_defaults(func=spack_setup_env_script)
-
-    # spacksites generate-modules site-name 
 
     # spacksites remove-deleted
 
