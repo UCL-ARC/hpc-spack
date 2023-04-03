@@ -10,7 +10,7 @@ A typical sequence of commands to work on an existing site.
 ssh myriad
 become ccspapp
 cd Scratch/hpc-spack
-module load python3/recommended
+spacksites/process-env-scripts/init-spacksites-on-myriad.sh  # loads python3.8 and gcc12
 alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites
 sps list  # To verify operation - this just shows a list of spacksites available to work on
 
