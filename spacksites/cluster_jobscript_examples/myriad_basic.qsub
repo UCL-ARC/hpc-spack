@@ -17,24 +17,24 @@
 # Request 36 cores for one node
 #$ -pe smp 6
 
-# Set the working directory to somewhere in your scratch space.  (This is where .e. adn .o appear?)
+# Set the working directory to somewhere in your scratch space.  (This is where .e and .o appear)
 #$ -wd /shared/ucl/apps/spack-test/buildlogs
 
 # This job is intended to be executed as ccspapp
 
 # cd to spack code installation and set deps to run spacksites  (alias does not work inside script?)
-source /home/james/hpc-spack/spacksites/process-env-scripts/init-spacksites-on-myriad.sh
+source /home/ccspapp/Scratch/hpc-spack/spacksites/process-env-scripts/init-spacksites-on-myriad.sh
 
 # instead of the usual alias for spacksites
-export sps="/home/james/hpc-spack/spacksites/spacksites"
+export sps="/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites"
 
 # job parameters - adjust core count and time above to match
 export site=batch-site2
 export hpc_spack="/home/ccspapp/Scratch/hpc-spack"
 export env_name=autotools
 
-# test spacksites 
-echo "***** starting - sps list - at $(date)" 
+# test spacksites
+echo "***** starting - sps list - at $(date)"
 $sps list
 
 # make a new spack site in /shared/ucl/apps/spack-test
@@ -45,7 +45,7 @@ $sps create $site
 echo "***** starting - eval $(sps spack-setup-env $site) - at $(date)"
 eval $($sps spack-setup-env $site)
 
-# create 
+# create
 echo "***** starting - spack create create $env_name $hpc_spack/spacksites/spack-env-templates/dev1/build/autotools.yaml - at $(date)"
 spack env create $env_name $hpc_spack/spacksites/spack-env-templates/dev1/build/autotools.yaml
 spack env activate $env_name

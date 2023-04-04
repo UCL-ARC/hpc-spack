@@ -1,0 +1,50 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+  # none of these considered for the spack variants to use!
+  # compilers
+    - gcc@12.2.0
+    - go@1.18
+  # build tools
+    - automake@1.16.5
+    - autoconf@2.69
+    - libtool@2.4.7
+    - autogen@5.18.12
+    - cmake@3.24.2
+  # interpreters
+    - perl@5.36.0
+    - m4@1.4.19
+    - julia@1.8.2
+  # dev tools
+    - git@2.38.1
+    - flex@2.6.4
+    - nano@6.3
+    - vim@9.0.0045
+    - emacs@28.2
+  # applications
+    - graphviz@2.49.0
+    - gromacs@2022.3
+    - openfoam@2206
+    - sqlite@3.39.4
+    - opencv@4.6.0
+  # libraries
+    - boost@1.80.0
+    - eigen@3.4.0
+    - vtk@9.0.3
+  # low dependencies
+
+
+
+  # python
+    - python@3.10.8
+    - py-numpy@1.23.4
+    - py-matplotlib@3.6.2 
+    - py-scipy@1.8.1 
+    - py-scikit-learn@1.1.3
+  view: true
+  concretizer:
+    unify: when_possible
