@@ -31,7 +31,7 @@ export sps="/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites"
 # job parameters - adjust core count and time above to match
 export site=batch-site3
 export hpc_spack="/home/ccspapp/Scratch/hpc-spack"
-export env_name=autotools
+export env_name=largeset
 export env_template=$hpc_spack/spacksites/spack-env-templates/dev1/build/demo_site2.yaml
 
 # test spacksites
