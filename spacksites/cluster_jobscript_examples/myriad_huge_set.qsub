@@ -52,7 +52,9 @@ eval $($sps spack-setup-env $site)
 # # create
 # echo "***** starting - spack create create $env_name $env_template - at $(date)"
 # spack env create $env_name $env_template
-# spack env activate $env_name
+
+# activate the spack environment
+spack env activate $env_name
 
 echo "***** starting - spack install (in spack env $env_name) - at $(date)"
 echo "***** using 4 spack install processes -outputs to install.oe${JOB_ID}.proc#n"
