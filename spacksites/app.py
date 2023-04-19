@@ -65,7 +65,13 @@ def install_env(args):
             specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
     site.install_spack_env(args.env_name, specs_file)
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
-        site.find_system_compilers()
+        # TODO get the spec of the compiler from packages.yaml
+        # so spack config --scope=site get packages | grep compiler and then pick first from list
+        # - a problem is that functions here that wrap these do not return subsprocess outputs
+        # could read packages.yaml from the site and parse that with a yaml reader  
+        # check that the spec is in first_compiler.yaml - error if not 
+        # then put the spec as the argument in the next line
+        site.find_system_compilers(['gcc@12.2.0'])  # temporary fix until the general value of the spec can be read.
 
 def refresh_modules(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)

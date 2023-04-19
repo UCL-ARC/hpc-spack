@@ -28,7 +28,7 @@ class Site():
         if not os.path.exists(os.path.join(dir,'spack', 'README.md')):
             self.clone_spack()
             self.configure_spack(initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml)
-            self.find_system_compilers()
+            self.find_system_compilers()  # this should find the system compilers
     
     def make_dirs(self):
         os.makedirs(self.dir)
@@ -55,17 +55,11 @@ class Site():
         self.run_command(['spack', 'buildcache', 'keys', '--install', '--trust'])
     
     def find_system_compilers(self, compiler_specs=[]):
-        # TODO
-        # for compiler_spec in compiler_specs:
-            # check that this exists as an installed package 
-            
-            # find the compiler path from the installed package
-            
-            # do a spack compiler find using  
-        
-        # and a general pickup
-        self.run_command(['spack', 'compiler', 'find', '--scope=site'])
-    
+        for compiler_spec in compiler_specs:
+             self.run_command(['spack', 'load', compiler_spec, '; ', 'spack', 'compiler', 'find', '--scope=site'])    # these commands: loads + find, need to be in same spack process context 
+        # and a general round up - also needed for when compiler_specs=[]
+        self.run_command(['spack', 'compiler', 'find', '--scope=site'])    
+         
     def run_command(self, command):
         # spdsper - adds spacks dependencies to process and sets up spack in it
         command.insert(0, self.spack_setup_env_script) 
