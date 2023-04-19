@@ -60,10 +60,10 @@ def install_env(args):
     specs_file = args.specs_file
     if not os.path.isabs(specs_file):
         if specs_file == 'first_compiler.yaml':
-            specs_file = os.path.join(spacksites_dir(), config.templates_active_set, specs_file)
+            full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, specs_file)
         else:
-            specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
-    site.install_spack_env(args.env_name, specs_file)
+            full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
+    site.install_spack_env(args.env_name, full_specs_file)
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
         # TODO get the spec of the compiler from packages.yaml
         # so spack config --scope=site get packages | grep compiler and then pick first from list
