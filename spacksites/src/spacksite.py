@@ -55,15 +55,21 @@ class Site():
         self.run_command(['spack', 'buildcache', 'keys', '--install', '--trust'])
     
     def find_system_compilers(self, compiler_specs=[]):
-        for compiler_spec in compiler_specs:
-             self.run_command(['spack', 'load', compiler_spec, '; ', 'spack', 'compiler', 'find', '--scope=site'])    # these commands: loads + find, need to be in same spack process context 
-        # and a general round up - also needed for when compiler_specs=[]
-        self.run_command(['spack', 'compiler', 'find', '--scope=site'])    
+        if len(compiler_specs) > 0:
+            for compiler_spec in compiler_specs:
+                self.run_commands(['spack load {}'.format(compiler_spec), 'spack compiler find --scope=site'])    # these commands: loads + find, need to be in same spack process context 
+        else:
+            # or a general round up - also needed for when compiler_specs=[]
+            self.run_command(['spack', 'compiler', 'find', '--scope=site'])    
          
-    def run_command(self, command):
+    def run_command(self, command): # command is a list of words of the command
         # spdsper - adds spacks dependencies to process and sets up spack in it
         command.insert(0, self.spack_setup_env_script) 
         Scripts.spdsper(command)
+        
+    def run_commands(self, commands):  # commands is a list of command lines (no newlines)
+        commands.insert(0, 'source  {}'.format(self.spack_setup_env_script))
+        return Scripts.spdsperscript(commands, self.spd_script)
     
     # here 'env' means one of spacks environments, a collection of spack specs, 
     # and not the shell environment in which spack commands are run.
