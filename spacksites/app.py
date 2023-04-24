@@ -73,6 +73,23 @@ def install_env(args):
         # then put the spec as the argument in the next line
         site.find_system_compilers(['gcc@12.2.0'])  # temporary fix until the general value of the spec can be read.
 
+def create_env(args):
+    print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
+    config = AppConfig(args.config_file)
+    Scripts.make_links(config.spd_script)  # this is repetive here but avoids use having to init the application with this before any use
+    # TODO same as TODOs in site_create() above
+    site = Site(os.path.join(config.spack_sites_root, args.site_name), config.initial_site_config_yaml, config.initial_site_modules_yaml,
+         config.initial_site_packages_yaml, config.initial_site_repos_yaml, config.initial_site_mirrors_yaml,
+         config.spd_script, config.spdsper_script,
+         spack_version=config.spack_version, error_if_non_existent=True)
+    specs_file = args.specs_file
+    if not os.path.isabs(specs_file):
+        if specs_file == 'first_compiler.yaml':
+            full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, specs_file)
+        else:
+            full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
+    site.create_spack_env(args.env_name, full_specs_file)
+
 def refresh_modules(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
     config = AppConfig(args.config_file)
@@ -139,6 +156,13 @@ def run_with_cli_args():
     install_env_parser.add_argument('env_name')
     install_env_parser.add_argument('specs_file')
     install_env_parser.set_defaults(func=install_env)
+    
+    # spacksites create-env site-name env-name specs-file
+    create_env_parser = subparsers.add_parser('create-env') 
+    create_env_parser.add_argument('site_name')
+    create_env_parser.add_argument('env_name')
+    create_env_parser.add_argument('specs_file')
+    create_env_parser.set_defaults(func=create_env)
     
     # spacksites refresh-modules site-name modules-env-file
     refresh_modules_parser = subparsers.add_parser('refresh-modules')

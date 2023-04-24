@@ -66,7 +66,9 @@ class Site():
         # spdsper - adds spacks dependencies to process and sets up spack in it
         command.insert(0, self.spack_setup_env_script) 
         Scripts.spdsper(command)
-        
+    
+    # this is different to run_command() in that it executes several commands and does so so that they are in the same process
+    # the need was for spack load gcc@21; spack compiler find - i.e. the compiler needs to be loaded in the process for spack to find it
     def run_commands(self, commands):  # commands is a list of command lines (no newlines)
         commands.insert(0, 'source  {}'.format(self.spack_setup_env_script))
         return Scripts.spdsperscript(commands, self.spd_script)
@@ -76,6 +78,9 @@ class Site():
     def install_spack_env(self, spack_env_name, spack_env_filename):        
         self.run_command(['spack', 'env', 'create', spack_env_name, spack_env_filename])
         self.run_command(['spack', '-e', spack_env_name, 'install'])
+        
+    def create_spack_env(self, spack_env_name, spack_env_filename):
+        self.run_command(['spack', 'env', 'create', spack_env_name, spack_env_filename])
         
     def refresh_modules(self, spack_env_filename):
         choices = string.ascii_uppercase
