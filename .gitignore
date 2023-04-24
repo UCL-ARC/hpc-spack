@@ -17,3 +17,4 @@ spacksites/spack-env-specs/**/modules/**/.spack-env/*
 spacksites/spack-env-specs/**/modules/**/spack.lock
 spacksites/src/__pycache__/*
 spacksites/dev-notes/~$Gen Guide - 27 March 2023.pptx
+spacksites/src/scratch.py
