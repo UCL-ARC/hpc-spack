@@ -7,11 +7,12 @@ if [[ "$USER" == "ccspapp" ]]; then
     cd /home/ccspapp/Scratch/hpc-spack
     alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites
     source  /home/ccspapp/Scratch/hpc-spack/spacksites/process-env-scripts/spack-deps-rhel-7.8.sh
-
+    pip install --user pyyaml
     echo "An alias has been set:"
     echo "       alias sps=/home/ccspapp/Scratch/hpc-spack/spacksites/spacksites"
     echo "This will disappear if you use 'bash' to get another shell, e.g. prior to entering a particular spack site."
-    echo "This script has called spack-deps-rhel-7.8.sh to load gcc from RHEL's devtoolset 11 and python32 also from RHEL to run spacksites."
+    echo "This script has called spack-deps-rhel-7.8.sh to load gcc from RHEL's devtoolset 11 and python38 also from RHEL to run spacksites."
+    echo "Also a dependency, pyyaml, of spacksites has been installed"
     echo "Do an 'sps list' to test."
 
 else
