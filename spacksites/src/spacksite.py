@@ -1,8 +1,9 @@
-import os, shutil
+import os, shutil, sys
 import subprocess
 from spacksites.src.scripts import Scripts
 from spacksites.src.helpers import spacksites_dir
 import random, string
+import yaml
 
 class Site():
     # if not using the default, user code should update Scripts.dir 
@@ -29,6 +30,12 @@ class Site():
             self.clone_spack()
             self.configure_spack(initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml)
             self.find_system_compilers()  # this should find the system compilers
+        config_yaml_raw, err = self.run_commands(['spack config --scope=site get config'])
+        config_yaml = yaml.safe_load(config_yaml_raw)
+        build_stage_raw = config_yaml['config']['build_stage']
+        self.build_stage = build_stage_raw.replace('$spack', os.environ['SPACK_ROOT'])
+        print('# SPACKSITES: site.build_stage set to: ', self.build_stage, file=sys.stderr)
+
     
     def make_dirs(self):
         os.makedirs(self.dir)
