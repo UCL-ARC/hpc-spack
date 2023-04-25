@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os, sys
+import yaml
 
 # while this file can be run via: python -m spacksites <command args>,
 # this PYTHONPATH manipulation allows this file to be run directly 
@@ -71,7 +72,17 @@ def install_env(args):
         # could read packages.yaml from the site and parse that with a yaml reader  
         # check that the spec is in first_compiler.yaml - error if not 
         # then put the spec as the argument in the next line
-        site.find_system_compilers(['gcc@12.2.0'])  # temporary fix until the general value of the spec can be read.
+        packages_yaml_raw, err = site.run_commands(['spack config --scope=site get packages'])
+        packages_yaml = yaml.load(packages_yaml_raw)
+        compiler_spec = packages_yaml['packages']['all']['compiler'][0]
+        print('# SPACKSITES: found first compiler spec in packages.yaml', compiler_spec, file=sys.stderr)
+        # spack -e first_compiler config get
+        first_compiler_yaml_raw, err = site.run_commands(['spack -e first_compiler config get'])
+        first_compiler_yaml = yaml.load(first_compiler_yaml_raw)
+        if compiler_spec in first_compiler_yaml['spack']['specs']:
+            site.find_system_compilers([compiler_spec])  # temporary fix until the general value of the spec can be read.
+        else:
+            print('# SPACKSITES: ERROR! first compiler in packages.yaml not in first_compiler spack environment', file=sys.stderr)
 
 def create_env(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
