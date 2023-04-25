@@ -33,7 +33,7 @@ class Site():
         config_yaml_raw, err = self.run_commands(['spack config --scope=site get config'])
         config_yaml = yaml.safe_load(config_yaml_raw)
         build_stage_raw = config_yaml['config']['build_stage']
-        self.build_stage = build_stage_raw.replace('$spack', os.environ['SPACK_ROOT'])
+        self.build_stage = build_stage_raw.replace('$spack', os.path.join(dir,'spack'))
         print('# SPACKSITES: site.build_stage set to: ', self.build_stage, file=sys.stderr)
 
     
