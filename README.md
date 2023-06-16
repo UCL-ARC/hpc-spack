@@ -1,7 +1,14 @@
 # hpc-spack
 Solutions - HPC's Spack config
 
+## Using spacksites to work with central installs as ccspapp
+
+Start with [Spacksites README](spacksites/README.md).
+
+
 ## Get started with a personal install
+
+This is for non-spacksites-managed personal Spack use.
 
 ```
 git clone -c feature.manyFiles=true https://github.com/spack/spack.git
