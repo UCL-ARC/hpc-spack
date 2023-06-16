@@ -77,7 +77,7 @@ def install_env(args):
         compiler_spec = packages_yaml['packages']['all']['compiler'][0]
         print('# SPACKSITES: found first compiler spec in packages.yaml', compiler_spec, file=sys.stderr)
         # spack -e first_compiler config get
-        first_compiler_yaml_raw, err = site.run_commands(['spack -e first_compiler config get'])
+        first_compiler_yaml_raw, err = site.run_commands(['spack -e '+args.env_name+' config get'])
         first_compiler_yaml = yaml.safe_load(first_compiler_yaml_raw)
         if compiler_spec in first_compiler_yaml['spack']['specs']:
             site.find_system_compilers([compiler_spec])  # temporary fix until the general value of the spec can be read.
