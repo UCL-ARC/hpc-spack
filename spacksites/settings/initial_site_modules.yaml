@@ -1,5 +1,7 @@
 modules:
   default:
+    enable:
+      - tcl
     roots:
       tcl: $spack/../modules/$env
     tcl:
