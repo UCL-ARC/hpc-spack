@@ -3,22 +3,13 @@
 
 These steps should be carried out in order.  
 1.	__Clone this repo__: `git clone https://github.com/UCL-ARC/hpc-spack.git`
-2.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
+2.	__Initialise spacksites__: `spacksites/myriad-utilities/init-spacksites-on-myriad.sh`
+3.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
     1. make a directory for the new spack site, 
     2. clone spack into that,
     3. import, to the spack site, appropriate ones of the spack yaml config files in spacksites/settings (config.yaml, modules.yaml, packages.yaml), with all the defaults you will love. These include, default compiler for spack to use, the number of cores to use in a build, locating the build stage under the site directory (rather than some TMP, whick gets filled up), module name format and module location. (The current value, `$spack/../modules/$env`, of this last one will sepatate modules created by differnt spack environment files into different sub directories, with a desired result of facilitating corresponding separate sections in `module avail`.) The yaml files are selected automatically from those at `spacksites/settings/initial_site_*.yaml`.  
     4. have spack identify the compilers already on your system (including that from a devtoolset if such is in the script for your system in `spacksites/process-env-scripts`). One of these will be used to build an up to date compiler inside spack - see the next step below.
-3. __Install your first compiler into the spack site__: use `spacksites/spacksites install-env test_site1 first_compiler first_compiler.yaml`, where `first_compiler` is the name for the spack environment that will contain the new compiler. `first_compiler.yaml` is found at `spacksites/spack-env-templates/first_compiler.yaml`. It makes sense to specify the same compiler there and in the `intial_site_packages_*.yaml` files. 
-
-## Optional steps 
-Some things you might want to do between steps 1 and 2 above:
-  - 1A.	__Optional__: Switch to the git branch of this repo that is of interest, if that is not `main`.
-  - 1B.	__Optional__: Consider settings in  `spacksites/settings/spack_sites.ini` under `[general]`. If you make no change, your root directory for the spack sites will be `test-spack-sites/`, a sibling of the repo you just cloned. 
-  - 1C. __Optional__: Consider the settings in the files `spacksites/settings/initial_site_*.yaml`. e.g. for an actual, rather than a test, spack site you would want to increase `build_jobs:`, the number of cores used when intalling packages. The configration of your spack site can be altered later with the usual spack commands.
-  - 1D. __Optional__: Consider the setting in `spacksites/settings/spack_sites.ini` of `[spack_env_templates][active_set]`. This governs which set of spack environment templates is used by default. You may change this setting later, and access to other sets is not prevented in the meantime; there is a path syntax for those. Indeed, using templates from elsewhere is not prevented. See the relevant sections below for how `spacksites` helps with spack environments4. 
-
-Something you might want to do between steps 2 and 3 above:
-  - 2A. __Optional__: ___NOT YET IMPLEMENTED___ make links to other spack sites to save time on building packages. This will be spacksite commands allowing you specifiy the links with your site names. This only make sense when you have two or more spack sites.
+4. __Install your first compiler into the spack site__: use `spacksites/spacksites install-env test_site1 first_compiler first_compiler.yaml`, where `first_compiler` is the name for the spack environment that will contain the new compiler. It will use the buildcache if it finds it there. `first_compiler.yaml` is found at `spacksites/spack-env-templates/first_compiler.yaml`. It makes sense to specify the same compiler there and in the `initial_site_packages_*.yaml` files. 
 
 ## Using sites
 At this point you have a new spack site that you can use as normal. There are two activities that you will want to do with your new spack site(s): 
@@ -66,6 +57,16 @@ If you want to add the environment defining the modules permanently to the site,
 
 ## Shell environment scripts at `spacksites/process-env-scripts`
 These scripts relate to the environment of the process/shell in which spacksite and spack commands are run. This environment is not to be confused with a spack environment. The scripts put in place spack's dependencies. Those are a system compiler that it can use to compile its first compiler and a sensible version of python to run spack and spacksites. The suffices of the filenames of these scripts identifying the operating system are there to help spacksites work out of the box. Rhel-7.8 is for UCL ARC clusters and Ubuntu-20.04 is to allow development on a laptop, in particular the author's, using WSL. Extra scripts may have to be provided for other operating systems / the base of installed system packages, in particular if they are lacking in the aforementioned dependencies. 
+
+## Optional steps for further configuration
+Some things you might want to do between steps 1 and 2 above:
+  - 1A.	__Optional__: Switch to the git branch of this repo that is of interest, if that is not `main`.
+  - 1B.	__Optional__: Consider settings in  `spacksites/settings/spack_sites.ini` under `[general]`. If you make no change, your root directory for the spack sites will be `test-spack-sites/`, a sibling of the repo you just cloned. 
+  - 1C. __Optional__: Consider the settings in the files `spacksites/settings/initial_site_*.yaml`. e.g. for an actual, rather than a test, spack site you would want to increase `build_jobs:`, the number of cores used when intalling packages. The configration of your spack site can be altered later with the usual spack commands.
+  - 1D. __Optional__: Consider the setting in `spacksites/settings/spack_sites.ini` of `[spack_env_templates][active_set]`. This governs which set of spack environment templates is used by default. You may change this setting later, and access to other sets is not prevented in the meantime; there is a path syntax for those. Indeed, using templates from elsewhere is not prevented. See the relevant sections below for how `spacksites` helps with spack environments4. 
+
+Something you might want to do between steps 2 and 3 above:
+  - 2A. __Optional__: ___NOT YET IMPLEMENTED___ make links to other spack sites to save time on building packages. This will be spacksite commands allowing you specifiy the links with your site names. This only make sense when you have two or more spack sites.
 
 ## Spack environment development tips
 To be able to divide efforts and to make testing more finite we can split our packages into separate environments. There seems to be many ways to upset a spack site so to develop the definition of an environment it may be better to develop it in its own separate spack site - use this spacksites tool to create it. When these work they can be combined (at the cost perhaps of then finding more conflicts?)  
