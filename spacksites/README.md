@@ -3,7 +3,7 @@
 
 These steps should be carried out in order.  
 1.	__Clone this repo__: `git clone https://github.com/UCL-ARC/hpc-spack.git`
-2.	__Initialise spacksites__: `spacksites/myriad-utilities/init-spacksites-on-myriad.sh`
+2.	__Initialise spacksites__: `source spacksites/myriad-utilities/init-spacksites-on-myriad.sh`
 3.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
     1. make a directory for the new spack site, 
     2. clone spack into that,
