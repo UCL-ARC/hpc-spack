@@ -2,14 +2,17 @@
 ## Main steps
 
 These steps should be carried out in order.  
-1.	__Clone this repo__: `git clone https://github.com/UCL-ARC/hpc-spack.git`
-2.	__Initialise spacksites__: `source spacksites/myriad-utilities/init-spacksites-on-myriad.sh`
-3.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
+1.  __Create Spack-versioned directory to check out into__: `mkdir -p /home/ccspapp/Scratch/spack/0.20`
+2.  `cd /home/ccspapp/Scratch/spack/0.20`
+3.	__Clone this repo and switch to desired branch__: `git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.20`
+4.	`cd hpc-spack`
+5.	__Initialise spacksites__: `source spacksites/myriad-utilities/init-spacksites-on-myriad.sh`
+6.	__Make a new spack site__: with the command `spacksites/spacksites create test_site1`. (You can use another name for the site.) This will:
     1. make a directory for the new spack site, 
     2. clone spack into that,
     3. import, to the spack site, appropriate ones of the spack yaml config files in spacksites/settings (config.yaml, modules.yaml, packages.yaml), with all the defaults you will love. These include, default compiler for spack to use, the number of cores to use in a build, locating the build stage under the site directory (rather than some TMP, whick gets filled up), module name format and module location. (The current value, `$spack/../modules/$env`, of this last one will sepatate modules created by differnt spack environment files into different sub directories, with a desired result of facilitating corresponding separate sections in `module avail`.) The yaml files are selected automatically from those at `spacksites/settings/initial_site_*.yaml`.  
     4. have spack identify the compilers already on your system (including that from a devtoolset if such is in the script for your system in `spacksites/process-env-scripts`). One of these will be used to build an up to date compiler inside spack - see the next step below.
-4. __Install your first compiler into the spack site__: use `spacksites/spacksites install-env test_site1 first_compiler first_compiler.yaml`, where `first_compiler` is the name for the spack environment that will contain the new compiler. It will use the buildcache if it finds it there. `first_compiler.yaml` is found at `spacksites/spack-env-templates/first_compiler.yaml`. It makes sense to specify the same compiler there and in the `initial_site_packages_*.yaml` files. 
+7. __Install your first compiler into the spack site__: use `spacksites/spacksites install-env test_site1 first_compiler first_compiler.yaml`, where `first_compiler` is the name for the spack environment that will contain the new compiler. It will use the buildcache if it finds it there. `first_compiler.yaml` is found at `spacksites/spack-env-templates/first_compiler.yaml`. It makes sense to specify the same compiler there and in the `initial_site_packages_*.yaml` files. 
 
 ## Using sites
 At this point you have a new spack site that you can use as normal. There are two activities that you will want to do with your new spack site(s): 
