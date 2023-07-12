@@ -1,6 +1,8 @@
 # hpc-spack
 Solutions - HPC's Spack config
 
+There should be a branch of this repo for each major Spack release. Branch 0.20 covers all 0.20.x Spack versions.
+
 ## Using spacksites to work with central installs as ccspapp
 
 Start with [Spacksites README](spacksites/README.md).
