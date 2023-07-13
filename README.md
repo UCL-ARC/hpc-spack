@@ -30,7 +30,7 @@ spacksites/spacksites create $site_name
 spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
 
 # get ready to run spack commands as normal for this site
-eval $(spacksites/spacksites spack-setup-env hk-initial-stack)
+eval $(spacksites/spacksites spack-setup-env $site_name)
 ```
 
 You can now run `spack find` to show the installed packages, or `spack info --all $package` to show available versions of that package to install.
