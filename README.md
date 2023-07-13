@@ -14,7 +14,7 @@ cd /home/ccspapp/Scratch/spack/0.20
 git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.20
 ```
 
-Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.20` for 0.20.x.
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.20` for 0.20.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini).
 
 ```
 cd /home/ccspapp/Scratch/spack/0.20/hpc-spack
