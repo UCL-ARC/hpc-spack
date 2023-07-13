@@ -5,8 +5,68 @@ There should be a branch of this repo for each major Spack release. Branch 0.20 
 
 ## Using spacksites to work with central installs as ccspapp
 
-Start with [Spacksites README](spacksites/README.md).
+The very first user of this version of Spack and this repo should create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.20.x:
 
+```
+mkdir -p /home/ccspapp/Scratch/spack/0.20
+cd /home/ccspapp/Scratch/spack/0.20
+
+git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.20
+```
+
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.20` for 0.20.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini).
+
+```
+cd /home/ccspapp/Scratch/spack/0.20/hpc-spack
+
+# initialise spacksites
+source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
+
+# make your new site - we've been prefixing $site_name with initials
+spacksites/spacksites create $site_name
+
+# install your first compiler into your site - will use the buildcache as long as it exists
+# $env_name will be the name of the environment you are creating, eg first_compiler.
+spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
+
+# get ready to run spack commands as normal for this site
+eval $(spacksites/spacksites spack-setup-env $site_name)
+```
+
+You can now run `spack find` to show the installed packages, or `spack info --all $package` to show available versions of that package to install.
+
+There is more detailed info and possible considerations in [Spacksites README](spacksites/README.md#using-sites).
+
+### Pulling changes into different site roots
+
+If you are not using our default site root for this version, when you pull down changes later on you will need to alter `sites_root` in [spack_sites.ini](spacksites/settings/spack_sites.ini) back to the correct location you are using. 
+
+You could use a script like this one to stash changes, pull, and update `sites_root` for you.
+
+```
+spacksites/myriad-utilities/git-pull-on-myriad.sh 
+```
+
+### Buildcache
+
+Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.20/buildcache` for 0.20.x.
+
+```
+# take my site-installed gcc@12.2.0 and all its dependencies, and put it into a buildcache at this location
+spack buildcache push --allow-root /shared/ucl/apps/spack/0.20/buildcache gcc@12.2.0
+```
+
+### Updating to a new Spack version
+
+When there is a major version release, we need to:
+
+ - Create a new branch in this repo
+ - In that branch, edit the version in [spack_sites.ini](spacksites/settings/spack_sites.ini)
+ - Update the sites_root in [spack_sites.ini](spacksites/settings/spack_sites.ini)
+ - Check whether the major changes/deprecations for the new version require any alterations to the spack commands spacksites runs, [initial_site_modules.yaml](spacksites/settings/initial_site_modules.yaml), any other config or format changes or changes in default behaviour.
+ - Check out the new branch in a new directory, as when starting from scratch above.
+ - Create the new sites_root in `/shared/ucl/apps/$version`
+ - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating our site .yaml files if they do not.
 
 ## Get started with a personal install
 

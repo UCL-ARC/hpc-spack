@@ -23,4 +23,4 @@ spack:
     - gcc@12.2.0
     - libsigsegv@2.13
     - mpfr@4.1.0
-    - readline@8.1.2
+    - readline@8.1
