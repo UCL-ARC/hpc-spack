@@ -5,13 +5,19 @@ There should be a branch of this repo for each major Spack release. Branch 0.20 
 
 ## Using spacksites to work with central installs as ccspapp
 
-Create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.20.x:
+The very first user of this version of Spack and this repo should create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.20.x:
+
 ```
 mkdir -p /home/ccspapp/Scratch/spack/0.20
 cd /home/ccspapp/Scratch/spack/0.20
 
 git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.20
-cd hpc-spack
+```
+
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.20` for 0.20.x.
+
+```
+cd /home/ccspapp/Scratch/spack/0.20/hpc-spack
 
 # initialise spacksites
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
