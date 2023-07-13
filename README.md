@@ -66,7 +66,7 @@ When there is a major version release, we need to:
  - Check whether the major changes/deprecations for the new version require any alterations to the spack commands spacksites runs, [initial_site_modules.yaml](spacksites/settings/initial_site_modules.yaml), any other config or format changes or changes in default behaviour.
  - Check out the new branch in a new directory, as when starting from scratch above.
  - Create the new sites_root in `/shared/ucl/apps/$version`
- - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating the .yaml files if they do not.
+ - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating our site .yaml files if they do not.
 
 ## Get started with a personal install
 
