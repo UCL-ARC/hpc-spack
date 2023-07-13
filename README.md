@@ -56,6 +56,18 @@ Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.20/buildcache` fo
 spack buildcache push --allow-root /shared/ucl/apps/spack/0.20/buildcache gcc@12.2.0
 ```
 
+### Updating to a new Spack version
+
+When there is a major version release, we need to:
+
+ - Create a new branch in this repo
+ - In that branch, edit the version in [spack_sites.ini](spacksites/settings/spack_sites.ini)
+ - Update the sites_root in [spack_sites.ini](spacksites/settings/spack_sites.ini)
+ - Check whether the major changes/deprecations for the new version require any alterations to the spack commands spacksites runs, [initial_site_modules.yaml](spacksites/settings/initial_site_modules.yaml), any other config or format changes or changes in default behaviour.
+ - Check out the new branch in a new directory, as when starting from scratch above.
+ - Create the new sites_root in `/shared/ucl/apps/$version`
+ - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating the .yaml files if they do not.
+
 ## Get started with a personal install
 
 This is for non-spacksites-managed personal Spack use.
