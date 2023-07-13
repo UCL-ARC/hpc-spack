@@ -31,6 +31,15 @@ You can now run `spack find` to show the installed packages, or `spack info --al
 
 There is more detailed info and possible considerations in [Spacksites README](spacksites/README.md#using-sites).
 
+## Pulling changes
+
+To pull down changes later on, you need to run this to set `sites_root` in [spack_sites.ini](spacksites/settings/spack_sites.ini) back to the correct location in use. It will stash changes, pull, and update `sites_root`.
+
+```
+spacksites/myriad-utilities/git-pull-on-myriad.sh 
+```
+
+TODO: maybe just change the default to what we're using and only require this if you're doing something custom.
 
 ## Get started with a personal install
 
