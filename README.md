@@ -5,7 +5,31 @@ There should be a branch of this repo for each major Spack release. Branch 0.20 
 
 ## Using spacksites to work with central installs as ccspapp
 
-Start with [Spacksites README](spacksites/README.md).
+Create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.20.x:
+```
+mkdir -p /home/ccspapp/Scratch/spack/0.20
+cd /home/ccspapp/Scratch/spack/0.20
+
+git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.20
+cd hpc-spack
+
+# initialise spacksites
+source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
+
+# make your new site - we've been prefixing $site_name with initials
+spacksites/spacksites create $site_name
+
+# install your first compiler into your site - will use the buildcache as long as it exists
+# $env_name will be the name of the environment you are creating, eg first_compiler.
+spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
+
+# get ready to run spack commands as normal for this site
+eval $(spacksites/spacksites spack-setup-env hk-initial-stack)
+```
+
+You can now run `spack find` to show the installed packages, or `spack info --all $package` to show available versions of that package to install.
+
+There is more detailed info and possible considerations in [Spacksites README](spacksites/README.md#using-sites).
 
 
 ## Get started with a personal install
