@@ -39,7 +39,7 @@ There is more detailed info and possible considerations in [Spacksites README](s
 
 ### Pulling changes into different site roots
 
-If you are not using our default site root for this version, to pull down changes later on you will need to alter `sites_root` in [spack_sites.ini](spacksites/settings/spack_sites.ini) back to the correct location you are using. 
+If you are not using our default site root for this version, when you pull down changes later on you will need to alter `sites_root` in [spack_sites.ini](spacksites/settings/spack_sites.ini) back to the correct location you are using. 
 
 You could use a script like this one to stash changes, pull, and update `sites_root` for you.
 
