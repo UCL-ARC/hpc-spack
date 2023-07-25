@@ -51,7 +51,9 @@ spacksites/myriad-utilities/git-pull-on-myriad.sh
 
 Make a site for a small subset of software, test them, end up with a .yaml specifying what has been installed, decide those are the 
 versions we want, push them into the buildcache so they can be picked up by everyone, work on the next subset until we have a large 
-set of software packages while keeping different versions of the same build dependencies to a necessary minimum.
+set of software packages and one large .yaml file while keeping different versions of the same build dependencies to a necessary minimum.
+
+On new releases of Spack, rebuild the build cache, see if there are package versions that have been removed and new ones we want to include.
 
 ### Buildcache
 
