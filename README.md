@@ -51,6 +51,8 @@ spacksites/myriad-utilities/git-pull-on-myriad.sh
 
 Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.20/buildcache` for 0.20.x.
 
+This is specified in [initial_site_mirrors.yaml](spacksites/settings/initial_site_mirrors.yaml) and gets copied into `$site_name/spack/etc/spack/mirrors.yaml` in any sites you create.
+
 ```
 # take my site-installed gcc@12.2.0 and all its dependencies, and put it into a buildcache at this location
 spack buildcache push --allow-root /shared/ucl/apps/spack/0.20/buildcache gcc@12.2.0
