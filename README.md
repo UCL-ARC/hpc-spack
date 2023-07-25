@@ -47,6 +47,12 @@ You could use a script like this one to stash changes, pull, and update `sites_r
 spacksites/myriad-utilities/git-pull-on-myriad.sh 
 ```
 
+### Intended use
+
+Make a site for a small subset of software, test them, end up with a .yaml specifying what has been installed, decide those are the 
+versions we want, push them into the buildcache so they can be picked up by everyone, work on the next subset until we have a large 
+set of software packages while keeping different versions of the same build dependencies to a necessary minimum.
+
 ### Buildcache
 
 Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.20/buildcache` for 0.20.x.
