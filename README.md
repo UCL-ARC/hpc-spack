@@ -74,7 +74,7 @@ When there is a major version release, we need to:
 
 You can run spacksites and use the existing buildcache as your own user rather than `ccspapp`. You will need to make these changes.
 
-### Update spack_sites.ini for your user locations
+#### Update spack_sites.ini for your user locations
 
 You may wish to make a private fork of this repo with the [spack_sites.ini](spacksites/settings/spack_sites.ini) changes suitable for your install location, or you can create another script like this one to stash changes, pull, and update `sites_root` and other settings in the .ini file for you.
 
@@ -82,26 +82,30 @@ You may wish to make a private fork of this repo with the [spack_sites.ini](spac
 spacksites/myriad-utilities/git-pull-on-myriad.sh
 ```
 
-### Initialise spacksites and create a site
+#### Update or create your own init-spacksites-on-myriad.sh
+
+You will need to change [init-spacksites-on-myriad.sh](spacksites/myriad-utilities/init-spacksites-on-myriad.sh) so it is suitable for your own user and install of spacksites rather than `ccspapp`, or create your own similar init script. Right now that script hard-codes where the spacksites checkout location is.
+
+#### Initialise spacksites and create a site
 
 The first two steps are the same as above:
 
 ```
-# initialise spacksites
+# initialise spacksites (or replace this with your own init script)
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
 
 # make your new site - this will be created in your specified site_root
 spacksites/spacksites create $site_name
 ```
 
-### Set up the env so you can run Spack commands
+#### Set up the env so you can run Spack commands
 
 ```
 # get ready to run spack commands as normal for this site
 eval $(spacksites/spacksites spack-setup-env $site_name)
 ```
 
-### Trust the buildcache
+#### Trust the buildcache
 
 The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.20/buildcache/build_cache/_pgp/` for version 0.20. This key belongs to the `ccspapp` user.
 
@@ -110,7 +114,7 @@ The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.20/bui
 spack gpg trust <keyfile>
 ```
 
-### Install your first compiler
+#### Install your first compiler
 
 ```
 # install your first compiler into your site - will use the buildcache as long as it exists
