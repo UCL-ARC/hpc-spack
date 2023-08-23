@@ -37,16 +37,6 @@ You can now run `spack find` to show the installed packages, or `spack info --al
 
 There is more detailed info and possible considerations in [Spacksites README](spacksites/README.md#using-sites).
 
-### Pulling changes into different site roots
-
-If you are not using our default site root for this version, when you pull down changes later on you will need to alter `sites_root` in [spack_sites.ini](spacksites/settings/spack_sites.ini) back to the correct location you are using. 
-
-You could use a script like this one to stash changes, pull, and update `sites_root` for you.
-
-```
-spacksites/myriad-utilities/git-pull-on-myriad.sh 
-```
-
 ### Intended use
 
 Make a site for a small subset of software, test them, end up with a .yaml specifying what has been installed, decide those are the 
@@ -61,13 +51,12 @@ Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.20/buildcache` fo
 
 This is specified in [initial_site_mirrors.yaml](spacksites/settings/initial_site_mirrors.yaml) and gets copied into `$site_name/spack/etc/spack/mirrors.yaml` in any sites you create.
 
-To push a package to the buildcache:
+To push a package to the buildcache as ccspapp:
 
 ```
 # take my site-installed gcc@12.2.0 and all its dependencies, and put it into a buildcache at this location
 spack buildcache push --allow-root /shared/ucl/apps/spack/0.20/buildcache gcc@12.2.0
 ```
-
 ### Updating to a new Spack version
 
 When there is a major version release, we need to:
@@ -80,6 +69,65 @@ When there is a major version release, we need to:
  - Check out the new branch in a new directory, as when starting from scratch above.
  - Create the new sites_root in `/shared/ucl/apps/$version`
  - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating our site .yaml files if they do not.
+
+## Running spacksites as your own user
+
+You can run spacksites and use the existing buildcache as your own user rather than `ccspapp`. You will need to make these changes.
+
+### Update spack_sites.ini for your user locations
+
+You may wish to make a private fork of this repo with the [spack_sites.ini](spacksites/settings/spack_sites.ini) changes suitable for your install location, or you can create another script like this one to stash changes, pull, and update `sites_root` and other settings in the .ini file for you.
+
+```
+spacksites/myriad-utilities/git-pull-on-myriad.sh
+```
+
+### Initialise spacksites and create a site
+
+The first two steps are the same as above:
+
+```
+# initialise spacksites
+source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
+
+# make your new site - this will be created in your specified site_root
+spacksites/spacksites create $site_name
+```
+
+### Set up the env so you can run Spack commands
+
+```
+# get ready to run spack commands as normal for this site
+eval $(spacksites/spacksites spack-setup-env $site_name)
+```
+
+### Trust the buildcache
+
+The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.20/buildcache/build_cache/_pgp/` for version 0.20. This key belongs to the `ccspapp` user.
+
+```
+# To use the buildcache you need to trust our existing public gpg key
+spack gpg trust <keyfile>
+```
+
+### Install your first compiler
+
+```
+# install your first compiler into your site - will use the buildcache as long as it exists
+# $env_name will be the name of the environment you are creating, eg first_compiler.
+spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
+```
+
+You can now go ahead and install any other packages you want to build.
+
+#### Optional: change build_stage
+
+You can set a different build_stage in your site's `config.yaml` file (suggested to use `$XDG_RUNTIME_DIR` if you are on the login nodes).
+
+Spack's default config.yaml for your site is in `$site_root/$site_name/etc/spack/defaults/config.yaml`. Each site has its own.
+
+Note: spacksites deliberately ignores any other local Spack config files to avoid clashes with other Spack setups you may have: [Personal spack config - ignored](spacksites/README.md#personal-spack-config---ignored) 
+
 
 ## Get started with a personal install
 
