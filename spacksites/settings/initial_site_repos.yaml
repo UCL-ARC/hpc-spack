@@ -1,2 +1,3 @@
 repos:
+  - $HPC_SPACK_ROOT/repos/ucl
   - $HPC_SPACK_ROOT/repos/dev
