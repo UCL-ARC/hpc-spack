@@ -2,6 +2,7 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
+# Local update to depend on zlib, not zlib-api for Spack 0.20
 
 from spack.package import *
 
