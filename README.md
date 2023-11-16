@@ -57,6 +57,39 @@ To push a package to the buildcache as ccspapp:
 # take my site-installed gcc@12.2.0 and all its dependencies, and put it into a buildcache at this location
 spack buildcache push --allow-root /shared/ucl/apps/spack/0.20/buildcache gcc@12.2.0
 ```
+
+### Local package repositories
+
+We have two local package repos at the top level in this repository:
+
+```
+repos/dev
+repos/ucl
+```
+
+The intent is that `dev` is for specs that we are developing and don't consider to be fully tested. 
+`ucl` is for non-dev specs, including updated versions from Spack's `develop` branch in situations
+where we need the updated version but it doesn't exist in the version of Spack we are currently using.
+
+These repos are defined in [spacksites/settings/initial_site_repos.yaml](spacksites/settings/initial_site_repos.yaml) 
+so all new sites will pick those up.
+
+Spack will search through the repos in order to find requested specs, so it will find our versions first.
+
+```
+# show repos for the active site
+spack repo list
+==> 3 package repositories.
+ucl.arc.hpc        /lustre/scratch/scratch/ccspapp/spack/0.20/hpc-spack/repos/ucl
+ucl.arc.hpc.dev    /lustre/scratch/scratch/ccspapp/spack/0.20/hpc-spack/repos/dev
+builtin            /lustre/shared/ucl/apps/spack/0.20/hk-initial-stack/spack/var/spack/repos/builtin
+```
+
+If you have an existing site and we have added new repos that it does not have, add them to
+`spack/etc/spack/repos.yaml` in your site.
+
+[Spack documentation on Package Repositories](https://spack.readthedocs.io/en/latest/repositories.html).
+
 ### Updating to a new Spack version
 
 When there is a major version release, we need to:
@@ -69,6 +102,7 @@ When there is a major version release, we need to:
  - Check out the new branch in a new directory, as when starting from scratch above.
  - Create the new sites_root in `/shared/ucl/apps/$version`
  - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating our site .yaml files if they do not.
+ - Check our `ucl` local package repo to see if specs we got from `develop` now exist in builtin. If they do, delete the local one.
 
 ## Running spacksites as your own user
 
