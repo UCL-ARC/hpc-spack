@@ -90,6 +90,12 @@ If you have an existing site and we have added new repos that it does not have, 
 
 [Spack documentation on Package Repositories](https://spack.readthedocs.io/en/latest/repositories.html).
 
+#### zlib-api virtual package
+
+If we pick up a spec from `develop` that depends on `zlib-api`, we need to change that to `zlib` in
+our local copy for Spack 0.20 - adding a comment to the package that we have done this may be 
+helpful!
+
 ### Updating to a new Spack version
 
 When there is a major version release, we need to:
