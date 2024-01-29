@@ -114,6 +114,12 @@ When there is a major version release, we need to:
 
 You can run spacksites and use the existing buildcache as your own user rather than `ccspapp`. You will need to make these changes.
 
+#### Check your login environment
+
+The instructions all assume that you have the default Myriad login environment (you can view the default `.bashrc` and `.bash_profile` in `/etc/skel`).
+
+Most importantly, you mustn't have any other python loaded or PYTHONPATH set, or other spack environment active, or things are likely to break in strange ways.
+
 #### Update spack_sites.ini for your user locations
 
 You may wish to make a private fork of this repo with the [spack_sites.ini](spacksites/settings/spack_sites.ini) changes suitable for your install location, or you can create another script like this one to stash changes, pull, and update `sites_root` and other settings in the .ini file for you.
