@@ -1,5 +1,5 @@
 repos/dev/packages/**/*.pyc
-spacksites/__pycache__/**/*.pyc
+**/__pycache__/**/*.pyc
 .vscode/launch.json
 .vscode/settings.json
 spacksites/src/__pycache__/spacksite.cpython-38.pyc
