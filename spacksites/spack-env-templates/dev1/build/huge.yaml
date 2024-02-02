@@ -7,7 +7,7 @@ spack:
   specs:
   # none of these considered for the spack variants to use!
   # compilers
-    - gcc@12.2.0
+    - gcc@13.1.0
     - go@1.18
   # build tools
     - automake@1.16.5
