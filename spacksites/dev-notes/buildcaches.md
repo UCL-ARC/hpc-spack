@@ -1,15 +1,15 @@
 # Buildcaches
-Are they a good idea, or shoould one use upstream instead.
+Are they a good idea, or shoould one use upstream instead. 
 
 ## Have posted this on spack slack:
 I am interested in using build caches, to share common items between sites, but my first attempt did not go so well:
 ```
-$ spack buildcache create -d /home/james/test-spack-sites/buildcachemirror   --only package gcc@13.1.0
+$ spack buildcache create -d /home/james/test-spack-sites/buildcachemirror   --only package gcc@12.2.0
 ==> Pushing binary packages to file:///home/james/test-spack-sites/buildcachemirror/build_cache
-==> Error:
- /tmp/tmpglzq7j17/gcc-12.2.0-mbdh5toomrjy4yr4ts4awskiio55nmq6/bin/c++
+==> Error: 
+ /tmp/tmpglzq7j17/gcc-12.2.0-mbdh5toomrjy4yr4ts4awskiio55nmq6/bin/c++ 
 contains string
- /home/james/test-spack-sites/t1/spack/opt/spack
+ /home/james/test-spack-sites/t1/spack/opt/spack 
 after replacing it in rpaths.
 Package should not be relocated.
  Use -a to override.
@@ -37,35 +37,35 @@ gpg: key C97796D57C4C5934 marked as ultimately trusted
 gpg: directory '/home/james/test-spack-sites/t1/spack/opt/spack/gpg/openpgp-revocs.d' created
 gpg: revocation certificate stored as '/home/james/test-spack-sites/t1/spack/opt/spack/gpg/openpgp-revocs.d/52DF92D2904498B6A0011B80C97796D57C4C5934.rev'
 
-==> Error:
- /tmp/tmpxfgypfdz/mpfr-4.1.0-j5qgj4oikcyz26427vbbgjvrlj2n4qm6/lib/libmpfr.so.6.1.0
+==> Error: 
+ /tmp/tmpxfgypfdz/mpfr-4.1.0-j5qgj4oikcyz26427vbbgjvrlj2n4qm6/lib/libmpfr.so.6.1.0 
 contains string
- /home/james/test-spack-sites/t1/spack/opt/spack
+ /home/james/test-spack-sites/t1/spack/opt/spack 
 after replacing it in rpaths.
 Package should not be relocated.
  Use -a to override.
 
 - that's helpful !
 
-so tried: spack buildcache create -d /home/james/test-spack-sites/buildcachemirror   --only package gcc@13.1.0
+so tried: spack buildcache create -d /home/james/test-spack-sites/buildcachemirror   --only package gcc@12.2.0
 
-==> Error:
- /tmp/tmpglzq7j17/gcc-12.2.0-mbdh5toomrjy4yr4ts4awskiio55nmq6/bin/c++
+==> Error: 
+ /tmp/tmpglzq7j17/gcc-12.2.0-mbdh5toomrjy4yr4ts4awskiio55nmq6/bin/c++ 
 contains string
- /home/james/test-spack-sites/t1/spack/opt/spack
+ /home/james/test-spack-sites/t1/spack/opt/spack 
 after replacing it in rpaths.
 Package should not be relocated.
  Use -a to override.
 
  # Fixed problem with filling /tmp on Myriad
 
- spack buildcache create -d /home/james/test-spack-sites/buildcachemirror -a gcc@13.1.0 worked on WSL
+ spack buildcache create -d /home/james/test-spack-sites/buildcachemirror -a gcc@12.2.0 worked on WSL
 
  Trying on Myraid
 
- spack buildcache create -d /shared/ucl/apps/spack-test/buildcache -a gcc@13.1.0
+ spack buildcache create -d /shared/ucl/apps/spack-test/buildcache -a gcc@12.2.0 
 
- this put sig files at /shared/ucl/apps/spack-test/buildcache/build_cache/ - where are the actual files - try aagain with -f
+ this put sig files at /shared/ucl/apps/spack-test/buildcache/build_cache/ - where are the actual files - try aagain with -f 
 
  Ah! the actual files are in an dir tree - so follow down linux-rhel7-skylake_avx512/
  - nso they are now creates
@@ -77,10 +77,10 @@ Package should not be relocated.
  spack mirror add buildcache  /shared/ucl/apps/spack-test/buildcache
  spack buildcache update-index -d /shared/ucl/apps/spack-test/buildcache
  spack buildcache list  # now listed the cached specs - gcc12 and its deps.
- spack install gcc@13.1.0 # no chatter for a while !
+ spack install gcc@12.2.0 # no chatter for a while !
  it began by buildin libiconv libsigsegv berkley-db - these wre not in the build cache
  pkgconf
- then it said
+ then it said 
 
 ==> Installing zlib-1.2.13-e7tak744ivqyus4hlrptilzxcycrzgut
 ==> Fetching file:///shared/ucl/apps/spack-test/buildcache/build_cache/linux-rhel7-skylake_avx512-gcc-11.2.1-zlib-1.2.13-e7tak744ivqyus4hlrptilzxcycrzgut.spec.json.sig
@@ -109,12 +109,12 @@ autoconf-archive zstd diffutils nucrses m4 bzip2 readline libtool gdbm perl text
 spack buildcache list
 ==> 6 cached builds.
 -- linux-rhel7-skylake_avx512 / gcc@11.2.1 ----------------------
-gcc@13.1.0  gmp@6.2.1  mpc@1.2.1  mpfr@4.1.0  zlib@1.2.13  zstd@1.5.2
+gcc@12.2.0  gmp@6.2.1  mpc@1.2.1  mpfr@4.1.0  zlib@1.2.13  zstd@1.5.2
 
 did it cache run deps and not build deps? Need to add build deps to things to download from cache
 
 DONE rebuild cache items with --unsigned
-OR download the keys from the buildcache mirror (there are spack commands) and trust the keys
+OR download the keys from the buildcache mirror (there are spack commands) and trust the keys 
 
 
 DONE - add gcc deps (both kinds) to first_complier.yaml so that they get pulled from the cache.
@@ -122,7 +122,7 @@ DONE - add gcc deps (both kinds) to first_complier.yaml so that they get pulled 
 DONE - add command to link site to another (e.g. buildcache) and to download and trust its keys - if the latter is the step to take (see DONEs above)
 
 ## 20 March 2023
-tried spack buildcache keys --install --trust  but then gcc install gave
+tried spack buildcache keys --install --trust  but then gcc install gave 
 
 ==> Warning: Failed to verify: file:///shared/ucl/apps/spack-test/buildcache/build_cache/linux-rhel7-skylake_avx512-gcc-11.2.1-zlib-1.2.13-e7tak744ivqyus4hlrptilzxcycrzgut.spec.json.sig
 
@@ -134,7 +134,7 @@ now at one point I did:
 spack gpg init
 spack gpg create Jlegg j.legg@ucl.ac.uk
 
-made pushed some buildcaches with spack buildcache create -a -m buildcache autoconf-archive@2022.02.11 etc
+made pushed some buildcaches with spack buildcache create -a -m buildcache autoconf-archive@2022.02.11 etc 
 
 ## made a new site3 to test cache
 
@@ -150,7 +150,7 @@ did spacksites install-env site3 first_compiler first_compiler.yaml - it install
 spack find
 -- linux-rhel7-skylake_avx512 / gcc@11.2.1 ----------------------
 autoconf@2.69                gawk@5.1.1       libtool@2.4.7  pkgconf@1.8.0
-autoconf-archive@2022.02.11  gcc@13.1.0       m4@1.4.19      readline@8.1.2
+autoconf-archive@2022.02.11  gcc@12.2.0       m4@1.4.19      readline@8.1.2
 automake@1.16.5              gdbm@1.23        mpc@1.2.1      texinfo@6.5
 berkeley-db@18.1.40          gmp@6.2.1        mpfr@4.1.0     zlib@1.2.13
 bzip2@1.0.8                  libiconv@1.16    ncurses@6.3    zstd@1.5.2
@@ -164,4 +164,4 @@ spack buildcache update-index --keys <mirror>
 DONE - add the 2(or3?) commands to link in the buildcache spacksites - mirror add and keys
 - need a setting for the path to the buildcache - no, do with mirrors.yaml  DONE
 
-TODO add a spacksites command to push buildcache items to the buildcache
+TODO add a spacksites command to push buildcache items to the buildcache 
