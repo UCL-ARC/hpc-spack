@@ -70,7 +70,7 @@ spack:
         all:
           prerequisites: direct
         include: [automake, autoconf]
-        exclude: [%gcc@12.2.0]
+        exclude: [%gcc@13.1.0]
     mpi:
       roots:
         tcl: $spack/../modules/mpi
