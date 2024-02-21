@@ -1,6 +1,7 @@
 spack:
   specs:
     - gcc@13.1.0
+    - nvhpc@23.9
     - autoconf@2.69
     - bzip2@1.0.8
     - gdbm@1.23
