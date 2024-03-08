@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 21f9b8ff9a..807da8e357 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,11 +17,11 @@ endif ()
+ 
+ # =================================================================================================
+ # PROJECT AND VERSION
+-include(GetGitRevisionDescription)
++# include(GetGitRevisionDescription)
+ 
+-git_describe(GIT_DESC)
++# git_describe(GIT_DESC)
+ 
+-if (GIT_DESC)
++if (FALSE)
+   string(REGEX REPLACE "^v([0-9]+)\\..*" "\\1" VERSION_MAJOR "${GIT_DESC}")
+   string(REGEX REPLACE "^v[0-9]+\\.([0-9]+).*" "\\1" VERSION_MINOR
+                        "${GIT_DESC}")
