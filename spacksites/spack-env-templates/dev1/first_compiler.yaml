@@ -1,7 +1,9 @@
 spack:
+  concretizer:
+    unify: when_possible
+  view: false
   specs:
-    - gcc@13.1.0
-    - nvhpc@23.9
+    - gcc@12.3.0
     - autoconf@2.69
     - bzip2@1.0.8
     - gdbm@1.23

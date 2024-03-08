@@ -1,4 +1,3 @@
 packages:
   all:
-    compiler: [gcc@13.1.0]
- 
+    compiler: [gcc@12.3.0]
