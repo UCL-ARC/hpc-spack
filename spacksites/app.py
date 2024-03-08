@@ -66,23 +66,18 @@ def install_env(args):
             full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
     site.install_spack_env(args.env_name, full_specs_file)
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
-        # TODO get the spec of the compiler from packages.yaml
-        # so spack config --scope=site get packages | grep compiler and then pick first from list
-        # - a problem is that functions here that wrap these do not return subsprocess outputs
-        # could read packages.yaml from the site and parse that with a yaml reader  
-        # check that the spec is in first_compiler.yaml - error if not 
-        # then put the spec as the argument in the next line
-        packages_yaml_raw, err = site.run_commands(['spack config --scope=site get packages'])
-        packages_yaml = yaml.safe_load(packages_yaml_raw)
-        compiler_spec = packages_yaml['packages']['all']['compiler'][0]
-        print('# SPACKSITES: found first compiler spec in packages.yaml', compiler_spec, file=sys.stderr)
-        # spack -e first_compiler config get
-        first_compiler_yaml_raw, err = site.run_commands(['spack -e '+args.env_name+' config get'])
-        first_compiler_yaml = yaml.safe_load(first_compiler_yaml_raw)
-        if compiler_spec in first_compiler_yaml['spack']['specs']:
-            site.find_system_compilers([compiler_spec])  # temporary fix until the general value of the spec can be read.
-        else:
-            print('# SPACKSITES: ERROR! first compiler in packages.yaml not in first_compiler spack environment', file=sys.stderr)
+        with open(config.initial_site_packages_yaml) as file:
+            packages_yaml = yaml.safe_load(file)
+        compiler_specs = packages_yaml['packages']['all']['compiler']
+        for compiler_spec in compiler_specs:
+            print('# SPACKSITES: found first compiler spec in packages.yaml', compiler_spec, file=sys.stderr)
+            first_compiler_yaml_raw, err = site.run_commands(['spack -e '+args.env_name+' config get'])
+            first_compiler_yaml = yaml.safe_load(first_compiler_yaml_raw)
+            compilers_in_first_compiler_yaml = first_compiler_yaml['spack']['specs'][0]['matrix'][0]
+            if any([comp.startswith(compiler_spec) for comp in compilers_in_first_compiler_yaml]):
+                site.find_system_compilers([compiler_spec])  # temporary fix until the general value of the spec can be read.
+            else:
+                print(f'# SPACKSITES: ERROR! first compiler {compiler_spec} in packages.yaml not in first_compiler spack environment', file=sys.stderr)
 
 def create_env(args):
     print('# SPACKSITES: in app.py function:', inspect.stack()[0][3], file=sys.stderr)
