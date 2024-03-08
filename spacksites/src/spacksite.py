@@ -64,7 +64,14 @@ class Site():
     def find_system_compilers(self, compiler_specs=[]):
         if len(compiler_specs) > 0:
             for compiler_spec in compiler_specs:
-                self.run_commands(['spack load {}'.format(compiler_spec), 'spack compiler find --scope=site'])    # these commands: loads + find, need to be in same spack process context 
+                # nvhpc needs special treatment because the `bin/` directory of
+                # the compiler is deep down the prefix tree.
+                if compiler_spec.startswith('nvhpc'):
+                    location, err = self.run_commands(['spack location -i {}'.format(compiler_spec)])
+                    bin_dir, err = self.run_commands(['find {} -type d -wholename "*/compilers/bin"'.format(location.decode().strip())])
+                    self.run_command(['spack', 'compiler', 'find', '--scope=site', bin_dir.decode().strip()])
+                else:
+                    self.run_commands(['spack load {}'.format(compiler_spec), 'spack compiler find --scope=site'])    # these commands: loads + find, need to be in same spack process context
         else:
             # or a general round up - also needed for when compiler_specs=[]
             self.run_command(['spack', 'compiler', 'find', '--scope=site'])    
@@ -107,6 +114,3 @@ class Site():
         spack_deps_command = 'source {}\n'.format(os.path.join(Scripts.dir, self.spd_script))
         spack_setup_env_command = 'source {}\n'.format(self.spack_setup_env_script)
         return ';'.join([prompt_command, disable_user_config_command, environment_variable_command, tmp_dir_command, spack_deps_command, spack_setup_env_command])
-
-    
-    
