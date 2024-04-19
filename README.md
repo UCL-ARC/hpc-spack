@@ -58,6 +58,12 @@ To push a package to the buildcache as ccspapp:
 spack buildcache push --allow-root /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
 ```
 
+Or do this for an entire .yaml file
+
+```
+spack buildcache push --allow-root --spec-file spack.yaml /shared/ucl/apps/spack/0.21/buildcache
+```
+
 ### Local package repositories
 
 We have two local package repos at the top level in this repository:
