@@ -54,8 +54,8 @@ This is specified in [initial_site_mirrors.yaml](spacksites/settings/initial_sit
 To push a package to the buildcache as ccspapp:
 
 ```
-# take my site-installed gcc@12.2.0 and all its dependencies, and put it into a buildcache at this location
-spack buildcache push --allow-root /shared/ucl/apps/spack/0.21/buildcache gcc@12.2.0
+# take my site-installed gcc@12.3.0 and all its dependencies, and put it into a buildcache at this location
+spack buildcache push --allow-root /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
 ```
 
 ### Local package repositories
