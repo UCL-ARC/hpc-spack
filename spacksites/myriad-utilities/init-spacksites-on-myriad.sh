@@ -4,7 +4,7 @@
 
 if [[ "$USER" == "ccspapp" ]]; then
 
-    TOP_DIR="${HOME}/Scratch/spack/0.20/hpc-spack"
+    TOP_DIR="${HOME}/Scratch/spack/0.21/hpc-spack"
     cd "${TOP_DIR}"
     alias sps="${TOP_DIR}/spacksites/spacksites"
     source  "${TOP_DIR}/spacksites/process-env-scripts/spack-deps-rhel-7.8.sh"
