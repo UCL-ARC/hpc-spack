@@ -58,7 +58,7 @@ To push a package to the buildcache as ccspapp:
 spack buildcache push /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
 ```
 
-Or do this for an entire environment: 
+Or do this for an entire environment, in this case called `myriad`: 
 
 ```
 spack -e myriad buildcache push /shared/ucl/apps/spack/0.21/buildcache
