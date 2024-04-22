@@ -64,6 +64,8 @@ def install_env(args):
             full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, specs_file)
         else:
             full_specs_file = os.path.join(spacksites_dir(), config.templates_active_set, 'build', specs_file)
+    else:
+        full_specs_file = specs_file
     site.install_spack_env(args.env_name, full_specs_file)
     if (not os.path.isabs(specs_file)) and (specs_file == 'first_compiler.yaml'):
         with open(config.initial_site_packages_yaml) as file:
