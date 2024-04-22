@@ -55,13 +55,13 @@ To push a package to the buildcache as ccspapp:
 
 ```
 # take my site-installed gcc@12.3.0 and all its dependencies, and put it into a buildcache at this location
-spack buildcache push --allow-root /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
+spack buildcache push /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
 ```
 
-Or do this for an entire .yaml file
+Or do this for an entire environment: 
 
 ```
-spack buildcache push --allow-root --spec-file spack.yaml /shared/ucl/apps/spack/0.21/buildcache
+spack -e myriad buildcache push /shared/ucl/apps/spack/0.21/buildcache
 ```
 
 ### Local package repositories
