@@ -3,6 +3,9 @@ spack:
   - matrix:
     - - 'vcftools@0.1.16'
     - - '%gcc@12.3.0'
+  - $base
+  - $gpu
+  - $gpu-on-gpu
   concretizer:
     unify: when_possible
   view: false
