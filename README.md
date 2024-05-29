@@ -1,23 +1,23 @@
 # hpc-spack
 Solutions - HPC's Spack config
 
-There should be a branch of this repo for each major Spack release. Branch 0.21 covers all 0.21.x Spack versions.
+There should be a branch of this repo for each major Spack release. Branch 0.22 covers all 0.22.x Spack versions.
 
 ## Using spacksites to work with central installs as ccspapp
 
-The very first user of this version of Spack and this repo should create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.21.x:
+The very first user of this version of Spack and this repo should create an Spack-versioned directory to check out into, clone this repo and switch to the desired branch. This example is for Spack 0.22.x:
 
 ```
-mkdir -p /home/ccspapp/Scratch/spack/0.21
-cd /home/ccspapp/Scratch/spack/0.21
+mkdir -p /home/ccspapp/Scratch/spack/0.22
+cd /home/ccspapp/Scratch/spack/0.22
 
-git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.21
+git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.22
 ```
 
-Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.21` for 0.21.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini).
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.22` for 0.22.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini).
 
 ```
-cd /home/ccspapp/Scratch/spack/0.21/hpc-spack
+cd /home/ccspapp/Scratch/spack/0.22/hpc-spack
 
 # initialise spacksites
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
@@ -47,7 +47,7 @@ On new releases of Spack, rebuild the build cache, see if there are package vers
 
 ### Buildcache
 
-Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.21/buildcache` for 0.21.x.
+Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.22/buildcache` for 0.22.x.
 
 This is specified in [initial_site_mirrors.yaml](spacksites/settings/initial_site_mirrors.yaml) and gets copied into `$site_name/spack/etc/spack/mirrors.yaml` in any sites you create.
 
@@ -55,13 +55,13 @@ To push a package to the buildcache as ccspapp:
 
 ```
 # take my site-installed gcc@12.3.0 and all its dependencies, and put it into a buildcache at this location
-spack buildcache push /shared/ucl/apps/spack/0.21/buildcache gcc@12.3.0
+spack buildcache push /shared/ucl/apps/spack/0.22/buildcache gcc@12.3.0
 ```
 
 Or do this for an entire environment, in this case called `myriad`: 
 
 ```
-spack -e myriad buildcache push /shared/ucl/apps/spack/0.21/buildcache
+spack -e myriad buildcache push /shared/ucl/apps/spack/0.22/buildcache
 ```
 
 ### Local package repositories
@@ -86,9 +86,9 @@ Spack will search through the repos in order to find requested specs, so it will
 # show repos for the active site
 spack repo list
 ==> 3 package repositories.
-ucl.arc.hpc        /lustre/scratch/scratch/ccspapp/spack/0.21/hpc-spack/repos/ucl
-ucl.arc.hpc.dev    /lustre/scratch/scratch/ccspapp/spack/0.21/hpc-spack/repos/dev
-builtin            /lustre/shared/ucl/apps/spack/0.21/hk-initial-stack/spack/var/spack/repos/builtin
+ucl.arc.hpc        /lustre/scratch/scratch/ccspapp/spack/0.22/hpc-spack/repos/ucl
+ucl.arc.hpc.dev    /lustre/scratch/scratch/ccspapp/spack/0.22/hpc-spack/repos/dev
+builtin            /lustre/shared/ucl/apps/spack/0.22/hk-initial-stack/spack/var/spack/repos/builtin
 ```
 
 If you have an existing site and we have added new repos that it does not have, add them to
@@ -159,7 +159,7 @@ eval $(spacksites/spacksites spack-setup-env $site_name)
 
 #### Trust the buildcache
 
-The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.21/buildcache/build_cache/_pgp/` for version 0.21. This key belongs to the `ccspapp` user.
+The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.22/buildcache/build_cache/_pgp/` for version 0.22. This key belongs to the `ccspapp` user.
 
 ```
 # To use the buildcache you need to trust our existing public gpg key
