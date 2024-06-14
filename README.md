@@ -64,6 +64,12 @@ Or do this for an entire environment, in this case called `myriad`:
 spack -e myriad buildcache push /shared/ucl/apps/spack/0.22/buildcache
 ```
 
+Once packages are pushed, update the index so they show in `spack buildcache list`:
+
+```
+spack buildcache update-index /shared/ucl/apps/spack/0.22/buildcache/
+```
+
 ### Local package repositories
 
 We have two local package repos at the top level in this repository:
