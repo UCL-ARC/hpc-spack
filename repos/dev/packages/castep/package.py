@@ -32,11 +32,19 @@ class Castep(MakefilePackage):
     )
 
     variant("mpi", default=True, description="Enable MPI build")
+    #variant("xml", default=False, description="Enable CML, link against FoX libraries")
+    variant("libxc", default=False, description="Enable libxc library of additional XC functionals")
+    variant("grimmed3", default=False, description="Enable Grimme DFT+D library")
+    variant("grimmed4", default=False, description="Enable Grimme D4 library")
     depends_on("rsync", type="build")
     depends_on("blas")
     depends_on("lapack")
     depends_on("fftw-api")
+    depends_on("perl", type=("build", "run"))
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
+    depends_on("libxc", type=("build", "link", "run"), when="+libxc")
+    # don't have a FoX package atm, only C++ fox-toolkit
+    #depends_on("fortran-fox", type=("build", "link", "run"), when="+xml")
 
     parallel = True
 
@@ -64,6 +72,16 @@ class Castep(MakefilePackage):
 
         if "+mpi" in spec:
             targetlist.append("COMMS_ARCH=mpi")
+
+        # "system" for existing libxc, "compile" to build own
+        if "+libxc" in spec:
+            targetlist.append("LIBXC=system")
+
+        if "+grimmed3" in spec:
+            targetlist.append("GRIMMED3=compile")
+
+        if "+grimmed4" in spec:
+            targetlist.append("GRIMMED4=compile")
 
         targetlist.append(f"FFTLIBDIR={spec['fftw-api'].prefix.lib}")
         targetlist.append(f"MATHLIBDIR={spec['blas'].prefix.lib}")
