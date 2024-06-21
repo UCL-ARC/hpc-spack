@@ -1,4 +1,6 @@
 mirrors:
+  manylinuxcache:
+    url: https://binaries.spack.io/develop/developer-tools-manylinux2014
   buildcache:
     fetch:
       url: file:///shared/ucl/apps/spack/0.22/buildcache
@@ -16,9 +18,6 @@ mirrors:
       access_token: null
       profile: null
       endpoint_url: null
-  # below buildcache for right now because manylinux perl is missing libcrypt
-  manylinuxcache:
-    url: https://binaries.spack.io/develop/developer-tools-manylinux2014
   pkgstore: 
     url: file:///shared/ucl/apps/pkg-store
 
