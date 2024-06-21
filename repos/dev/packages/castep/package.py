@@ -23,6 +23,9 @@ class Castep(MakefilePackage):
     url = f"file://{os.getcwd()}/CASTEP-21.11.tar.gz"
     manual_download = True
 
+    version(
+        "23.1.1", sha256="8d922c641c99fc6e4f5b4f7f2478abab897065850e454fb4968154ddbb566388"
+    )
     version("21.11", sha256="d909936a51dd3dff7a0847c2597175b05c8d0018d5afe416737499408914728f")
     version(
         "19.1.1.rc2", sha256="1fce21dc604774e11b5194d5f30df8a0510afddc16daf3f8b9bbb3f62748f86a"
