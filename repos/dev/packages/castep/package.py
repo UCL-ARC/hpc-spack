@@ -64,7 +64,7 @@ class Castep(MakefilePackage):
     # dl_mg is 2.0.3 for 20.1, 21.11; 3.0.0 for 23.1, 
     def edit(self, spec, prefix):
         if spec.satisfies("%gcc"):
-            if self.spec.satisfies("@20:21"):
+            if self.spec.satisfies("@19:21"):
                 dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
             if self.spec.satisfies("@23:"):
                 dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
