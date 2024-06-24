@@ -61,9 +61,13 @@ class Castep(MakefilePackage):
 
     parallel = True
 
+    # dl_mg is 2.0.3 for 20.1, 21.11; 3.0.0 for 23.1, 
     def edit(self, spec, prefix):
         if spec.satisfies("%gcc"):
-            dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
+            if self.spec.satisfies("@20:21"):
+                dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
+            if self.spec.satisfies("@23:"):
+                dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
             dlmakefile.filter(r"MPIFLAGS = -DMPI", "MPIFLAGS = -fallow-argument-mismatch -DMPI")
             if self.spec.satisfies("@20:"):
                 platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
