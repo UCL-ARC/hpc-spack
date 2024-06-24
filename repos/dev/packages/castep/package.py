@@ -24,18 +24,30 @@ class Castep(MakefilePackage):
     manual_download = True
 
     version(
-        "23.1.1", sha256="8d922c641c99fc6e4f5b4f7f2478abab897065850e454fb4968154ddbb566388"
+        "23.1.1", sha256="8d922c641c99fc6e4f5b4f7f2478abab897065850e454fb4968154ddbb566388",
+        url=f"file://{os.getcwd()}/castep-23.1.1.tar.bz2"
+    
     )
     version("21.11", sha256="d909936a51dd3dff7a0847c2597175b05c8d0018d5afe416737499408914728f")
+    version(
+        "20.1", sha256="fa0f615ed1992ebf583ed3a2a4596085c2ebd59530271e70cc3a36789ba8180b",
+        url=f"file://{os.getcwd()}/castep-20.1.tar.xz"
+    )
     version(
         "19.1.1.rc2", sha256="1fce21dc604774e11b5194d5f30df8a0510afddc16daf3f8b9bbb3f62748f86a"
     )
 
     variant("mpi", default=True, description="Enable MPI build")
     #variant("xml", default=False, description="Enable CML, link against FoX libraries")
-    variant("libxc", default=False, description="Enable libxc library of additional XC functionals")
     variant("grimmed3", default=False, description="Enable Grimme DFT+D library")
-    variant("grimmed4", default=False, description="Enable Grimme D4 library")
+
+    variant("grimmed4", default=False, when="@23:", description="Enable Grimme D4 library")
+
+    variant(
+        "libxc", default=False, when="@23:",
+        description="Enable libxc library of additional XC functionals"
+    )
+
     depends_on("rsync", type="build")
     depends_on("blas")
     depends_on("lapack")
@@ -43,8 +55,9 @@ class Castep(MakefilePackage):
     depends_on("perl", type=("build", "run"))
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
     depends_on("libxc", type=("build", "link", "run"), when="+libxc")
+
     # don't have a FoX package atm, only C++ fox-toolkit
-    #depends_on("fortran-fox", type=("build", "link", "run"), when="+xml")
+    #depends_on("fox-fortran", type=("build", "link", "run"), when="+xml")
 
     parallel = True
 
