@@ -61,20 +61,29 @@ class Castep(MakefilePackage):
 
     parallel = True
 
-    # dl_mg is 2.0.3 for 20.1, 21.11; 3.0.0 for 23.1, 
+    # dl_mg is 2.0.3 for 20.1, 21.11; then 3.0.0 for 23.1.
+    # There is a base linux_x86_64_gfortran.mk and a gfortran9.0.mk for 19, then a 
+    # gfortran10.mk for 20.1 onwards.
     def edit(self, spec, prefix):
         if spec.satisfies("%gcc"):
             if self.spec.satisfies("@19:21"):
                 dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
-            if self.spec.satisfies("@23:"):
+            elif self.spec.satisfies("@23:"):
                 dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
-            dlmakefile.filter(r"MPIFLAGS = -DMPI", "MPIFLAGS = -fallow-argument-mismatch -DMPI")
+
+            if spec.satisfies("%gcc@9:"):
+                dlmakefile.filter(r"MPIFLAGS = -DMPI", "MPIFLAGS = -fallow-argument-mismatch -DMPI")
+
             if self.spec.satisfies("@20:"):
-                platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
+                if spec.satisfies("%gcc@10:"):
+                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran10.mk")
+                else:
+                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
             else:
                 platfile = FileFilter("obj/platforms/linux_x86_64_gfortran9.0.mk")
             platfile.filter(r"^\s*OPT_CPU\s*=.*", "OPT_CPU = ")
             platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
+
         elif spec.satisfies("%intel"):
             if self.spec.satisfies("@20:"):
                 platfile = FileFilter("obj/platforms/linux_x86_64_ifort.mk")
