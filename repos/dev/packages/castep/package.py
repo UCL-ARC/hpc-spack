@@ -79,10 +79,15 @@ class Castep(MakefilePackage):
                     platfile = FileFilter("obj/platforms/linux_x86_64_gfortran10.mk")
                 else:
                     platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
-            else:
-                platfile = FileFilter("obj/platforms/linux_x86_64_gfortran9.0.mk")
+                    platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
+            elif self.spec.satisfies("@19"):
+                if spec.satisfies("%gcc@9:"):
+                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran9.0.mk")
+                else:
+                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
+                platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
+
             platfile.filter(r"^\s*OPT_CPU\s*=.*", "OPT_CPU = ")
-            platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
 
         elif spec.satisfies("%intel"):
             if self.spec.satisfies("@20:"):
