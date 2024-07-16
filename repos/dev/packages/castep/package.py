@@ -128,10 +128,12 @@ class Castep(MakefilePackage):
         if spec.satisfies("target=x86_64:"):
             if spec.satisfies("platform=linux"):
                 if spec.satisfies("%gcc"):
-                    if self.spec.satisfies("@20:"):
+                    if self.spec.satisfies("@20:") and spec.satisfies("%gcc@10:"):
                         targetlist.append("ARCH=linux_x86_64_gfortran10")
-                    else:
+                    elif self.spec.satisfies("@19") and spec.satisfies("%gcc@9:"):
                         targetlist.append("ARCH=linux_x86_64_gfortran9.0")
+                    else:
+                        targetlist.append("ARCH=linux_x86_64_gfortran")
                 if spec.satisfies("%intel"):
                     if self.spec.satisfies("@20:"):
                         targetlist.append("ARCH=linux_x86_64_ifort")
