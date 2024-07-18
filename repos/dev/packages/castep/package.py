@@ -38,10 +38,10 @@ class Castep(MakefilePackage):
     )
 
     variant("mpi", default=True, description="Enable MPI build")
-    #variant("xml", default=False, description="Enable CML, link against FoX libraries")
-    variant("grimmed3", default=False, description="Enable Grimme DFT+D library")
+    #variant("foxcml", default=False, description="Enable CML, link against FoX libraries")
+    variant("grimmed3", default=True, description="Enable Grimme DFT+D library")
 
-    variant("grimmed4", default=False, when="@23:", description="Enable Grimme D4 library")
+    variant("grimmed4", default=True, when="@23:", description="Enable Grimme D4 library")
 
     variant(
         "libxc", default=False, when="@23:",
@@ -57,8 +57,8 @@ class Castep(MakefilePackage):
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
     depends_on("libxc", type=("build", "link", "run"), when="+libxc")
 
-    # don't have a FoX package atm, only C++ fox-toolkit
-    #depends_on("fox-fortran", type=("build", "link", "run"), when="+xml")
+    # don't have a FoX CML package atm, only C++ fox-toolkit
+    #depends_on("foxcml", type=("build", "link", "run"), when="+foxcml")
 
     parallel = True
 
