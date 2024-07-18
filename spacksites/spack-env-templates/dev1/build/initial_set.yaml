@@ -10,7 +10,7 @@ spack:
       - 'hdf5@1.14.3 +cxx +fortran -mpi +hl'
       - 'hdf5@1.14.3 +fortran +mpi +hl'
       - 'htslib@1.17'
-      - 'openmpi@4.1.6 fabrics=psm2,cma,ucx,knem,xpmem,ofi schedulers=sge'
+      - 'openmpi@4.1.6 fabrics=psm2,cma,ucx,ofi schedulers=sge'
       # - 'orca@5.0.3'
       - 'python@3.11.6'
       - 'netcdf-c@4.9.2 -mpi'
