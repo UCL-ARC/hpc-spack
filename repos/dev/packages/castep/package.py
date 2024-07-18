@@ -49,6 +49,7 @@ class Castep(MakefilePackage):
     )
 
     depends_on("rsync", type="build")
+    depends_on("fortran", type="build")
     depends_on("blas")
     depends_on("lapack")
     depends_on("fftw-api")
