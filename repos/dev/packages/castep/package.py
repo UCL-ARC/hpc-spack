@@ -54,7 +54,7 @@ class Castep(CMakePackage, MakefilePackage):
         default="cmake",
     )
 
-    with_when("build_system=cmake"):
+    with when("build_system=cmake"):
         depends_on("cmake@3.18:", type="build")
 
     depends_on("rsync", type="build")
