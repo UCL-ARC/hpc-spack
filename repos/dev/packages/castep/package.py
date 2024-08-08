@@ -92,7 +92,7 @@ class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
             self.define_from_variant("WITH_GRIMMED4", "grimmed4"),
             #self.define_from_variant("WITH_DLMG", "dlmg"),
         ]
-    return args
+        return args
 
     # cmake -B <build-dir> -D<build-variable-or-option>
     # Works as default so nothing needed here.
