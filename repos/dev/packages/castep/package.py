@@ -8,7 +8,7 @@ import os
 from spack.package import *
 
 
-class Castep(MakefilePackage):
+class Castep(CMakePackage, MakefilePackage):
     """
     CASTEP is a leading code for calculating the
     properties of materials from first principles.
@@ -48,8 +48,18 @@ class Castep(MakefilePackage):
         description="Enable libxc library of additional XC functionals"
     )
 
+    build_system(
+        conditional("cmake", when="@23:"),
+        conditional("makefile", when="@:0.22"),
+        default="cmake",
+    )
+
+    with_when("build_system=cmake"):
+        depends_on("cmake@3.18:", type="build")
+
     depends_on("rsync", type="build")
     #depends_on("fortran", type="build")
+    #depends_on("c", type="build") # for Utility
     depends_on("blas")
     depends_on("lapack")
     depends_on("fftw-api")
@@ -61,6 +71,43 @@ class Castep(MakefilePackage):
     #depends_on("foxcml", type=("build", "link", "run"), when="+foxcml")
 
     parallel = True
+
+class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
+
+    # requires an out of tree build
+    #@property
+    #def build_directory(self):
+    #    return self.pkg.stage.
+
+    # Is ok with default subdir build but requires -B to be set.
+    def cmake_args(self):
+        args = [
+            "-B .",
+            self.define_from_variant("WITH_MPI", "mpi"),
+            self.define_from_variant("WITH_LIBXC", "libxc"),
+            self.define_from_variant("WITH_OPENMP", "openmp"),
+            #self.define_from_variant("WITH_FOXCML", "foxcml"),
+            #self.define_from_variant("WITH_QUIP", "quip"),
+            self.define_from_variant("WITH_GRIMMED3", "grimmed3"),
+            self.define_from_variant("WITH_GRIMMED4", "grimmed4"),
+            #self.define_from_variant("WITH_DLMG", "dlmg"),
+        ]
+    return args
+
+    # cmake -B <build-dir> -D<build-variable-or-option>
+    # Works as default so nothing needed here.
+    #def cmake(self):
+
+    # cmake --build <build-dir> -t <target>
+    #def build(self, pkg, spec, prefix):    
+    #    cmake()
+
+    # cmake --build <build-dir> -t install -DCMAKE_INSTALL_PREFIX= 
+    #def install(self, pkg, spec, prefix):
+    #    cmake()
+
+
+class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
 
     # dl_mg is 2.0.3 for 20.1, 21.11; then 3.0.0 for 23.1.
     # There is a base linux_x86_64_gfortran.mk and a gfortran9.0.mk for 19, then a 
