@@ -48,6 +48,8 @@ class Castep(CMakePackage, MakefilePackage):
         description="Enable libxc library of additional XC functionals"
     )
 
+    variant("openmp", default=True, when="build_system=cmake", description="Enable OpenMP"),
+
     build_system(
         conditional("cmake", when="@23:"),
         conditional("makefile", when="@:0.22"),
@@ -85,7 +87,7 @@ class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
             "-B .",
             self.define_from_variant("WITH_MPI", "mpi"),
             self.define_from_variant("WITH_LIBXC", "libxc"),
-            self.define_from_variant("WITH_OPENMP", "openmp"),
+            self.define_from_variant("WITH_OpenMP", "openmp"),
             #self.define_from_variant("WITH_FOXCML", "foxcml"),
             #self.define_from_variant("WITH_QUIP", "quip"),
             self.define_from_variant("WITH_GRIMMED3", "grimmed3"),
