@@ -50,6 +50,9 @@ class Castep(CMakePackage, MakefilePackage):
 
     variant("openmp", default=True, when="build_system=cmake", description="Enable OpenMP"),
 
+    # Fixes generation of buildinfo_data.f90 in the cmake build
+    patch("castep_2023.1.1_buildinfo.patch", when="@23.1.1 build_system=cmake")
+
     build_system(
         conditional("cmake", when="@23:"),
         conditional("makefile", when="@:0.22"),
