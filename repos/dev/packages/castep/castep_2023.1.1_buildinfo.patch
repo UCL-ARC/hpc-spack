@@ -9,7 +9,7 @@ index c7c68cd..d01a770 100644
 -    )
 -  string(REGEX MATCH "not a git repo" NOT_GIT_VC "${GIT_STAT}")
 +  )
-+  string(REGEX MATCH ".*Not a git repo.*" NOT_GIT_VC "${GIT_STAT}")
++  string(REGEX MATCH ".*not a git repo.*" NOT_GIT_VC string(TOLOWER GIT_STAT "${GIT_STAT}"))
  else()
    set(NOT_GIT_VC -1)
  endif()
