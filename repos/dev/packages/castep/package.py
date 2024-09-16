@@ -23,11 +23,9 @@ class Castep(CMakePackage, MakefilePackage):
     url = f"file://{os.getcwd()}/CASTEP-21.11.tar.gz"
     manual_download = True
 
-    version(
-        "23.1.1", sha256="8d922c641c99fc6e4f5b4f7f2478abab897065850e454fb4968154ddbb566388",
-        url=f"file://{os.getcwd()}/castep-23.1.1.tar.bz2"
     
-    )
+    version("24.1", sha256="97d77a4f3ce3f5c5b87e812f15a2c2cb23918acd7034c91a872b6d66ea0f7dbb")
+    version("23.1.1", sha256="7fba0450d3fd71586c8498ce51975bbdde923759ab298a656409280c29bf45b5")
     version("21.11", sha256="d909936a51dd3dff7a0847c2597175b05c8d0018d5afe416737499408914728f")
     version(
         "20.1", sha256="fa0f615ed1992ebf583ed3a2a4596085c2ebd59530271e70cc3a36789ba8180b",
@@ -42,6 +40,7 @@ class Castep(CMakePackage, MakefilePackage):
     variant("grimmed3", default=True, description="Enable Grimme DFT+D library")
 
     variant("grimmed4", default=True, when="@23:", description="Enable Grimme D4 library")
+    variant("dlmg", default=True, description="Enable DLMG Functionality functionals")
 
     variant(
         "libxc", default=False, when="@23:",
@@ -50,8 +49,14 @@ class Castep(CMakePackage, MakefilePackage):
 
     variant("openmp", default=True, when="build_system=cmake", description="Enable OpenMP"),
 
-    # Fixes generation of buildinfo_data.f90 in the cmake build
-    patch("castep_2023.1.1_buildinfo.patch", when="@23.1.1")
+    # Patch available alongside source, manual download
+    patch(
+        "Castep_23.1_build_fixes.diff.gz", 
+        f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
+        sha256="a7860dc6677955d9bc877859666c4e8aa59635723968661674283a3939d7a66b",
+        archive_sha256="5f31daf4733f8ee906cba0ff092e317b9cbaa100666533b2dce39f1f829646c2",
+        when="@23.1.1",
+    )
 
     build_system(
         conditional("cmake", when="@23:"),
@@ -69,13 +74,15 @@ class Castep(CMakePackage, MakefilePackage):
     depends_on("lapack")
     depends_on("fftw-api")
     depends_on("perl", type=("build", "run"))
+    depends_on("python@3", type=("build", "run"))
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
-    depends_on("libxc", type=("build", "link", "run"), when="+libxc")
+    depends_on("libxc@5.2", type=("build", "link", "run"), when="+libxc")
 
     # don't have a FoX CML package atm, only C++ fox-toolkit
     #depends_on("foxcml", type=("build", "link", "run"), when="+foxcml")
 
     parallel = True
+
 
 class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
 
@@ -95,7 +102,7 @@ class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
             #self.define_from_variant("WITH_QUIP", "quip"),
             self.define_from_variant("WITH_GRIMMED3", "grimmed3"),
             self.define_from_variant("WITH_GRIMMED4", "grimmed4"),
-            #self.define_from_variant("WITH_DLMG", "dlmg"),
+            self.define_from_variant("WITH_DLMG", "dlmg"),
         ]
         return args
 
@@ -107,7 +114,7 @@ class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
     #def build(self, pkg, spec, prefix):    
     #    cmake()
 
-    # cmake --build <build-dir> -t install -DCMAKE_INSTALL_PREFIX= 
+    # cmake --build <build-dir> -t install (to -DCMAKE_INSTALL_PREFIX=) 
     #def install(self, pkg, spec, prefix):
     #    cmake()
 
@@ -121,8 +128,8 @@ class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
         if spec.satisfies("%gcc"):
             if self.spec.satisfies("@19:21"):
                 dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
-            elif self.spec.satisfies("@23:"):
-                dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
+            #elif self.spec.satisfies("@23:"):
+            #    dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
 
             if self.spec.satisfies("@20:"):
                 if spec.satisfies("%gcc@10:"):
@@ -161,9 +168,18 @@ class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
 
         if "+grimmed3" in spec:
             targetlist.append("GRIMMED3=compile")
+        else:
+            targetlist.append("GRIMMED3=none")
 
         if "+grimmed4" in spec:
             targetlist.append("GRIMMED4=compile")
+        else:
+            targetlist.append("GRIMMED4=none")
+
+        if "+dlmg" in spec:
+            targetlist.append("DL_MG=compile")
+        else:
+            targetlist.append("DL_MG=none")
 
         targetlist.append(f"FFTLIBDIR={spec['fftw-api'].prefix.lib}")
         targetlist.append(f"MATHLIBDIR={spec['blas'].prefix.lib}")
