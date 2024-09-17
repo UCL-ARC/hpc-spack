@@ -52,7 +52,7 @@ class Castep(CMakePackage, MakefilePackage):
     # Patch available alongside source, manual download
     patch(
         "Castep_23.1_build_fixes.diff.gz", 
-        f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
+        url=f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
         sha256="a7860dc6677955d9bc877859666c4e8aa59635723968661674283a3939d7a66b",
         archive_sha256="5f31daf4733f8ee906cba0ff092e317b9cbaa100666533b2dce39f1f829646c2",
         when="@23.1.1",
