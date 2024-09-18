@@ -58,7 +58,8 @@ class Castep(CMakePackage, MakefilePackage):
     )
 
     # Patches the cmake install step for libxc's mod files.
-    patch("castep_cmake_libxc.patch", when="@23:24")
+    patch("castep_cmake_libxc523.patch", when="@24")
+    patch("castep_cmake_libxc522.patch", when="@23")
 
     build_system(
         conditional("cmake", when="@23:"),
