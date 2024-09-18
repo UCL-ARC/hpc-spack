@@ -25,7 +25,7 @@ class Castep(CMakePackage, MakefilePackage):
 
     
     version("24.1", sha256="97d77a4f3ce3f5c5b87e812f15a2c2cb23918acd7034c91a872b6d66ea0f7dbb")
-    version("23.1.1", sha256="7fba0450d3fd71586c8498ce51975bbdde923759ab298a656409280c29bf45b5")
+    version("23.1", sha256="7fba0450d3fd71586c8498ce51975bbdde923759ab298a656409280c29bf45b5")
     version("21.11", sha256="d909936a51dd3dff7a0847c2597175b05c8d0018d5afe416737499408914728f")
     version(
         "20.1", sha256="fa0f615ed1992ebf583ed3a2a4596085c2ebd59530271e70cc3a36789ba8180b",
@@ -54,7 +54,7 @@ class Castep(CMakePackage, MakefilePackage):
         f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
         sha256="a7860dc6677955d9bc877859666c4e8aa59635723968661674283a3939d7a66b",
         archive_sha256="5f31daf4733f8ee906cba0ff092e317b9cbaa100666533b2dce39f1f829646c2",
-        when="@23.1.1",
+        when="@23.1",
     )
 
     # Patches the cmake install step for libxc's mod files.
