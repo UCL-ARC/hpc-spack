@@ -57,6 +57,9 @@ class Castep(CMakePackage, MakefilePackage):
         when="@23.1.1",
     )
 
+    # Patches the cmake install step for libxc's mod files.
+    patch("castep_cmake_libxc.patch", when="@23:24")
+
     build_system(
         conditional("cmake", when="@23:"),
         conditional("makefile", when="@:0.22"),
@@ -75,7 +78,9 @@ class Castep(CMakePackage, MakefilePackage):
     depends_on("perl", type=("build", "run"))
     depends_on("python@3", type=("build", "run"))
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
-    depends_on("libxc@5.2", type=("build", "link", "run"), when="+libxc")
+
+    # castep strongly prefers to build libxc itself
+    #depends_on("libxc@5.2", type=("build", "link", "run"), when="+libxc")
 
     # don't have a FoX CML package atm, only C++ fox-toolkit
     #depends_on("foxcml", type=("build", "link", "run"), when="+foxcml")
