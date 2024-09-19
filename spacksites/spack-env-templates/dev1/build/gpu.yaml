@@ -1,5 +1,5 @@
-definitions:
-- gpu:
+spack:
+  specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
     - - 'cp2k@2023.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr cuda_arch=80 ^libxsmm@1.17'
@@ -8,3 +8,17 @@ definitions:
       # - 'py-alphafold@2.2.4 +cuda cuda_arch=80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=80'
       # - 'vasp@6.3.2 +cuda'
     - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+
+  modules:
+    default:
+      tcl:
+        projections:
+          all: '{name}/{version}/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH, LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH, LIBRARY_PATH]
+

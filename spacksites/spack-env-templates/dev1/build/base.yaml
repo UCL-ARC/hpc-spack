@@ -1,21 +1,38 @@
-definitions:
-- base:
+spack:
+  specs:
   - matrix:
-    - - 'bcftools@1.16'
-      - 'beast2@2.7.4'
-      - 'bedtools2@2.31.0'
-      - 'bwa@0.7.17'
-      - 'gatk@4.4.0.0'
-      - 'gzip@1.13'
-      - 'hdf5@1.14.3 +cxx +fortran -mpi +hl'
-      - 'hdf5@1.14.3 +fortran +mpi +hl'
-      - 'htslib@1.17'
-      - 'openmpi@4.1.6 fabrics=psm2,cma,ucx,ofi schedulers=sge'
-      # - 'orca@5.0.3'
-      - 'python@3.11.6'
-      - 'netcdf-c@4.9.2 -mpi'
-      - 'netcdf-fortran@4.6.1'
-      - 'picard@2.26.2'
-      - 'samtools@1.17'
-      #- 'vcftools@0.1.16'
-    - - '%gcc@12.3.0'
+    - - bcftools@1.16
+      - beast2@2.7.4
+      - bedtools2@2.31.0
+      - bwa@0.7.17
+      - gatk@4.4.0.0
+      - gzip@1.13
+      - hdf5@1.14.3 +cxx +fortran -mpi +hl
+      - hdf5@1.14.3 +fortran +mpi +hl
+      - htslib@1.17
+      - openmpi@4.1.6 fabrics=psm2,cma,ucx,ofi schedulers=sge
+      # - orca@5.0.3
+      - python@3.11.6
+      - netcdf-c@4.9.2 -mpi
+      - netcdf-fortran@4.6.1
+      - picard@2.26.2
+      - samtools@1.17
+      - castep@24.1 +libxc
+      - castep@23.1 +libxc
+    - - %gcc@12.3.0
+  concretizer:
+    unify: when_possible
+  view: false
+
+  modules:
+    default:
+      tcl:
+        projections:
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+    prefix_inspections:
+      lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+      lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+

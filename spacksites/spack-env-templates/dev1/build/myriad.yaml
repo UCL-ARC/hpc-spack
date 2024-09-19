@@ -1,18 +1,16 @@
 spack:
   specs:
   - matrix:
-    - - 'vcftools@0.1.16'
-    - - '%gcc@12.3.0'
-  - $base
-  - $gpu
-  - $gpu-on-gpu
+    - - vcftools@0.1.16
+    - - %gcc@12.3.0
   concretizer:
     unify: when_possible
   view: false
-  include:
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/base.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu-on-gpu.yaml
+  include_concrete:
+  - $SPACK_ROOT/spack/var/spack/environments/base
+  - $SPACK_ROOT/spack/var/spack/environments/gpu
+  - $SPACK_ROOT/spack/var/spack/environments/gpu-on-gpu
+
   modules:
     default:
       tcl:
