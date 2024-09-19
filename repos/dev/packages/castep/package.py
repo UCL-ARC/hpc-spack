@@ -80,7 +80,8 @@ class Castep(CMakePackage, MakefilePackage):
     depends_on("python@3", type=("build", "run"))
     depends_on("mpi", type=("build", "link", "run"), when="+mpi")
 
-    # castep strongly prefers to build libxc itself
+    # castep strongly prefers to build libxc itself - would also need -DEXTERNAL_LIBXC_LIBRARY=ON
+    # or make equivalent and ensure it can find the include files.
     #depends_on("libxc@5.2", type=("build", "link", "run"), when="+libxc")
 
     # don't have a FoX CML package atm, only C++ fox-toolkit
@@ -90,11 +91,6 @@ class Castep(CMakePackage, MakefilePackage):
 
 
 class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
-
-    # requires an out of tree build
-    #@property
-    #def build_directory(self):
-    #    return self.pkg.stage.
 
     # Is ok with default subdir build but requires -B to be set.
     def cmake_args(self):
@@ -110,18 +106,6 @@ class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
             self.define_from_variant("WITH_DLMG", "dlmg"),
         ]
         return args
-
-    # cmake -B <build-dir> -D<build-variable-or-option>
-    # Works as default so nothing needed here.
-    #def cmake(self):
-
-    # cmake --build <build-dir> -t <target>
-    #def build(self, pkg, spec, prefix):    
-    #    cmake()
-
-    # cmake --build <build-dir> -t install (to -DCMAKE_INSTALL_PREFIX=) 
-    #def install(self, pkg, spec, prefix):
-    #    cmake()
 
 
 class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
