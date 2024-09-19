@@ -7,6 +7,8 @@ spack:
       # - 'namd@2.14 +cuda cuda_arch=80'
       # - 'py-alphafold@2.2.4 +cuda cuda_arch=80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=80'
       # - 'vasp@6.3.2 +cuda'
+      - gromacs@2024.2 +cuda cuda_arch=80 
+      - gromacs@2023 +cuda cuda_arch=80 +plumed
     - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
