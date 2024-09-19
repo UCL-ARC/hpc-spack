@@ -1,0 +1,10 @@
+definitions:
+- gpu:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - 'cp2k@2023.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr cuda_arch=80 ^libxsmm@1.17'
+      - 'cuda@12.2.0' # v12.2.0 matches the driver installed on Myriad
+      # - 'namd@2.14 +cuda cuda_arch=80'
+      # - 'py-alphafold@2.2.4 +cuda cuda_arch=80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=80'
+      # - 'vasp@6.3.2 +cuda'
+    - - '%gcc@12.3.0'

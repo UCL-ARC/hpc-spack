@@ -1,0 +1,6 @@
+definitions:
+- gpu-on-gpu:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - 'dbcsr@2.6.0'
+    - - '%gcc@12.3.0'

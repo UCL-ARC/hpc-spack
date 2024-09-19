@@ -1,0 +1,26 @@
+spack:
+  specs:
+  - matrix:
+    - - 'vcftools@0.1.16'
+    - - '%gcc@12.3.0'
+  - $base
+  - $gpu
+  - $gpu-on-gpu
+  concretizer:
+    unify: when_possible
+  view: false
+  include:
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/base_include.yaml
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_include.yaml
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu-on-gpu_include.yaml
+  modules:
+    default:
+      tcl:
+        projections:
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+    prefix_inspections:
+      lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+      lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
