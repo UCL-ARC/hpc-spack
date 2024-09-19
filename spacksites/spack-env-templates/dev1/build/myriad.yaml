@@ -2,7 +2,7 @@ spack:
   specs:
   - matrix:
     - - vcftools@0.1.16
-    - - %gcc@12.3.0
+    - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
   view: false
