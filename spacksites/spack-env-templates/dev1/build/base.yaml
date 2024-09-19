@@ -21,7 +21,7 @@ spack:
       - castep@23.1 +libxc
       - gromacs@2024.2 +double
       - gromacs@2023 +double +plumed
-    - - %gcc@12.3.0
+    - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
   view: false
