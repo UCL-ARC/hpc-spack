@@ -22,6 +22,8 @@ spack:
         projections:
           all: '{name}/{version}/{compiler.name}-{compiler.version}'
           ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
     prefix_inspections:
       lib: [LD_LIBRARY_PATH, LIBRARY_PATH]
       lib64: [LD_LIBRARY_PATH, LIBRARY_PATH]
