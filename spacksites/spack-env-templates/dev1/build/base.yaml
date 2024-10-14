@@ -19,8 +19,8 @@ spack:
       - samtools@1.17
       - castep@24.1 +libxc
       - castep@23.1 +libxc
-      - gromacs@2024.2 +double
-      - gromacs@2023 +double +plumed
+      - gromacs@2024.3 +double
+      - gromacs@2023.5 +double +plumed
     - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
