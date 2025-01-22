@@ -1,0 +1,372 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+  - r@4.4.1 # We already have 4.4.2 on Myriad, but that's not available in Spack 0.23
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/R_packages_UCL_1.R#L20-L35
+  - r-mvtnorm@1.2-6
+  - r-scatterplot3d@0.3-44
+  - r-mnormt@2.1.1
+  - r-numderiv@ 2016.8-1.1
+  - r-sn@2.1.1
+  - r-pspline@1.0-20
+  - r-gsl@2.1-8
+  - r-adgoftest@0.3
+  - r-stabledist@0.7-2
+  - r-copula@1.1-4
+  - r-combinat@0.0-8
+  - r-formula@1.2-5
+  - r-rcolorbrewer@1.1-3
+  - r-latticeextra@0.6-30
+  - r-shiny@1.9.1
+  - r-hmisc@5.1-3
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/R_packages_UCL_2_3.6.3.R#L15-L82
+  - r-modeltools@0.2-23
+  - r-survival@3.7-0
+  - r-th-data@1.1-2
+  - r-zoo@1.8-12
+  - r-sandwich@3.1-0
+  - r-multcomp@1.4-26
+  - r-flexmix@2.3-19
+  # - r-gamlss-mx # not found in Spack
+  # - r-gamlss-nl # not found in Spack
+  - r-gtools@3.9.5
+  - r-gdata@3.0.0
+  - r-genetics@1.3.8.1.3
+  # - r-haplo-stats # not found in Spack
+  # - r-genabel-data # not found in Spack
+  # - r-genabel # not found in Spack
+  - r-xml@3.99-0.17
+  - r-bitops@1.0-8
+  - r-rcurl@1.98-1.16
+  - r-expm@1.0-0
+  # - r-msm # not found in Spack
+  - r-dbi@1.2.3
+  - r-rsqlite@2.3.7
+  # - r-r2html # not found in Spack
+  # - r-tkrplot # not found in Spack
+  - r-quadprog@1.5-8
+  - r-tseries@0.10-57
+  - r-sparsem@1.84-2
+  - r-quantreg@5.98
+  # - r-akima # not found in Spack
+  - r-locfit@1.5-9.10
+  # - r-abc # not found in Spack
+  - r-iterators@1.0.14
+  - r-codetools@0.2-20
+  - r-foreach@1.5.2
+  - r-domc@1.3.8
+  - r-permute@0.9-7
+  - r-vegan@2.6-6.1
+  - r-metafor@4.6-0
+  - r-xtable@1.8-4
+  - r-lpsolve@5.6.20
+  # - r-sampling # not found in Spack
+  # - r-nutshell-bbdb # not found in Spack
+  # - r-nutshell-audioscrobbler # not found in Spack
+  # - r-nutshell # not found in Spack
+  # - r-tgp # not found in Spack
+  - r-spam@2.10-0
+  - r-maps@3.4.2
+  - r-fields@16.2
+  - r-pixmap@0.4-13
+  - r-sp@2.1-4
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/R_packages_UCL_3.R#L17-L63
+  - r-rcpp@1.0.13
+  - r-minqa@1.2.8
+  - r-nloptr@2.1.1
+  - r-rcppeigen@0.3.4.0.1
+  - r-lme4@1.1-35.5
+  # - r-saemix # not found in Spack
+  # - r-ncdf # not found in Spack
+  # - r-rnetcdf # not found in Spack
+  - r-mclust@6.1.1
+  - r-fpc@2.2-12
+  # - r-basta # not found in Spack
+  - r-corpcor@1.6.10
+  - r-dynamictreecut@1.63-1
+  - r-flashclust@1.01-2
+  - r-reshape@0.8.9
+  - r-doparallel@1.0.17
+  - r-wgcna@1.72-5
+  - r-igraph@2.0.3
+  - r-inline@0.3.19
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/R_packages_UCL_4.R#L15-L42
+  - r-hwriter@1.3.2.1
+  - r-statmod@1.5.0
+  - r-glmnet@4.1-8
+  # - r-ppls # not found in Spack
+  # - r-mstate # not found in Spack
+  # - r-etm # not found in Spack
+  # - r-epi # not found in Spack
+  # - r-longitudinal # not found in Spack
+  # - r-fdrtool # not found in Spack
+  # - r-genenet # not found in Spack
+  # - r-parcor # not found in Spack
+  # - r-hi # not found in Spack
+  - r-car@3.1-2
+  - r-ellipse@0.5.0
+  - r-leaps@3.2
+  - r-factominer@2.11
+  - r-r-methodss3@1.8.2
+  - r-r-oo@1.26.0
+  - r-r-utils@2.12.3
+  - r-mcmc@0.9-8
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/R_packages_UCL_5_4.1.1.R#L26-L272
+  - r-rgl@1.3.1
+  - r-fastmatch@1.1-4
+  - r-phangorn@2.11.1
+  - r-coda@0.19-4.1
+  - r-rjags@4-16
+  - r-abind@1.4-5
+  # - r-r2winbugs # not found in Spack
+  - r-httpuv@1.6.15
+  - r-rjsonio@1.3-1.9
+  - r-digest@0.6.37
+  - r-htmltools@0.5.8.1
+  - r-catools@1.18.2
+  - r-shiny@1.9.1
+  - r-ade4@1.7-22
+  - r-ape@5.8
+  - r-plyr@1.8.9
+  - r-labeling@0.4.3
+  - r-dichromat@2.0-0.1
+  - r-colorspace@2.1-1
+  - r-munsell@0.5.1
+  - r-scales@1.3.0
+  - r-shiny@1.9.1
+  - r-gtable@0.3.5
+  - r-stringr@1.5.1
+  - r-reshape2@1.4.4
+  - r-proto@1.0.0
+  - r-ggplot2@3.5.1
+  - r-devtools@2.4.5
+  - r-sf@1.0-16
+  - r-adegenet@2.1.10
+  - r-pegas@1.3
+  # - r-stringdist # not found in Spack
+  # - r-hac # not found in Spack
+  - r-e1071@1.7-14
+  - r-gplots@3.1.3.1
+  - r-checkmate@2.3.2
+  - r-bbmisc@1.13
+  - r-base64enc@0.1-3
+  # - r-sendmailr # not found in Spack
+  - r-brew@1.0-10
+  # - r-fail # not found in Spack
+  # - r-batchjobs # not found in Spack
+  - r-rmysql@0.10.27
+  - r-r-methodss3@1.8.2
+  - r-matrixstats@1.3.0
+  - r-base64@2.0.1
+  # - r-gsmoothr # not found in Spack
+  - r-r-cache@0.16.0
+  # - r-r-filesets # not found in Spack
+  # - r-r-devices # not found in Spack
+  # - r-r-rsp # not found in Spack
+  # - r-r-huge # not found in Spack
+  - r-truncnorm@1.0-9
+  - r-rsolnp@1.16
+  - r-intervals@0.15.4
+  # - r-colorramps # not found in Spack
+  # - r-schoolmath # not found in Spack
+  # - r-lsd # not found in Spack
+  - r-rcpparmadillo@14.0.0-1
+  # - r-rstanarm # not found in Spack
+  # - r-gam # not found in Spack
+  - r-vgam@1.1-11
+  - r-powerlaw@0.80.0
+  - r-mlr@2.19.2
+  - r-pracma@2.4.4
+  # - r-softimpute # not found in Spack
+  - r-caret@6.0-94
+  - r-quantreg@5.98
+  - r-randomforest@4.7-1.1
+  # - r-relaimpo # not found in Spack
+  - r-ggally@2.2.1
+  - r-effects@4.2-2
+  # - r-hotdeckimputation # not found in Spack
+  - r-psych@2.4.6.26
+  # - r-rlecuyer # not found in Spack
+  - r-roxygen2@7.3.2
+  - r-rgdal@1.6-7
+  - r-rgeos@0.6-4
+  # - r-erer # not found in Spack
+  # - r-panelar # not found in Spack
+  - r-arm@1.14-4
+  # - r-systemfit # not found in Spack
+  - r-rcpp@1.0.13
+  - r-jsonlite@1.8.8
+  - r-curl@5.2.1
+  # - r-source # not found in Spack
+  - r-udunits2@0.13.2.1
+  - r-lwgeom@0.2-14
+  - r-classint@0.4-10
+  # - r-tmap # not found in Spack
+  - r-rmarkdown@2.28
+  - r-tidyverse@2.0.0
+  - r-bio3d@2.4-4
+  - r-png@0.1-8
+  # - r-tam # not found in Spack
+  # - r-kohonen # not found in Spack
+  # - r-gjrm # not found in Spack
+  - r-rlist@0.4.6.2
+  # - r-ltm # not found in Spack
+  # - r-polca # not found in Spack
+  # - r-quanteda # not found in Spack
+  # - r-topicmodels # not found in Spack
+  # - r-quanteda-corpora # not found in Spack
+  - r-spdep@1.3-5
+  - r-rfast@2.1.0
+  # - r-learnr # not found in Spack
+  # - r-benchmarkme # not found in Spack
+  - r-spatstat@3.1-1
+  - r-tictoc@1.2.1
+  # - r-bradleyterry2 # not found in Spack
+  # - r-geojsonio # not found in Spack
+  # - r-plinkqc # not found in Spack
+  - r-dplyr@1.1.4
+  # - r-docopt # not found in Spack
+  - r-mendelianrandomization@0.10.0
+  # - r-histdata # not found in Spack
+  # - r-nlmixr2 # not found in Spack
+  # - r-arrow # not found in Spack
+  # - r-vim # not found in Spack
+  # - r-quanteda-textstats # not found in Spack
+  # - r-quanteda-textmodels # not found in Spack
+  - r-cmdstanr@0.5.3
+
+  # https://github.com/UCL-RITS/rcps-buildscripts/blob/c13e1488035f6f5dd17ed677d94c43459410231f/files/R_UCL/Bioconductor_UCL_1_4.1.1.R#L24-L236
+  - r-biocmanager@1.30.24
+  - r-biobase@2.60.0
+  - r-qvalue@2.32.0
+  - r-iranges@2.34.0
+  - r-genomeinfodb@1.36.0
+  - r-annotationdbi@1.62.0
+  - r-annotate@1.78.0
+  - r-biomart@2.56.0
+  - r-xvector@0.40.0
+  - r-zlibbioc@1.46.0
+  - r-biostrings@2.68.0
+  # - r-dyndoc # not found in Spack
+  - r-affyio@1.70.0
+  - r-preprocesscore@1.62.0
+  - r-biocinstaller@1.33.1
+  - r-affy@1.78.0
+  - r-gcrma@2.72.0
+  - r-affyplm@1.76.0
+  - r-genefilter@1.82.0
+  - r-simpleaffy@2.66.0
+  - r-affyqcreport@1.68.0
+  - r-affydata@1.48.0
+  - r-go-db@3.17.0
+  # - r-kegg-db@3.2.4 # All versions of this package are deprecated in Spack
+  - r-annaffy@1.72.0
+  - r-geneplotter@1.78.0
+  - r-org-hs-eg-db@3.17.0
+  # - r-hgu95av2-db # not found in Spack
+  - r-limma@3.56.0
+  - r-marray@1.78.0
+  - r-multtest@2.56.0
+  - r-vsn@3.68.0
+  # - r-affylmgui # not found in Spack
+  # - r-widgettools # not found in Spack
+  - r-genomicranges@1.52.0
+  - r-rsamtools@2.16.0
+  - r-bsgenome@1.68.0
+  - r-bsgenome-hsapiens-ucsc-hg19@1.4.3
+  - r-biocparallel@1.34.0
+  - r-genomicalignments@1.36.0
+  - r-rtracklayer@1.60.0
+  # - r-made4 # not found in Spack
+  - r-graph@1.78.0
+  - r-gseabase@1.62.0
+  # - r-hugene10stprobeset-db # not found in Spack
+  # - r-hugene10sttranscriptcluster-db # not found in Spack
+  # - r-genomegraphs # not found in Spack
+  - r-genomicfeatures@1.52.0
+  - r-variantannotation@1.46.0
+  - r-biovizbase@1.48.0
+  - r-gviz@1.44.0
+  # - r-annmap # not found in Spack
+  - r-impute@1.74.0
+  - r-wgcna@1.72-5
+  - r-edger@3.42.0
+  # - r-beaddatapackr # not found in Spack
+  - r-illuminaio@0.42.0
+  # - r-beadarray # not found in Spack
+  # - r-beadarrayexampledata # not found in Spack
+  - r-annotationforge@1.42.0
+  # - r-illuminahumanv4-db # not found in Spack
+  - r-seqlogo@1.66.0
+  - r-rbgl@1.76.0
+  - r-category@2.66.0
+  - r-gostats@2.66.0
+  - r-dnacopy@1.74.0
+  # - r-ringo # not found in Spack
+  - r-affxparser@1.72.0
+  - r-aroma-light@3.30.0
+  # - r-aroma-apd # not found in Spack
+  # - r-aroma-affymetrix # not found in Spack
+  # - r-aroma-core # not found in Spack
+  # - r-repitools # not found in Spack
+  - r-rsubread@2.16.0
+  - r-deseq@1.42.0
+  # - r-genomeintervals # not found in Spack
+  - r-shortread@1.58.0
+  # - r-easyrnaseq # not found in Spack
+  - r-deseq2@1.46.0
+  - r-rcppgsl@0.3.13
+  - r-pls@2.8-4
+  - r-registry@0.5-1
+  - r-pkgmaker@0.32.10
+  - r-rngtools@1.5.2
+  - r-dorng@1.8.6
+  - r-bumphunter@1.42.0
+  - r-beanplot@1.3.1
+  - r-nor1mix@1.3-3
+  - r-siggenes@1.74.0
+  - r-minfi@1.46.0
+  - r-champdata@2.32.0
+  - r-illumina450probevariants-db@1.36.0
+  - r-sva@3.48.0
+  - r-illuminahumanmethylation450kmanifest@0.4.0
+  - r-methylumi@2.46.0
+  - r-nleqslv@3.3.5
+  - r-lumi@2.52.0
+  - r-fdb-infiniummethylation-hg19@2.2.0
+  - r-illuminahumanmethylationepicanno-ilm10b4-hg19@0.6.0
+  - r-roc@1.76.0
+  - r-watermelon@2.6.0
+  - r-ruv@0.9.7.1
+  - r-champ@2.30.0 # It runs into https://github.com/spack/spack/issues/33237 :(
+  - r-ebseq@2.0.0
+  # - r-copynumber # not found in Spack
+  - r-goseq@1.52.0
+  - r-missmethyl@1.34.0
+  - r-dexseq@1.46.0
+  # - r-karyoploter # not found in Spack
+  - r-pscbs@0.67.0
+  # - r-fmesher # not found in Spack
+  # - r-ecdat # not found in Spack
+  # - r-hkprocess # not found in Spack
+  # - r-mlogit # not found in Spack
+  - r-splancs@2.01-45
+  # - r-tidyterra # not found in Spack
+  # - r-inlaspacetime # not found in Spack
+  # - r-inla # not found in Spack
+
+  view: false
+  concretizer:
+    unify: when_possible
+  config:
+    install_tree:
+      padded_length: 128
