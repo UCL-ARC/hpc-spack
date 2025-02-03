@@ -31,7 +31,12 @@ class AppConfig():
         self.initial_site_modules_yaml = self._subst_setting(config['initial_site_configs']['modules_default'])
         self.initial_site_repos_yaml = self._subst_setting(config['initial_site_configs']['repos_default'])
         self.initial_site_mirrors_yaml = self._subst_setting(config['initial_site_configs']['mirrors_default'])
-        self.initial_site_packages_yaml = self._subst_setting(config['initial_site_configs'][packages_setting_key()])
+        try:
+            self.initial_site_packages_yaml = self._subst_setting(config['initial_site_configs'][packages_setting_key()])
+        except KeyError as err:
+            print("No such OS packages key in ini file, falling back to package defaults: ", err)
+            self.initial_site_packages_yaml = self._subst_setting(config['initial_site_configs']['packages_default'])
+
         self.templates_active_set = self._subst_setting(config['spack_env_templates']['active_set'])
         self.site_archive_root = self._subst_setting(config['spack_env_templates']['archive_root'])
 
