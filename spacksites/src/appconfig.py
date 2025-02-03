@@ -21,7 +21,11 @@ class AppConfig():
         self.spack_version = config['general']['spack_version']
         # TODO add the other scipts in process-env-scripts if they get used
         self.spdsper_script = self._subst_setting(config['process_env_scripts']['spdsper'])
-        self.spd_script = self._subst_setting(config['process_env_scripts'][spd_setting_key()])
+        try:
+            self.spd_script = self._subst_setting(config['process_env_scripts'][spd_setting_key()])
+        except KeyError as err:
+            print("No such OS key in ini file, falling back to spd_default: " + err)
+            self.spd_script = self._subst_setting(config['process_env_scripts']['spd_default'])
 
         self.initial_site_config_yaml = self._subst_setting(config['initial_site_configs']['config_default'])
         self.initial_site_modules_yaml = self._subst_setting(config['initial_site_configs']['modules_default'])
