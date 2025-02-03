@@ -24,7 +24,7 @@ class AppConfig():
         try:
             self.spd_script = self._subst_setting(config['process_env_scripts'][spd_setting_key()])
         except KeyError as err:
-            print("No such OS key in ini file, falling back to spd_default: " + err)
+            print("No such OS key in ini file, falling back to spd_default: ", err)
             self.spd_script = self._subst_setting(config['process_env_scripts']['spd_default'])
 
         self.initial_site_config_yaml = self._subst_setting(config['initial_site_configs']['config_default'])
