@@ -1,4 +1,5 @@
 import os
+import sys
 
 from spacksites.src.helpers import spacksites_dir, spd_setting_key, packages_setting_key
 from configparser import ConfigParser
@@ -24,7 +25,7 @@ class AppConfig():
         try:
             self.spd_script = self._subst_setting(config['process_env_scripts'][spd_setting_key()])
         except KeyError as err:
-            print("No such OS key in ini file, falling back to spd_default: ", err)
+            print("# SPACKSITES: Falling back to spd_default, this OS key not in ini file: ", err, file=sys.stderr)
             self.spd_script = self._subst_setting(config['process_env_scripts']['spd_default'])
 
         self.initial_site_config_yaml = self._subst_setting(config['initial_site_configs']['config_default'])
@@ -34,7 +35,7 @@ class AppConfig():
         try:
             self.initial_site_packages_yaml = self._subst_setting(config['initial_site_configs'][packages_setting_key()])
         except KeyError as err:
-            print("No such OS packages key in ini file, falling back to package defaults: ", err)
+            print("# SPACKSITES: Falling back to package defaults, this OS key not in ini file: ", err, file=sys.stderr)
             self.initial_site_packages_yaml = self._subst_setting(config['initial_site_configs']['packages_default'])
 
         self.templates_active_set = self._subst_setting(config['spack_env_templates']['active_set'])
