@@ -1,0 +1,52 @@
+spack:
+  specs:
+  - matrix:
+    - - bcftools@1.16
+      - beast2@2.7.4
+      - bedtools2@2.31.0
+      - bwa@0.7.17
+      - gatk@4.4.0.0
+      - git@2.46.2
+      - gzip@1.13
+      - hdf5@1.14.3 +cxx +fortran -mpi +hl
+      - hdf5@1.14.3 +fortran +mpi +hl
+      - htslib@1.17
+      - openmpi@4.1.6 fabrics=psm2,cma,ucx,ofi schedulers=sge
+      - python@3.11.6
+      - netcdf-c@4.9.2 -mpi
+      - netcdf-fortran@4.6.1
+      - picard@2.26.2
+      - samtools@1.17
+      # stop it picking an openblas with threads=openmp purely for package reuse
+      - castep@24.1 +libxc ^openblas threads=none
+      - castep@23.1 +libxc ^openblas threads=none
+      - cp2k@2024.3 
+      - gromacs@2024.3 +double
+      - gromacs@2023.5 +double +plumed
+      - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff
+      - namd@2.14 ^charmpp backend=ucx pmi=pmix
+      #- namd@3.0 ^charmpp backend=ucx pmi=pmix
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+
+  modules:
+    default:
+      tcl:
+        projections:
+          # Named packages where we have more than one installed so need different module names.
+          # First match is picked, so more specific need to be at top. 'all' can be anywhere.
+          # Add omp for openmp variants.
+          fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
+          openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+    prefix_inspections:
+      lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+      lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+
