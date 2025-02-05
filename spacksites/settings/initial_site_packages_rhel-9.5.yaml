@@ -1,6 +1,4 @@
 packages:
-  all:
-    compiler: [gcc@12.3.0]
 
   # Slurm, hwloc, ucx and pmix are external. 
   # All MPI things need to use the same hwloc, ucx and pmix as Slurm.
