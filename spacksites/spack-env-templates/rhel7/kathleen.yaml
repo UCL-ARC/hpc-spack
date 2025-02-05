@@ -4,6 +4,8 @@ spack:
     - - orca@6.0.1
     - - '%gcc@12.3.0'
   concretizer:
+    # all these packages should already be in the buildcache
+    reuse: true
     unify: when_possible
   view: false
   include_concrete:
