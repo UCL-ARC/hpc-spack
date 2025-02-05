@@ -1,0 +1,43 @@
+packages:
+  all:
+    compiler: [gcc@12.3.0]
+
+  # Slurm, hwloc, ucx and pmix are external. 
+  # All MPI things need to use the same hwloc, ucx and pmix as Slurm.
+  hwloc:
+    externals:
+    - spec: hwloc:2.4.1
+      prefix: /usr
+    buildable: false
+
+  ucx:
+    externals:
+    - spec: ucx:1.15.0
+      prefix: /usr
+    buildable: false
+
+  pmix:
+    externals:
+    - spec: pmix:3.2.3
+      prefix: /usr
+    buildable: false
+
+  psm2:
+    externals:
+    - spec: psm2:11.2.230
+      prefix: /usr
+    buildable: false
+
+  slurm:
+    externals:
+    - spec: slurm:24 +hwloc +mariadb +ucx +pmix +restd
+      prefix: /usr
+    buildable: false
+    #extra_attributes:
+    #  environment:
+    #    prepend_path:
+    #      CPATH: /usr/include/slurm
+
+  all:
+    compiler: [gcc@12.3.0]
+
