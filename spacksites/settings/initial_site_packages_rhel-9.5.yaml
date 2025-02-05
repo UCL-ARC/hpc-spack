@@ -22,7 +22,7 @@ packages:
       prefix: /usr
     buildable: false
 
-  psm2:
+  opa-psm2:
     externals:
     - spec: psm2:11.2.230
       prefix: /usr
