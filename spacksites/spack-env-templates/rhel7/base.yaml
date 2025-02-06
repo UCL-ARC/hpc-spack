@@ -27,6 +27,8 @@ spack:
       - namd@2.14 ^charmpp backend=ucx pmi=pmix
       #- namd@3.0 ^charmpp backend=ucx pmi=pmix
     - - '%gcc@12.3.0'
+  - gcc@12.3.0
+
   concretizer:
     # all these packages should already be in the buildcache
     reuse: true
