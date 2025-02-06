@@ -14,6 +14,8 @@ spack:
 
   modules:
     default:
+      roots:
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules
       tcl:
         projections:
           # Named packages where we have more than one installed so need different module names.
