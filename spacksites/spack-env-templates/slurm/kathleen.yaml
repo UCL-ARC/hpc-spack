@@ -7,13 +7,19 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - /lustre/shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
-  - /lustre/shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/ompi412
+  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
+  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/ompi412
 
   modules:
     default:
       roots:
-        tcl: /lustre/shared/ucl/apps/spack/0.23/deploy/2025-02/modules
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules
+
+      tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+
       tcl:
         projections:
           # Named packages where we have more than one installed so need different module names.
