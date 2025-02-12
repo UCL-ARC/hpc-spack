@@ -20,7 +20,6 @@ spack:
         all:
           autoload: direct
 
-      tcl:
         projections:
           # Named packages where we have more than one installed so need different module names.
           # First match is picked, so more specific need to be at top. 'all' can be anywhere.
