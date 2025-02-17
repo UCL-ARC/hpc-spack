@@ -7,6 +7,7 @@ spack:
       - bwa@0.7.17
       - gatk@4.4.0.0
       - git@2.46.2
+      - gsl@2.8
       - gzip@1.13
       - hdf5@1.14.3 +cxx +fortran -mpi +hl
       - hdf5@1.14.3 +fortran +mpi +hl
@@ -24,8 +25,14 @@ spack:
       - gromacs@2024.3 +double
       - gromacs@2023.5 +double +plumed
       - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff
+      - libxc@6.2.2
       - namd@2.14 ^charmpp backend=ucx pmi=pmix
       - namd@3.0 ^charmpp backend=ucx pmi=pmix
+      - netlib-scalapack@2.2.0
+      - numactl@2.0.18
+      - openblas@0.3.28 threads=none
+      - openblas@0.3.28 threads=openmp
+      - plumed@2.9.2
     - - '%gcc@12.3.0'
   - gcc@12.3.0
 
