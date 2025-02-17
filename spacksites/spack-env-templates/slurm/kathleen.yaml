@@ -85,8 +85,8 @@ spack:
           # conflict with everything of same name
           conflict:
             - '{name}'
-        #include: ['plumed']
-        exclude: ['gcc', 'intel-one-api', 'intel',
+        exclude: ['glibc', 'gcc-runtime',
+                  'gcc', 'intel-one-api', 'intel',
                   'openmpi', 'intel-mpi', 'intel-oneapi-mpi',
                   'boost', 'cgal', 'eigen', 'fftw', 'gsl', 'gulp', 'hdf5', 'htslib', 'libxc', 'mesa', 'metis', 'mumps',
                   'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip', 
