@@ -1,0 +1,126 @@
+spack:
+  packages:
+    castep:
+      permissions:
+        read: group
+        group: lgcastep
+        #group: ag-archpc-castep
+    orca:
+      permissions:
+        read: group
+        group: legorca
+        #group: ag-archpc-orca
+    vasp@6:
+      permissions:
+        read: group
+        group: legvasp6
+        #group: ag-archpc-vasp6
+
+  specs:
+  - matrix:
+    - - orca@6.0.1
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
+  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/ompi412
+  # Young's gpu environments are in the avx2.yaml
+
+  modules:
+
+    # using modulesets to get flat categories
+    compilers:
+      roots:
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules/compilers
+
+      tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+          # conflict with all other compilers in this section
+          conflict:
+            - 'compilers'
+        include: ['gcc', 'intel-one-api', 'intel']
+        exclude: ['@:']
+        hash_length: 0
+
+        projections:
+          all:  'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
+
+    mpi:
+      roots:
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules/mpi
+
+      tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+          # conflict with all other mpis in this section
+          conflict:
+            - 'mpi'
+        include: ['openmpi', 'intel-mpi', 'intel-oneapi-mpi']
+        exclude: ['@:']
+        hash_length: 0
+
+        projections:
+          all:  'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
+
+    libraries:
+      roots:
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules/libraries
+
+      tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+          # conflict with everything of same name
+          conflict:
+            - '{name}'
+        include: ['boost', 'cgal', 'eigen', 'fftw', 'gsl', 'gulp', 'hdf5', 'htslib', 'libxc', 'mesa', 'metis', 'mumps',
+                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip',
+                  'snappy', 'suitesparse', 'udunits', 'vtk']
+        exclude: ['@:']
+        hash_length: 0
+
+        projections:
+          fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
+          openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+    default:
+      roots:
+        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules/applications
+      tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+          # conflict with everything of same name
+          conflict:
+            - '{name}'
+        exclude: ['glibc', 'gcc-runtime',
+                  'gcc', 'intel-one-api', 'intel',
+                  'openmpi', 'intel-mpi', 'intel-oneapi-mpi',
+                  'boost', 'cgal', 'eigen', 'fftw', 'gsl', 'gulp', 'hdf5', 'htslib', 'libxc', 'mesa', 'metis', 'mumps',
+                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip',
+                  'snappy', 'suitesparse', 'udunits', 'vtk']
+
+        projections:
+          # Named packages where we have more than one installed so need different module names.
+          # First match is picked, so more specific need to be at top. 'all' can be anywhere.
+          # Add omp for openmp variants.
+          gromacs +plumed ^mpi: '{name}/{version}-{^mpi.name}-plumed/{compiler.name}-{compiler.version}'
+
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+    prefix_inspections:
+      lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+      lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
