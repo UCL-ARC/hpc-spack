@@ -1,4 +1,22 @@
 spack:
+
+  packages:
+    castep:
+      permissions:
+        read: group
+        group: lgcastep
+        #group: ag-archpc-castep
+    orca:
+      permissions:
+        read: group
+        group: legorca
+        #group: ag-archpc-orca
+    vasp@6:
+      permissions:
+        read: group
+        group: legvasp6
+        #group: ag-archpc-vasp6
+
   specs:
   - matrix:
     - - openmpi@4.1.2 fabrics=psm2,cma,ucx,ofi schedulers=sge
