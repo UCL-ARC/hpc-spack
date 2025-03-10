@@ -24,8 +24,8 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
-  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/ompi412
+  - /lustre/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/ompi412
 
   modules:
 #    # using modulesets to get flat categories
@@ -94,7 +94,7 @@ spack:
     default:
       roots:
 #        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules/applications
-        tcl: /shared/ucl/apps/spack/0.23/deploy/2025-02/modules
+        tcl: /lustre/apps/spack/0.23/deploy/2025-02/modules
 
       tcl:
         hide_implicits: true

@@ -1,5 +1,12 @@
 mirrors:
+
   buildcache:
+    fetch:
+      url: file:///lustre/apps/spack/0.23/buildcache
+    push:
+      url: file:///lustre/apps/spack/0.23/buildcache
+
+  old_buildcache:
     fetch:
       url: file:///shared/ucl/apps/spack/0.23/buildcache
     push:
@@ -7,9 +14,9 @@ mirrors:
 
   buildcache-private:
     fetch:
-      url: file:///shared/ucl/apps/spack/0.23/buildcache-private
+      url: file:///lustre/apps/spack/0.23/buildcache-private
     push:
-      url: file:///shared/ucl/apps/spack/0.23/buildcache-private
+      url: file:///lustre/apps/spack/0.23/buildcache-private
 
   pkgstore: 
     url: file:///shared/ucl/apps/pkg-store/spack-mirror

@@ -25,7 +25,7 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - /shared/ucl/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
 
   modules:
     default:
