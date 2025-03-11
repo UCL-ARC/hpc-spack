@@ -1,0 +1,20 @@
+mirrors:
+
+  buildcache:
+    fetch:
+      url: file:///shared/ucl/apps/spack/0.23/buildcache
+    push:
+      url: file:///shared/ucl/apps/spack/0.23/buildcache
+
+  buildcache-private:
+    fetch:
+      url: file:///shared/ucl/apps/spack/0.23/buildcache-private
+    push:
+      url: file:///shared/ucl/apps/spack/0.23/buildcache-private
+
+  pkgstore: 
+    url: file:///shared/ucl/apps/pkg-store/spack-mirror
+
+#  manylinuxcache:
+#    url: https://binaries.spack.io/develop/developer-tools-manylinux2014
+
