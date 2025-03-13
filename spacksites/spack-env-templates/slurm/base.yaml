@@ -47,6 +47,7 @@ spack:
       - libxc@6.2.2
       - namd@2.14 ^charmpp backend=ucx pmi=pmix
       - namd@3.0 ^charmpp backend=ucx pmi=pmix
+      - namd@3.0.1 ^charmpp backend=ucx pmi=pmix
       - netlib-scalapack@2.2.0
       - numactl@2.0.18
       - openblas@0.3.28 threads=none
