@@ -8,6 +8,12 @@ packages:
       prefix: /usr
     buildable: false
 
+  libfabric:
+    externals:
+    - spec: libfabric@1.18.0 fabrics=psm2,opx,shm,sockets,tcp,udp
+      prefix: /usr
+    buildable: false
+
   ucx:
     externals:
     - spec: ucx@1.15.0
