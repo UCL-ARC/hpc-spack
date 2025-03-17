@@ -335,8 +335,10 @@ class Charmpp(Package):
         if spec.satisfies("pmi=slurmpmi2"):
             options.append("slurmpmi2")
         if spec.satisfies("pmi=pmix"):
-            options.append("ompipmix")
-            options.extend(["--basedir=%s" % spec["openmpi"].prefix])
+            #options.append("ompipmix")
+            #options.extend(["--basedir=%s" % spec["openmpi"].prefix])
+            options.append("pmix")
+            options.extend(["--basedir=%s" % spec["pmix"].prefix])
 
         if spec.satisfies("backend=mpi"):
             # in intelmpi <prefix>/include and <prefix>/lib fails so --basedir
