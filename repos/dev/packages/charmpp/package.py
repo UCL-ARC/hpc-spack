@@ -1,4 +1,5 @@
 # Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+      - plumed@2.9.2
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -337,7 +338,7 @@ class Charmpp(Package):
         if spec.satisfies("pmi=pmix"):
             #options.append("ompipmix")
             #options.extend(["--basedir=%s" % spec["openmpi"].prefix])
-            options.append("pmix")
+            options.append("openpmix")
             options.extend(["--basedir=%s" % spec["pmix"].prefix])
 
         if spec.satisfies("backend=mpi"):
