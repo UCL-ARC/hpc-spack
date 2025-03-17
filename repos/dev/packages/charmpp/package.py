@@ -2,7 +2,7 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
+# UCL-dev: remove openmpi dependency when pmix
 
 import os
 import platform
@@ -127,11 +127,12 @@ class Charmpp(Package):
     depends_on("libfabric", when="backend=ofi")
     depends_on("slurm@:17-11-9-2", when="pmi=slurmpmi")
     depends_on("slurm@17-11-9-2:", when="pmi=slurmpmi2")
+    depends_on("pmix", when="pmi=pmix")
 
     # FIXME : As of now spack's OpenMPI recipe does not have a PMIx variant
     # But if users have external installs of OpenMPI with PMIx support, this
     # will allow them to build charm++ with it.
-    depends_on("openmpi", when="pmi=pmix")
+    #depends_on("openmpi", when="pmi=pmix")
 
     depends_on("mpi", when="pmi=simplepmi")
     depends_on("mpi", when="pmi=slurmpmi")
