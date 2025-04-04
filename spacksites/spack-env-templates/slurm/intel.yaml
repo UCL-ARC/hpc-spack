@@ -17,13 +17,13 @@ spack:
   - matrix:
     - - intel-oneapi-mpi@2021.14.0 +external-libfabric
       # VASP is tested with 2023.2.0. +cluster gives scalapack
-      - intel-oneapi-mkl@2023.2.0 +cluster 
+      - intel-oneapi-mkl@2023.2.0 +cluster
+      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm 
       - vasp@6.5.1 +hdf5
 #      - hdf5@1.14.3 +fortran +mpi +hl
 #      - plumed@2.9.2
-    - - '%intel-oneapi-compilers@2024.2.1' # VASP is tested with 2024.2
+    - - '%oneapi@2024.2.1' # VASP is tested with 2024.2
   #- intel@20.0.4 # last old Intel - check if we can remove
-  - intel-oneapi-tbb@2022.0.0
 
   # build these with gcc
   - matrix:
