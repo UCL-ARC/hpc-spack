@@ -111,6 +111,10 @@ spack:
 #                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip', 
 #                  'snappy', 'suitesparse', 'udunits', 'vtk']
         hash_length: 0
+	intel-oneapi-mpi:
+          environment:
+            set:
+              SLURM_MPI_TYPE: 'pmi2'
 
         projections:
           # Named packages where we have more than one installed so need different module names.
