@@ -19,7 +19,7 @@ spack:
       # VASP is tested with 2023.2.0. +cluster gives scalapack
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
-      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm 
+      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
       - vasp@6.5.1 +hdf5
 #      - hdf5@1.14.3 +fortran +mpi +hl
 #      - plumed@2.9.2
