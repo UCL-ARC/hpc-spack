@@ -120,6 +120,9 @@ spack:
         openmpi:
           conflict:
             - 'mpi'
+#          environment:
+#            set:
+#              OMPI_MCA_btl: 'self,vader'
 
         projections:
           # Named packages where we have more than one installed so need different module names.
