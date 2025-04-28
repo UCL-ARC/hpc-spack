@@ -20,17 +20,12 @@ spack:
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
       - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
-      - vasp@6.5.1 +hdf5
-#      - hdf5@1.14.3 +fortran +mpi +hl
+      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
+      - hdf5@1.14.3 +fortran +mpi +hl
 #      - plumed@2.9.2
     - - '%oneapi@2024.2.1' # VASP is tested with 2024.2
   #- intel@20.0.4 # last old Intel - check if we can remove
-
-  # build these with gcc
-  - matrix:
-    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
-  #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-    - - '%gcc@12.3.0'
+  - intel-oneapi-compilers@2024.2.1
 
   concretizer:
     unify: when_possible
@@ -40,14 +35,42 @@ spack:
 
   modules:
     default:
+
+      roots:
+        tcl: $env/modules
+
       tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+          # conflict with everything of same name
+          conflict:
+            - '{name}'
+        exclude: ['glibc', 'gcc-runtime']
+        hash_length: 0
+        intel-oneapi-mpi:
+          conflict:
+            - 'mpi'
+          environment:
+            set:
+              SLURM_MPI_TYPE: 'pmi2'
+        openmpi:
+          conflict:
+            - 'mpi'
+
         projections:
           # Named packages where we have more than one installed so need different module names.
           # First match is picked, so more specific need to be at top. 'all' can be anywhere.
           # Add omp for openmp variants.
+          gcc: 'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
+          intel-oneapi-compilers: 'compilers/intel-oneapi/{version}/{compiler.name}-{compiler.version}'
+          openmpi: 'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
+          intel-oneapi-mpi: 'mpi/{name}/{version}/intel-oneapi-{compiler.version}'
+
           fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
           fftw +openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
           openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+          intel-oneapi-mkl ^mpi: '{name}/{version}-{^mpi.name}/intel-oneapi-{compiler.version}'
 
           gromacs +plumed ^mpi: '{name}/{version}-{^mpi.name}-plumed/{compiler.name}-{compiler.version}'
           namd ^mpi ^charmpp backend=ofi: '{name}/{version}-{^mpi.name}-ofi/{compiler.name}-{compiler.version}'
@@ -65,4 +88,20 @@ spack:
     prefix_inspections:
       lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
       lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+
+  # should go into compilers after first_compiler.yaml is built
+  compilers:
+  - compiler:
+      spec: oneapi@=2024.2.1
+      paths:
+        cc: /lustre/apps/spack/0.23/deploy/2025-02/spack/opt/spack/linux-rhel9-broadwell/gcc-12.3.0/intel-oneapi-compilers-2024.2.1-vrwg3ue262yl3wsaxl32qdhlwl7ypqfr/compiler/latest/bin/icx
+        cxx: /lustre/apps/spack/0.23/deploy/2025-02/spack/opt/spack/linux-rhel9-broadwell/gcc-12.3.0/intel-oneapi-compilers-2024.2.1-vrwg3ue262yl3wsaxl32qdhlwl7ypqfr/compiler/latest/bin/icpx
+        f77: /lustre/apps/spack/0.23/deploy/2025-02/spack/opt/spack/linux-rhel9-broadwell/gcc-12.3.0/intel-oneapi-compilers-2024.2.1-vrwg3ue262yl3wsaxl32qdhlwl7ypqfr/compiler/latest/bin/ifx
+        fc: /lustre/apps/spack/0.23/deploy/2025-02/spack/opt/spack/linux-rhel9-broadwell/gcc-12.3.0/intel-oneapi-compilers-2024.2.1-vrwg3ue262yl3wsaxl32qdhlwl7ypqfr/compiler/latest/bin/ifx
+      flags: {}
+      operating_system: rhel9
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
 

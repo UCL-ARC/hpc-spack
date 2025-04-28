@@ -58,6 +58,12 @@ spack:
     - - '%gcc@12.3.0'
   - gcc@12.3.0
 
+  # Intel compilers built with gcc
+  - matrix:
+    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
+  #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+    - - '%gcc@12.3.0'
+
   concretizer:
     unify: when_possible
   view: false
@@ -69,6 +75,10 @@ spack:
           # Named packages where we have more than one installed so need different module names.
           # First match is picked, so more specific need to be at top. 'all' can be anywhere.
           # Add omp for openmp variants.
+          gcc: 'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
+          intel-oneapi-compilers: 'compilers/intel-oneapi/{version}/{compiler.name}-{compiler.version}'
+          openmpi: 'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
+
           fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
           fftw +openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
           openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
