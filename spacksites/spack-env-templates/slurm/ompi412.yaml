@@ -30,6 +30,10 @@ spack:
   modules:
     default:
       tcl:
+        hide_implicits: true
+        all:
+          autoload: direct
+
         projections:
           # Named packages where we have more than one installed so need different module names.
           # First match is picked, so more specific need to be at top. 'all' can be anywhere.
