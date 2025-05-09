@@ -31,7 +31,7 @@ spack:
   modules:
     default:
       roots:
-        tcl: /lustre/apps/spack/0.23/deploy/2025-02/modules
+        tcl: $spack/../modules
       tcl:
         exclude: ['glibc', 'gcc-runtime']
 #        exclude: ['glibc', 'gcc-runtime',
