@@ -33,10 +33,6 @@ spack:
       roots:
         tcl: /lustre/apps/spack/0.23/deploy/2025-02/modules
       tcl:
-        all:
-          # conflict with everything of same name
-          conflict:
-            - '{name}'
         exclude: ['glibc', 'gcc-runtime']
 #        exclude: ['glibc', 'gcc-runtime',
 #                  'gcc', 'intel-one-api', 'intel',
@@ -45,14 +41,10 @@ spack:
 #                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip', 
 #                  'snappy', 'suitesparse', 'udunits', 'vtk']
         intel-oneapi-mpi:
-          conflict:
-            - 'mpi'
           environment:
             set:
               SLURM_MPI_TYPE: 'pmi2'
-        openmpi:
-          conflict:
-            - 'mpi'
+#        openmpi:
 #          environment:
 #            set:
 #              OMPI_MCA_btl: 'self,vader'

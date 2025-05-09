@@ -40,21 +40,11 @@ spack:
         tcl: $env/modules
 
       tcl:
-        all:
-          # conflict with everything of same name
-          conflict:
-            - '{name}'
         exclude: ['glibc', 'gcc-runtime']
-        hash_length: 0
         intel-oneapi-mpi:
-          conflict:
-            - 'mpi'
           environment:
             set:
               SLURM_MPI_TYPE: 'pmi2'
-        openmpi:
-          conflict:
-            - 'mpi'
 
   # should go into compilers after first_compiler.yaml is built
   compilers:
