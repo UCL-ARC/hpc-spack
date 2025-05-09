@@ -41,10 +41,6 @@ spack:
 
       tcl:
         exclude: ['glibc', 'gcc-runtime']
-        intel-oneapi-mpi:
-          environment:
-            set:
-              SLURM_MPI_TYPE: 'pmi2'
 
   # should go into compilers after first_compiler.yaml is built
   compilers:
