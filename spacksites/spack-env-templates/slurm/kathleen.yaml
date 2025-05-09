@@ -32,8 +32,7 @@ spack:
     default:
       roots:
         tcl: $spack/../modules
-      tcl:
-        exclude: ['glibc', 'gcc-runtime']
+#      tcl:
 #        exclude: ['glibc', 'gcc-runtime',
 #                  'gcc', 'intel-one-api', 'intel',
 #                  'openmpi', 'intel-mpi', 'intel-oneapi-mpi',

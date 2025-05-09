@@ -39,9 +39,6 @@ spack:
       roots:
         tcl: $env/modules
 
-      tcl:
-        exclude: ['glibc', 'gcc-runtime']
-
   # should go into compilers after first_compiler.yaml is built
   compilers:
   - compiler:
