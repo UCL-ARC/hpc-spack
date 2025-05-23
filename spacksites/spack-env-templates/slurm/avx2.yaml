@@ -1,0 +1,26 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      target: [x86_64_v3]
+
+  # the Michael avx2 end applications and Young GPU applications
+  specs:
+  - matrix:
+    - - bcftools@1.16
+      - beast2@2.7.4
+      - bedtools2@2.31.0
+      - bwa@0.7.17
+      - gatk@4.4.0.0
+      - orca@avx2-6.0.1
+      - picard@2.26.2
+      - samtools@1.17
+    - - '%gcc@12.3.0'
+
+  include:
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_first.yaml
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu-on-gpu.yaml
+  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_third.yaml

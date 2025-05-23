@@ -1,0 +1,23 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      target: [x86_64_v3] # incs the Broadwell and AMD EPYC (zen3)
+
+  specs:
+  - matrix:
+    - - autoconf
+      - autoconf-archive
+      - autotools
+      - cmake
+      - git@2.46.2
+      # - gmake # don't have it yet
+      - gzip@1.13
+      - libtool
+      - perl@5.38.0
+      - texinfo
+    - - '%gcc@12.3.0'
+  - gcc@12.3.0
