@@ -1,0 +1,34 @@
+spack:
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - 'dbcsr@2.6.0 +cuda cuda_arch=60' # only one allowed
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - ${SPACK_ROOT}/var/spack/environments/gpu_first
+
+  modules:
+    default:
+      tcl:
+        projections:
+          # Named packages where we have more than one installed so need different module names.
+          # First match is picked, so more specific need to be at top. 'all' can be anywhere.
+          # Add omp for openmp variants.
+          fftw +openmp ^mpi+cuda: '{name}/{version}-{^mpi.name}-omp-cuda/{compiler.name}-{compiler.version}'
+          fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
+          fftw ~openmp ^mpi+cuda: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+          plumed ^mpi+cuda: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH, LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH, LIBRARY_PATH]
+

@@ -1,0 +1,43 @@
+spack:
+
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - 'cuda@12.2.0' # v12.2.0 matches the driver installed on Myriad
+      #- 'namd@2.14 +cuda cuda_arch=60,70,80' # requires cuda < 12
+       - 'py-alphafold@2.2.4 +cuda cuda_arch=60,70,80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=60,70,80'
+      # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
+      - gromacs@2024.3 +cuda cuda_arch=60,70,80 ^openmpi@4.1.6 +cuda
+      - gromacs@2023.5 +cuda cuda_arch=60,70,80 +plumed ^openmpi@4.1.6 +cuda
+      - openmpi@4.1.6 +cuda cuda_arch=60,70,80 fabrics=psm2,cma,ucx,ofi schedulers=sge
+    - - '%gcc@12.3.0'
+  # nvhpc packages
+  #- 'vasp@6.4.3 %nvhpc +cuda cuda_arch=60,70,80 +hdf5'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - ${SPACK_ROOT}/var/spack/environments/base
+
+  modules:
+    default:
+      tcl:
+        projections:
+          # Named packages where we have more than one installed so need different module names.
+          # First match is picked, so more specific need to be at top. 'all' can be anywhere.
+          # Add omp for openmp variants.
+          fftw +openmp ^mpi+cuda: '{name}/{version}-{^mpi.name}-omp-cuda/{compiler.name}-{compiler.version}'
+          fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
+          fftw ~openmp ^mpi+cuda: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+          plumed ^mpi+cuda: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+
+          ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+          ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+          ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+          all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH, LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH, LIBRARY_PATH]
+
