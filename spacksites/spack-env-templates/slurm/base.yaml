@@ -55,6 +55,7 @@ spack:
       - openblas@0.3.28 threads=none
       - openblas@0.3.28 threads=openmp
       - plumed@2.9.2
+      - quantum-espresso@7.4
     - - '%gcc@12.3.0'
   - gcc@12.3.0
 
