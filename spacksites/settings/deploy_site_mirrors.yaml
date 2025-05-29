@@ -19,7 +19,7 @@ mirrors:
 #      url: file:///shared/ucl/apps/spack/0.23/buildcache
 
   pkgstore: 
-    url: file:///shared/ucl/apps/pkg-store/spack-mirror
+    url: file:///lustre/apps/pkg-store/spack-mirror
 
 #  manylinuxcache:
 #    url: https://binaries.spack.io/develop/developer-tools-manylinux2014
