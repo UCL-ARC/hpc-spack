@@ -39,7 +39,7 @@ spack:
       - samtools@1.17
     - - '%gcc@12.3.0'
 
-  include:
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_first.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu-on-gpu.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_third.yaml
+  include_concrete:
+  - ${SPACK_ROOT}/var/spack/environments/gpu_first
+  - ${SPACK_ROOT}/var/spack/environments/gpu-on-gpu
+  - ${SPACK_ROOT}/var/spack/environments/gpu_third
