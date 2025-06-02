@@ -2,7 +2,7 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-# UCL: added VASP 6.5.1 
+# UCL: added VASP 6.5.1, added oneapi and intel compiler arch files to edit() 
 
 import os
 
@@ -70,6 +70,10 @@ class Vasp(MakefilePackage, CudaPackage):
     )
     variant("shmem", default=True, description="Enable use_shmem build flag")
     variant("hdf5", default=False, when="@6.2:", description="Enabled HDF5 support")
+
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", type="build")
 
     depends_on("rsync", type="build")
     depends_on("blas")
@@ -145,6 +149,28 @@ class Vasp(MakefilePackage, CudaPackage):
             if spec.satisfies("+openmp"):
                 include_string += "_omp"
             make_include = join_path("arch", include_string)
+
+        # intel-oneapi 2024.0 ono - use oneapi arch file
+        elif spec.satisfies("@6.3.0: %oneapi@2024.0:"):
+            include_string += "oneapi"
+            if spec.satisfies("+openmp"):
+                include_string += "_omp"
+            make_include = join_path("arch", include_string)
+
+        # intel-oneapi 2023 and earlier - use intel arch file
+        elif spec.satisfies("%oneapi@:2023.2.4"):
+            include_string += "intel"
+            if spec.satisfies("+openmp"):
+                include_string += "_omp"
+            make_include = join_path("arch", include_string)
+
+        # intel classic
+        elif spec.satisfies("%intel"):
+            include_string += "intel"
+            if spec.satisfies("+openmp"):
+                include_string += "_omp"
+            make_include = join_path("arch", include_string)
+
         # nvhpc
         elif spec.satisfies("%nvhpc"):
             qd_root = join_path(
