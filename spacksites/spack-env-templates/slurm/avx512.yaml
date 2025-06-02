@@ -9,6 +9,7 @@ spack:
 
   # the Young avx512 end CPU applications
   specs:
+  # Packages built with GCC
   - matrix:
     - - bcftools@1.16
       - beast2@2.7.4
@@ -38,3 +39,9 @@ spack:
       - plumed@2.9.2
       - samtools@1.17
     - - '%gcc@12.3.0'
+
+  # Packages built with Intel compiler
+  - matrix:
+    - - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
+      - hdf5@1.14.3 +fortran +mpi +hl
+    - - '%oneapi@2024.2.1'
