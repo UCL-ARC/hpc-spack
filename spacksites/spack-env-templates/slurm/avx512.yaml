@@ -38,8 +38,3 @@ spack:
       - plumed@2.9.2
       - samtools@1.17
     - - '%gcc@12.3.0'
-
-  include:
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_first.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu-on-gpu.yaml
-  - $HPC_SPACK_ROOT/spacksites/spack-env-templates/dev1/build/gpu_third.yaml
