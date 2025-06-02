@@ -1,4 +1,15 @@
 packages:
+  castep:
+    permissions:
+      read: group
+      group: ag-archpc-castep
+  orca:
+    permissions:
+      read: group
+      group: ag-archpc-orca
+  vasp@6:
+    permissions:
+      read: group
+      group: ag-archpc-vasp6
   all:
     compiler: [gcc@12.3.0]
-
