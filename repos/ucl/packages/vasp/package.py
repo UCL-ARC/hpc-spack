@@ -153,6 +153,8 @@ class Vasp(MakefilePackage, CudaPackage):
         # intel-oneapi 2024.0 ono - use oneapi arch file
         elif spec.satisfies("@6.3.0: %oneapi@2024.0:"):
             include_string += "oneapi"
+            # does not pick up MKL's include/fftw otherwise
+            incs.append(join_path(spec["fftw-api"].headers.include_flags, "fftw"))
             if spec.satisfies("+openmp"):
                 include_string += "_omp"
             make_include = join_path("arch", include_string)
@@ -160,6 +162,8 @@ class Vasp(MakefilePackage, CudaPackage):
         # intel-oneapi 2023 and earlier - use intel arch file
         elif spec.satisfies("%oneapi@:2023.2.4"):
             include_string += "intel"
+            # does not pick up MKL's include/fftw otherwise
+            incs.append(join_path(spec["fftw-api"].headers.include_flags, "fftw"))
             if spec.satisfies("+openmp"):
                 include_string += "_omp"
             make_include = join_path("arch", include_string)
@@ -167,6 +171,8 @@ class Vasp(MakefilePackage, CudaPackage):
         # intel classic
         elif spec.satisfies("%intel"):
             include_string += "intel"
+            # does not pick up MKL's include/fftw otherwise
+            incs.append(join_path(spec["fftw-api"].headers.include_flags, "fftw"))
             if spec.satisfies("+openmp"):
                 include_string += "_omp"
             make_include = join_path("arch", include_string)
