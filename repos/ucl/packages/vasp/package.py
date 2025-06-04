@@ -177,9 +177,8 @@ class Vasp(MakefilePackage, CudaPackage):
             # where icc and icpc no longer exist
             if spec.satisfies("@:6.2 %oneapi@2024.0:"):
                 # not compatible with c++17
-                env["CXXFLAGS"] = "-std=c++14"
                 filter_file("icc", spack_cc, make_include)
-                filter_file("icpc", spack_cxx, make_include)
+                filter_file("icpc", spack_cxx + " -std=c++14", make_include)
                 # may need fflags.append("-Wno-register") - not safe
 
         # nvhpc
