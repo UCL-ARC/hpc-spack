@@ -367,7 +367,7 @@ class Vasp(MakefilePackage, CudaPackage):
 
     def build(self, spec, prefix):
         # 5.x does not build successfully in parallel
-        if spec.satifies("@:5"):
+        if spec.satisfies("@:5"):
             make("DEPS=1", "std", "gam", "ncl", parallel = False)
         if spec.satisfies("@6.0:6.2"):
             if spec.satisfies("+cuda"):
