@@ -176,9 +176,11 @@ class Vasp(MakefilePackage, CudaPackage):
             make_include = join_path("arch", include_string)
             # where icc and icpc no longer exist
             if spec.satisfies("@:6.2 %oneapi@2024.0:"):
+                # not compatible with c++17
+                env["CXXFLAGS"] = "-std=c++14"
                 filter_file("icc", spack_cc, make_include)
                 filter_file("icpc", spack_cxx, make_include)
-                # may need fflags.append("-Wno-register")
+                # may need fflags.append("-Wno-register") - not safe
 
         # nvhpc
         elif spec.satisfies("%nvhpc"):
