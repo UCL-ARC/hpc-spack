@@ -93,6 +93,10 @@ class Vasp(MakefilePackage, CudaPackage):
     # at the very least the nvhpc mpi seems required
     depends_on("nvhpc+mpi+lapack+blas", when="%nvhpc")
 
+    # 5.x does not build successfully in parallel
+    if spec.satifies("@:5"):
+      parallel = False
+
     conflicts(
         "%gcc@:8", msg="GFortran before 9.x does not support all features needed to build VASP"
     )
@@ -179,7 +183,7 @@ class Vasp(MakefilePackage, CudaPackage):
                 # not compatible with c++17
                 filter_file("icc", spack_cc, make_include)
                 filter_file("icpc", spack_cxx + " -std=c++14", make_include)
-                # may need fflags.append("-Wno-register") - not safe
+                llibs.extend(["-Lparser", "-lparser"])
 
         # nvhpc
         elif spec.satisfies("%nvhpc"):
