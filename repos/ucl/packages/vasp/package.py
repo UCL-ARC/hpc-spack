@@ -93,10 +93,6 @@ class Vasp(MakefilePackage, CudaPackage):
     # at the very least the nvhpc mpi seems required
     depends_on("nvhpc+mpi+lapack+blas", when="%nvhpc")
 
-    # 5.x does not build successfully in parallel
-    if spec.satifies("@:5"):
-      parallel = False
-
     conflicts(
         "%gcc@:8", msg="GFortran before 9.x does not support all features needed to build VASP"
     )
@@ -370,7 +366,10 @@ class Vasp(MakefilePackage, CudaPackage):
             spack_env.set("NVHPC_CUDA_HOME", self.spec["cuda"].prefix)
 
     def build(self, spec, prefix):
-        if spec.satisfies("@:6.2"):
+        # 5.x does not build successfully in parallel
+        if spec.satifies("@:5"):
+            make("DEPS=1", "std", "gam", "ncl", parallel = False)
+        if spec.satisfies("@6.0:6.2"):
             if spec.satisfies("+cuda"):
                 make("DEPS=1", "all")
             else:
