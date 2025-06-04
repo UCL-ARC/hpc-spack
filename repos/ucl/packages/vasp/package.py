@@ -167,7 +167,7 @@ class Vasp(MakefilePackage, CudaPackage):
             make_include = join_path("arch", include_string)
 
         # intel classic or older vasp with oneapi
-        elif spec.satisfies("%intel") or spec.satisfies("@:6.2: %oneapi")
+        elif spec.satisfies("%intel") or spec.satisfies("@:6.2: %oneapi"):
             include_string += "intel"
             # does not pick up MKL's include/fftw otherwise
             incs.append(join_path(spec["fftw-api"].headers.include_flags, "fftw"))
