@@ -8,10 +8,18 @@ spack:
       permissions:
         read: group
         group: ag-archpc-orca
+    vasp@5:
+      permissions:
+        read: group
+        group: ag-archpc-vasp5
     vasp@6:
       permissions:
         read: group
         group: ag-archpc-vasp6
+    vasp@6.5:
+      permissions:
+        read: group
+        group: ag-archpc-vasp65
 
   specs:
   - matrix:
@@ -21,6 +29,8 @@ spack:
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
       - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
       - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
+      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
+      - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
       - hdf5@1.14.3 +fortran +mpi +hl
 #      - plumed@2.9.2
     - - '%oneapi@2024.2.1' # VASP is tested with 2024.2
