@@ -30,7 +30,7 @@ spack:
       - hdf5@1.14.3 +cxx +fortran -mpi +hl
       - hdf5@1.14.3 +fortran +mpi +hl
       - htslib@1.17
-      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
       - python@3.11.6
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
