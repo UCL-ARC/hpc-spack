@@ -43,7 +43,7 @@ spack:
           environment:
             set:
               SLURM_MPI_TYPE: 'pmi2'
-#        openmpi:
-#          environment:
-#            set:
-#              OMPI_MCA_btl: 'self,vader'
+        openmpi:
+          environment:
+            set:
+              OMPI_MCA_btl: 'self,vader'
