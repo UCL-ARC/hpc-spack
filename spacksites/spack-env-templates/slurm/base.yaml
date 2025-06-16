@@ -16,6 +16,11 @@ spack:
         #group: legvasp6
         group: ag-archpc-vasp6
 
+    # must build with make -j1
+    quantum-espresso:
+      package_attributes:
+        parallel: false
+
   specs:
   - matrix:
     - - bcftools@1.16
