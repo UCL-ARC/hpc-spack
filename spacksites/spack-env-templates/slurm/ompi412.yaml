@@ -25,4 +25,4 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-05/spack/var/spack/environments/base
