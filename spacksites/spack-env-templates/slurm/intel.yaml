@@ -8,15 +8,15 @@ spack:
       permissions:
         read: group
         group: ag-archpc-orca
-    vasp@5:
-      permissions:
-        read: group
-        group: ag-archpc-vasp5
-    vasp@6:
-      permissions:
-        read: group
-        group: ag-archpc-vasp6
-    vasp@6.5:
+    #vasp@5:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp5
+    #vasp@6:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp6
+    vasp:
       permissions:
         read: group
         group: ag-archpc-vasp65
