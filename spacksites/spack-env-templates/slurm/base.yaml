@@ -23,10 +23,14 @@ spack:
 
   specs:
   - matrix:
-    - - bcftools@1.16
+    - - apr
+      - apr-util
+      - bcftools@1.16
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
+      - cmake
+      - curl
       - fftw@3.3.10 -mpi -openmp
       - gatk@4.4.0.0
       - git@2.46.2
@@ -41,6 +45,7 @@ spack:
       - netcdf-fortran@4.6.1
       - picard@2.26.2
       - samtools@1.17
+      - subversion
       # stop it picking an openblas with threads=openmp purely for package reuse
       - castep@24.1 +libxc ^openblas threads=none
       - castep@23.1 +libxc ^openblas threads=none
