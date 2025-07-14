@@ -3,4 +3,5 @@ config:
   build_jobs: 6
   install_tree:
     padded_length: 256
- 
+  template_dirs:
+    - $spack/etc/spack/templates/modules 
