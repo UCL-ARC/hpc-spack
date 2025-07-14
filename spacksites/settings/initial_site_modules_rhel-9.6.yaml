@@ -30,6 +30,13 @@ modules:
           set:
             HDF5_USE_FILE_LOCKING: 'FALSE'
 
+      castep:
+        template: 'group-restricted_castep.tcl'
+      orca:
+        template: 'group-restricted_orca.tcl'
+      vasp:
+        template: 'group-restricted_vasp.tcl'
+
       projections:
         # Named packages where we have more than one installed so need different module names.
         # First match is picked, so more specific need to be at top. 'all' can be anywhere.
