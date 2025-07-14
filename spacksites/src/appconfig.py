@@ -30,6 +30,7 @@ class AppConfig():
 
         self.initial_site_config_yaml = self._subst_setting(config['initial_site_configs']['config_default'])
         self.initial_site_modules_yaml = self._subst_setting(config['initial_site_configs']['modules_default'])
+        self.initial_module_templates = self._subst_setting(config['initial_site_configs']['module_templates_default'])
         self.initial_site_repos_yaml = self._subst_setting(config['initial_site_configs']['repos_default'])
         self.initial_site_mirrors_yaml = self._subst_setting(config['initial_site_configs']['mirrors_default'])
         try:
