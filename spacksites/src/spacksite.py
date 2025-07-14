@@ -9,7 +9,7 @@ class Site():
     # if not using the default, user code should update Scripts.dir 
     # before instantiating any Site objects
         
-    def __init__(self, dir, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml,
+    def __init__(self, dir, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml, initial_module_templates,
                  spd_script, spdsper_script,
                  spack_version=None, error_if_non_existent=False):
         if error_if_non_existent:
@@ -50,11 +50,13 @@ class Site():
                         '--branch', self.spack_version, 'https://github.com/spack/spack.git'])
         os.chdir(current_dir)
 
-    def configure_spack(self, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml):
+    def configure_spack(self, initial_config_yaml, initial_modules_yaml, initial_packages_yaml, initial_repos_yaml, initial_mirrors_yaml, initial_module_templates):
         shutil.copy(initial_config_yaml, os.path.join(self.yaml_dir, 'config.yaml'))
         shutil.copy(initial_modules_yaml, os.path.join(self.yaml_dir, 'modules.yaml'))
         shutil.copy(initial_packages_yaml, os.path.join(self.yaml_dir, 'packages.yaml'))
         shutil.copy(initial_repos_yaml, os.path.join(self.yaml_dir, 'repos.yaml'))
+        # copy in the whole templates/modules tree
+        shutil.copytree(initial_module_templates, self.yaml_dir)
         # site will need a key to sign packages - this is a for now fix - TODO may want to import the same keys to all sites, also 'ARCHPCSolutions', 'rc-support@ucl.ac.uk' are magic numbers - remove to a settings file
         self.run_command(['spack', 'gpg', 'create', 'ARCHPCSolutions', 'rc-support@ucl.ac.uk'])
         # 2 steps to use the common build cache - thw first, a config copy, links it into this site as spack mirror
