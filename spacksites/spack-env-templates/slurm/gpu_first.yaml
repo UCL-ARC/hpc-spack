@@ -3,7 +3,7 @@ spack:
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
-    - - 'cuda@12.2.0' # v12.2.0 matches the driver installed on Myriad
+    - - 'cuda@12.2.2' # v12.2.2 matches the latest CUDA installed on Young
       #- 'namd@2.14 +cuda cuda_arch=60,70,80' # requires cuda < 12
       - 'py-alphafold@2.2.4 +cuda cuda_arch=60,70,80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=60,70,80'
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
@@ -17,4 +17,4 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - ${SPACK_ROOT}/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-02/spack/var/spack/environments/base
