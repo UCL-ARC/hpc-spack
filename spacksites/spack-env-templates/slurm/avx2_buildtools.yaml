@@ -11,7 +11,7 @@ spack:
   - matrix:
     - - autoconf
       - autoconf-archive
-      - autotools
+      - automake
       - cmake
       - git@2.46.2
       # - gmake # don't have it yet
