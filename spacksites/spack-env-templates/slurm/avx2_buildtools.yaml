@@ -20,4 +20,4 @@ spack:
       - perl@5.38.0
       - texinfo
     - - '%gcc@12.3.0'
-  - gcc@12.3.0
+  - gcc@12.3.0 +binutils
