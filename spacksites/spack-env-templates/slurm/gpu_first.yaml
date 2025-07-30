@@ -1,5 +1,8 @@
 spack:
-
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3'
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
