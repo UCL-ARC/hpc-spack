@@ -9,6 +9,6 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - ${SPACK_ROOT}/var/spack/environments/base
-  - ${SPACK_ROOT}/var/spack/environments/gpu_first
-  - ${SPACK_ROOT}/var/spack/environments/gpu-on-gpu
+  - /lustre/apps/spack/0.23/deploy/2025-07/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-07/spack/var/spack/environments/gpu_first
+  - /lustre/apps/spack/0.23/deploy/2025-07/spack/var/spack/environments/gpu-on-gpu
