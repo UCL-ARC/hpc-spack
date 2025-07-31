@@ -5,7 +5,8 @@ spack:
 
   packages:
     all:
-      target: [x86_64_v3] # incs the Broadwell and AMD EPYC (zen3)
+      require:
+      - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
 
   specs:
   - matrix:
