@@ -18,7 +18,6 @@ spack:
       - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
       - python@3.11.6
     - - '%gcc@12.3.0'
-  - gcc@12.3.0
 
   # Packages built with Intel compiler
   - matrix:
