@@ -48,6 +48,6 @@ spack:
     - - '%oneapi@2024.2.1'
 
   include_concrete:
-  - ${SPACK_ROOT}/var/spack/environments/gpu_first
-  - ${SPACK_ROOT}/var/spack/environments/gpu-on-gpu
-  - ${SPACK_ROOT}/var/spack/environments/gpu_third
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu_first
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu-on-gpu
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu_third
