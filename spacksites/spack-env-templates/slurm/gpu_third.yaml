@@ -12,5 +12,5 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2025-07/spack/var/spack/environments/gpu_first
-  - /lustre/apps/spack/0.23/deploy/2025-07/spack/var/spack/environments/gpu-on-gpu
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu_first
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu-on-gpu
