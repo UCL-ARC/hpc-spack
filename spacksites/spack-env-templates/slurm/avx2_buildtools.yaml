@@ -22,3 +22,10 @@ spack:
       - texinfo
     - - '%gcc@12.3.0'
   - gcc@12.3.0 +binutils
+
+  # Intel compilers built with gcc
+  - matrix:
+    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
+  #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+    - - '%gcc@12.3.0'
+
