@@ -1,0 +1,23 @@
+spack:
+
+  specs:
+  - matrix:
+    - - orca@6.0.1
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx2
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx2_buildtools
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx512
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/multiarch
+
+  modules:
+    default:
+      roots:
+        tcl: $spack/../modules
+        intel-oneapi-mpi:
+          environment:
+            set:
+              SLURM_MPI_TYPE: 'pmi2'

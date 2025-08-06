@@ -1,0 +1,15 @@
+spack:
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3'
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - 'dbcsr@2.6.0 +cuda cuda_arch=60' # only one allowed
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/gpu_first
