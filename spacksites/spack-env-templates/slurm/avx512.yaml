@@ -34,7 +34,6 @@ spack:
       - netcdf-fortran@4.6.1
       - netlib-scalapack@2.2.0
       - numactl@2.0.18
-      - orca@6.0.1
       - picard@2.26.2
       - plumed@2.9.2
       - samtools@1.17
