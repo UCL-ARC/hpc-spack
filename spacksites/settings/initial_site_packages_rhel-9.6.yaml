@@ -56,6 +56,13 @@ packages:
       prefix: /usr
     buildable: false
 
+  # external openssl means we need external curl
+  curl:
+    externals:
+    - spec: curl@7.76.1
+      prefix: /usr
+    buildable: false
+
   all:
     compiler: [gcc@12.3.0]
 
