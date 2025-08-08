@@ -8,6 +8,10 @@ spack:
       require:
       - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
 
+  # All the multi-kernel libraries and MPIs to be used by the other environments are built here.
+  # (Minus special-case MPI versions only used by one application).
+  # This should be included in any environment requiring fftw, openblas, mkl or these MPIs.
+
   specs:
   # Packages built with GCC
   - matrix:
@@ -15,7 +19,7 @@ spack:
       # - julia ^llvm~clang~gold~polly ^openblas threads=openmp
       - openblas@0.3.28 +dynamic_dispatch threads=none
       - openblas@0.3.28 +dynamic_dispatch threads=openmp
-      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
       - python@3.11.6
     - - '%gcc@12.3.0'
 
@@ -24,10 +28,9 @@ spack:
     - - intel-oneapi-mpi@2021.14.0 +external-libfabric
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
       - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
-      - openmpi@4.1.6 fabrics=psm2,ucx,ofi schedulers=slurm +legacylaunchers
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
     - - '%oneapi@2024.2.1'
 
-  # Intel compilers built with gcc
-  - matrix:
-    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
-    - - '%gcc@12.3.0'
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx2_buildtools
+
