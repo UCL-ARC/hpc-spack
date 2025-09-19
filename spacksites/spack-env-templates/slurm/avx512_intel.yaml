@@ -19,8 +19,8 @@ spack:
     - - '%oneapi@2024.2.1'
 
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx2_buildtools
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/multiarch
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/multiarch_intel
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx512
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/avx2_buildtools
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/multiarch
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/multiarch_intel
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/avx512
 
