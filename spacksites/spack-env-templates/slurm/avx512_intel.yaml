@@ -3,10 +3,6 @@ spack:
     unify: when_possible
   view: false
 
-  packages:
-    all:
-      target: [x86_64_v4]
-
   # the Young avx512 end CPU applications
   specs:
 
@@ -16,7 +12,7 @@ spack:
       - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
       - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
       - hdf5@1.14.3 +fortran +mpi +hl
-    - - '%oneapi@2024.2.1'
+    - - 'target=x86_64_v4 %oneapi@2024.2.1'
 
   include_concrete:
   - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/multiarch_intel
