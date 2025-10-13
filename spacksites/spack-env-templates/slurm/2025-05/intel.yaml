@@ -1,0 +1,51 @@
+spack:
+  packages:
+    castep:
+      permissions:
+        read: group
+        group: ag-archpc-castep
+    orca:
+      permissions:
+        read: group
+        group: ag-archpc-orca
+    #vasp@5:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp5
+    #vasp@6:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp6
+    vasp:
+      permissions:
+        read: group
+        group: ag-archpc-vasp65
+
+  specs:
+  - matrix:
+    - - intel-oneapi-mpi@2021.14.0 +external-libfabric
+      # VASP is tested with 2023.2.0. +cluster gives scalapack
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
+      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
+      - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
+      - hdf5@1.14.3 +fortran +mpi +hl
+#      - plumed@2.9.2
+    - - '%oneapi@2024.2.1' # VASP is tested with 2024.2
+  #- intel@20.0.4 # last old Intel - check if we can remove
+  - intel-oneapi-compilers@2024.2.1
+
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-05/spack/var/spack/environments/base
+
+  modules:
+    default:
+
+      roots:
+        tcl: $env/modules
+
