@@ -1,0 +1,30 @@
+spack:
+
+  specs:
+  - matrix:
+    - - openbabel@3.1.1 +openmp
+      - openfoam@2312 +int64
+      - openfoam@2112 +int64
+      - parallel@20240822
+      - paraview@5.13.1 +python ^[virtuals=gl] osmesa
+      - grace@5.1.25
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/base
+
+  modules:
+    default:
+      roots:
+        tcl: $spack/../modules
+
+        intel-oneapi-mpi:
+          environment:
+            set:
+              SLURM_MPI_TYPE: 'pmi2'
+        openmpi:
+          environment:
+            set:
+              OMPI_MCA_btl: 'self,vader'
