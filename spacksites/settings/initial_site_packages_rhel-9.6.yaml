@@ -42,24 +42,11 @@ packages:
     #    prepend_path:
     #      CPATH: /usr/include/slurm
 
-  # openssh and openssl are also external - a Spack-built openssh will ignore
+  # openssh is also external - a Spack-built openssh will ignore
   # our global ssh config.
   openssh:
     externals:
     - spec: openssh@8.7p1 +gssapi
-      prefix: /usr
-    buildable: false
-
-  openssl:
-    externals:
-    - spec: openssl@3.2.2
-      prefix: /usr
-    buildable: false
-
-  # external openssl means we need external curl
-  curl:
-    externals:
-    - spec: curl@7.76.1
       prefix: /usr
     buildable: false
 

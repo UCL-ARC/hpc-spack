@@ -8,11 +8,10 @@ spack:
   - matrix:
     - - 'cuda@12.6.2' # v12.6.2 is latest available in Spack v0.23
       #- 'namd@2.14 +cuda cuda_arch=60,70,80' # requires cuda < 12
-      - 'py-alphafold@2.2.4 +cuda cuda_arch=60,70,80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=60,70,80'
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
       - gromacs@2024.3 +cuda cuda_arch=60,70,80 ^openmpi@4.1.6 +cuda
       - gromacs@2023.5 +cuda cuda_arch=60,70,80 +plumed ^openmpi@4.1.6 +cuda
-      - openmpi@4.1.6 +cuda cuda_arch=60,70,80 fabrics=psm2,cma,ucx,ofi schedulers=sge
+      - openmpi@4.1.6 +cuda cuda_arch=60,70,80 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
     - - '%gcc@12.3.0'
   # nvhpc packages
   #- 'vasp@6.4.3 %nvhpc +cuda cuda_arch=60,70,80 +hdf5'

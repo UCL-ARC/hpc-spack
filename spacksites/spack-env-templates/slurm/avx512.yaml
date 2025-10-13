@@ -3,10 +3,6 @@ spack:
     unify: when_possible
   view: false
 
-  packages:
-    all:
-      target: [x86_64_v4]
-
   # the Young avx512 end CPU applications
   specs:
   # Packages built with GCC
@@ -36,9 +32,8 @@ spack:
       - picard@2.26.2
       - plumed@2.9.2
       - samtools@1.17
-    - - '%gcc@12.3.0'
+    - - 'target=x86_64_v4 %gcc@12.3.0'
 
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/avx2_buildtools
-  - /lustre/apps/spack/0.23/deploy/2025-08/spack/var/spack/environments/multiarch
-
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/avx2_buildtools
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/multiarch

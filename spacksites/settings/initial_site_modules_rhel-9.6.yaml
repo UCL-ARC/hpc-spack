@@ -37,6 +37,7 @@ modules:
         gcc: 'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
         intel-oneapi-compilers: 'compilers/intel-oneapi/{version}/{compiler.name}-{compiler.version}'
         intel-oneapi-mpi: 'mpi/{name}/{version}/intel-oneapi-{compiler.version}'
+        openmpi +cuda: 'mpi/{name}/{version}-cuda/{compiler.name}-{compiler.version}'
         openmpi: 'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
 
         fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
