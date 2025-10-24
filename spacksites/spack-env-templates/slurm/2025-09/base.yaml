@@ -51,8 +51,8 @@ spack:
       - git@2.46.2
       - gsl@2.8
       - gzip@1.13
-      - hdf5@1.14.3 +cxx +fortran -mpi +hl
-      - hdf5@1.14.3 +fortran +mpi +hl
+      - hdf5@ +cxx +fortran -mpi +hl
+      - hdf5@ +fortran +mpi +hl
       - htslib@1.17
       - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
       - python@3.11.6
