@@ -21,6 +21,21 @@ spack:
       package_attributes:
         parallel: false
 
+    # make sure everything uses zlib-ng with +new_strategies so we don't end up with multiple binutils
+    zlib:
+      require: 'zlib-ng'
+
+    zlib-ng:
+      require:
+      - spec: +new_strategies
+
+    # if anything demands a different openmpi, make sure it has the right options
+    openmpi:
+      require:
+      - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
+      prefer:
+      - '@4.1.6'
+
   specs:
   - matrix:
     - - apr
