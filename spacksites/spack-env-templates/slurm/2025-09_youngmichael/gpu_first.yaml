@@ -1,8 +1,16 @@
 spack:
   packages:
+    zlib:
+      require: 'zlib-ng'
+
+    zlib-ng:
+      require:
+      - spec: +new_strategies
+
     all:
       require:
       - 'target=x86_64_v3'
+
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:

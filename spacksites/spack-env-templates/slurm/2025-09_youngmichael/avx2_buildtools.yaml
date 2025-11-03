@@ -4,6 +4,13 @@ spack:
   view: false
 
   packages:
+    zlib:
+      require: 'zlib-ng'
+
+    zlib-ng:
+      require:
+      - spec: +new_strategies
+
     all:
       require:
       - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
