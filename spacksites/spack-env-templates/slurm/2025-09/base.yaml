@@ -22,7 +22,7 @@ spack:
         parallel: false
 
     # make sure everything uses zlib-ng with +new_strategies so we don't end up with multiple binutils
-    zlib:
+    zlib-api:
       require: 'zlib-ng'
 
     zlib-ng:
