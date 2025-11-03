@@ -1,6 +1,6 @@
 spack:
   packages:
-    zlib:
+    zlib-api:
       require: 'zlib-ng'
 
     zlib-ng:
