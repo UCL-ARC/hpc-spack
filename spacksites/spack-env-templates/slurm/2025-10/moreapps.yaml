@@ -9,7 +9,7 @@ spack:
       - openfoam@2312 +int64
       - openfoam@2112 +int64
       - parallel@20240822
-      - paraview@5.13.1 +python ^[virtuals=gl] osmesa
+      - paraview@5.13.1 +python ^[virtuals=gl] osmesa ^llvm
       - vmd@2.0.0a8
     - - '%gcc@12.3.0'
   concretizer:
