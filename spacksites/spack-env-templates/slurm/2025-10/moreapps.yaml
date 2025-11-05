@@ -1,4 +1,7 @@
 spack:
+  packages:
+    fftw-api:
+      require: 'fftw'
 
   specs:
   - matrix:
