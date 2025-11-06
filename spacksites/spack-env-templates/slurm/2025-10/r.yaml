@@ -14,7 +14,7 @@ spack:
       - jags
       - jq
       - pcre2
-      - plink
+      - plink@1.9-beta6.27 # or it prefers 1.07
       #- plink2 ?
       - proj
       - texlive
