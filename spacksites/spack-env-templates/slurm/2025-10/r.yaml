@@ -1,0 +1,29 @@
+spack:
+
+  # R itself and non-R dependencies we need for packages
+  specs:
+  - matrix:
+    - - r@5.2.0 ^java@21 # newer java needed for some packages
+      - cmdstan
+      - gdal
+      - geos
+      - ghostscript
+      - gmt
+      - graphicsmagick
+      - imagemagick
+      - jags
+      - jq
+      - pcre2
+      - plink
+      #- plink2 ?
+      - proj
+      - texlive
+      - udunits
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/moreapps
+
