@@ -91,7 +91,7 @@ class Icu4c(AutotoolsPackage, MSBuildPackage):
         return find_libraries("libicu*", root=self.prefix, recursive=True)
 
 
-class AutotoolsBuilder(autotools.AutotoolsBuilder):
+class AutotoolsBuilder(spack.build_systems.autotools.AutotoolsBuilder):
     configure_directory = "source"
 
     # Need to make sure that locale is UTF-8 in order to process source files in UTF-8.
@@ -116,7 +116,7 @@ class AutotoolsBuilder(autotools.AutotoolsBuilder):
         return args
 
 
-class MSBuildBuilder(msbuild.MSBuildBuilder):
+class MSBuildBuilder(spack.build_systems.msbuild.MSBuildBuilder):
     # Need to make sure that locale is UTF-8 in order to process source files in UTF-8.
     @when("@59:")
 #    def setup_build_environment(self, env: EnvironmentModifications) -> None:
