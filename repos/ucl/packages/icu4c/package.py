@@ -7,6 +7,8 @@ import pathlib
 #from spack_repo.builtin.build_systems import autotools, msbuild
 #from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
 #from spack_repo.builtin.build_systems.msbuild import MSBuildPackage
+import spack.build_systems.autotools
+import spack.build_systems.msbuild
 
 from spack.package import *
 
