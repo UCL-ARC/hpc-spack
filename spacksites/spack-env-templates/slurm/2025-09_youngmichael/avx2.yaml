@@ -7,9 +7,6 @@ spack:
     all:
       require:
       - 'target=x86_64_v3'
-    openmpi:
-      require:
-      - 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
 
   # the Michael avx2 end applications and Young GPU applications
   specs:

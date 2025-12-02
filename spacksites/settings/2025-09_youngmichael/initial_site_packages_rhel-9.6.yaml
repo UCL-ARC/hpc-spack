@@ -50,6 +50,19 @@ packages:
       prefix: /usr
     buildable: false
 
+  zlib-api:
+    require: 'zlib-ng'
+
+  zlib-ng:
+    require:
+    - spec: +new_strategies
+
+  openmpi:
+    require:
+    - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
+    prefer:
+    - '@4.1.6'
+
   all:
     compiler: [gcc@12.3.0]
 
