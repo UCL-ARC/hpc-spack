@@ -1,12 +1,5 @@
 spack:
   packages:
-    zlib-api:
-      require: 'zlib-ng'
-
-    zlib-ng:
-      require:
-      - spec: +new_strategies
-
     all:
       require:
       - 'target=x86_64_v3'
