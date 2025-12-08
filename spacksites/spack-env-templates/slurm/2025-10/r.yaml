@@ -3,7 +3,7 @@ spack:
   # R itself and non-R dependencies we need for packages
   specs:
   - matrix:
-    - - r@4.5.2 ^java@21 # newer java needed for some packages
+    - - r@4.5.2 +X +rmath ^java@21 # newer java needed for some packages
       - cmdstan
       - gdal
       - geos
@@ -15,7 +15,7 @@ spack:
       - jq
       - pcre2
       - plink@1.9-beta6.27 # or it prefers 1.07
-      #- plink2 ?
+      - plink2
       - proj
       - texlive
       - udunits
