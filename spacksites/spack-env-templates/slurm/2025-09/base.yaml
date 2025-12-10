@@ -74,7 +74,7 @@ spack:
       #- namd@2.14 ^charmpp backend=ucx pmi=pmix ^fftw -mpi
       #- namd@3.0.1 ^charmpp backend=ofi pmi=pmix ^fftw -mpi # should be doing this, can't yet
       - namd@3.0.1 ^charmpp backend=ucx pmi=pmix ^fftw -mpi
-      - namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi
+      #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi # not working outside dev
       - netlib-scalapack@2.2.0
       - numactl@2.0.18
       - openblas@0.3.28 threads=none
