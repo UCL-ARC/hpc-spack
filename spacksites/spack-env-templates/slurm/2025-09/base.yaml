@@ -45,7 +45,7 @@ spack:
       - bedtools2@2.31.0
       - bwa@0.7.17
       - cmake
-      - curl
+      - curl +libidn2
       - fftw@3.3.10 -mpi -openmp
       - gatk@4.4.0.0
       - git@2.46.2
