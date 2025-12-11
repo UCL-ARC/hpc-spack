@@ -1,0 +1,15 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
+
+  specs:
+  - matrix:
+    - - gcc@12.3.0 +binutils
+    - - '%gcc@12.3.0'
+
