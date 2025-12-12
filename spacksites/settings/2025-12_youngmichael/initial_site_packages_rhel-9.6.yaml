@@ -50,7 +50,7 @@ packages:
       prefix: /usr
     buildable: false
 
-  # zlib bitss
+  # zlib bits
   zlib-api:
     require: 'zlib-ng'
 
