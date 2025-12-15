@@ -8,7 +8,7 @@ spack:
   - matrix:
     # Fix `openblas` as blas provider, to avoid picking other unusual implementations
     - - 'dbcsr@2.6.0 +cuda cuda_arch=80 ^openblas@0.3.28 ^openmpi@4.1.6 +cuda' # only one CUDA arch allowed
-      - 'py-alphafold@2.2.4 +cuda cuda_arch=80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=80 ^openblas ^bazel@6.5.0'
+      - 'py-alphafold@2.2.4 +cuda cuda_arch=80 ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda cuda_arch=80 ^openblas ^llvm -gold'
     - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
