@@ -3,7 +3,7 @@ spack:
   # R itself and non-R dependencies we need for packages
   specs:
   - matrix:
-    - - r@4.5.2 +X +rmath ^openjdk@21 # newer java needed for some packages
+    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=11 # newer java needed for some packages
       - cmdstan
       - gdal
       - geos
