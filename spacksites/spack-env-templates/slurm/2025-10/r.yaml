@@ -13,6 +13,8 @@ spack:
       - imagemagick
       - jags
       - jq
+      - mysql +client_only
+      - libwebp +libwebpdecoder +libwebpdemux +libwebpextras +libwebpmux +gif +jpeg +png +tiff
       - pcre2
       - plink@1.9-beta6.27 # or it prefers 1.07
       - plink2
