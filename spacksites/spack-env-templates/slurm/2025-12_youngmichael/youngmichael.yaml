@@ -6,16 +6,16 @@ spack:
   view: false
   include_concrete:
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx2_buildtools
-  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx2
+  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/multiarch
+  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/multiarch_intel
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx2_intel
-  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx512
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx512_intel
+  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx512
+  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/ompi412-youngmichael
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/gpu_first
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/gpu-on-gpu
   - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/gpu_third
-  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/multiarch
-  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/multiarch_intel
-  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/ompi412-youngmichael
+  - /lustre/apps/spack/0.23/deploy/2025-12/spack/var/spack/environments/avx2
 
   modules:
     default:
