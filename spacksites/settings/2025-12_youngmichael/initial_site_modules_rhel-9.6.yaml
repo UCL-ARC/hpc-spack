@@ -49,6 +49,8 @@ modules:
 
         openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
 
+        gromacs +plumed +cuda ^mpi: '{name}/{version}-{^mpi.name}-plumed-cuda/{compiler.name}-{compiler.version}'
+        gromacs ~plumed +cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
         gromacs +plumed ^mpi: '{name}/{version}-{^mpi.name}-plumed/{compiler.name}-{compiler.version}'
 
         namd ^mpi ^charmpp backend=ofi: '{name}/{version}-{^mpi.name}-ofi/{compiler.name}-{compiler.version}'
