@@ -1,20 +1,5 @@
 packages:
 
-    # group restrictions
-    castep:
-      permissions:
-        read: group
-        group: ag-archpc-castep
-    orca:
-      permissions:
-        read: group
-        group: ag-archpc-orca
-    # restrict vasp to highest version and alter after since there can be only one
-    vasp:
-      permissions:
-        read: group
-        group: ag-archpc-vasp65
-
   # Slurm, hwloc, ucx and pmix are external. 
   # All MPI things need to use the same hwloc, ucx and pmix as Slurm.
   hwloc:
@@ -78,6 +63,22 @@ packages:
     - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
     prefer:
     - '@4.1.6'
+
+  # group restrictions
+  castep:
+    permissions:
+      read: group
+      group: ag-archpc-castep
+  orca:
+    permissions:
+      read: group
+      group: ag-archpc-orca
+  # restrict vasp to highest version and alter after since there can be only one
+  vasp:
+    permissions:
+      read: group
+      group: ag-archpc-vasp65
+
 
   all:
     compiler: [gcc@12.3.0]
