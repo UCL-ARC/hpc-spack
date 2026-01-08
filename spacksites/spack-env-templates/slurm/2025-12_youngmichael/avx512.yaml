@@ -31,6 +31,7 @@ spack:
       - numactl@2.0.18
       - picard@2.26.2
       - plumed@2.9.2
+      - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
       - samtools@1.17
     - - 'target=x86_64_v4 %gcc@12.3.0'
 
