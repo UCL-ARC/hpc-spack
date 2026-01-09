@@ -15,15 +15,30 @@ spack:
       - autoconf
       - autoconf-archive
       - automake
+      - berkeley-db
+      - bzip2
       - cmake
       - curl
+      - diffutils
+      - gawk
+      - gdbm
       - git@2.46.2
-      # - gmake # don't have it yet
+      - gmake
+      - gmp
       - gzip@1.13
       - libtool
+      - m4
+      - mpc
+      - mpfr
+      - ncurses
       - perl@5.38.0
+      - perl@5.40.0
+      - pkgconf
+      - readline
       - subversion
       - texinfo
+      - zlib-ng
+      - zstd
     - - '%gcc@12.3.0'
   - gcc@12.3.0 +binutils
 
