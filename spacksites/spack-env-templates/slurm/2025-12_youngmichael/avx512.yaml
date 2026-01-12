@@ -3,6 +3,12 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    mpi:
+      require: 'openmpi'
+    openmpi:
+      require: 'arch=linux-rhel9-x86_64_v3'
+
   # the Young avx512 end CPU applications
   specs:
   # Packages built with GCC
@@ -11,15 +17,15 @@ spack:
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
-      - castep@24.1 +libxc ^openblas threads=none
-      - castep@23.1 +libxc ^openblas threads=none
-      - cp2k@2024.3
+      - castep@24.1 +mpi +libxc ^openblas threads=none
+      - castep@23.1 +mpi +libxc ^openblas threads=none
+      - cp2k@2024.3 +mpi ^openblas threads=openmp
       - gatk@4.4.0.0
       - gromacs@2024.3 -double
-      - gromacs@2023.5 -double +plumed
+      - gromacs@2023.5 -double +plumed 
       - gsl@2.8
       - hdf5 +cxx +fortran -mpi +hl
-      - hdf5 +fortran +mpi +hl
+      - hdf5 +fortran +mpi +hl 
       - htslib@1.17
       - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff
       - libxc@6.2.2
@@ -27,7 +33,8 @@ spack:
       #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
-      - netlib-scalapack@2.2.0
+      - netlib-scalapack@2.2.0 ^openblas threads=none
+      - netlib-scalapack@2.2.0 ^openblas threads=openmp
       - numactl@2.0.18
       - picard@2.26.2
       - plumed@2.9.2
