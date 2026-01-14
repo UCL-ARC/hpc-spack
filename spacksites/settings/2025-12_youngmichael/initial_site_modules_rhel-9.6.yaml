@@ -13,6 +13,8 @@ modules:
         # conflict with everything of same name
         conflict:
           - '{name}'
+        suffixes:
+          'target=x86_64_v3': 'avx2'
       intel-oneapi-mpi:
         conflict:
           - 'mpi'
@@ -59,6 +61,9 @@ modules:
         namd ^charmpp backend=ofi: '{name}/{version}-ofi/{compiler.name}-{compiler.version}'
         namd ^charmpp backend=ucx: '{name}/{version}-ucx/{compiler.name}-{compiler.version}'
         namd ^charmpp backend=verbs: '{name}/{version}-verbs/{compiler.name}-{compiler.version}'
+
+        netlib-scalapack ^mpi ^openblas threads=openmp ^cuda: '{name}/{version}-{^mpi.name}-cuda-ompblas/{compiler.name}-{compiler.version}'
+        netlib-scalapack ^mpi ^openblas threads=openmp: '{name}/{version}-{^mpi.name}-ompblas/{compiler.name}-{compiler.version}'
 
         ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
         ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
