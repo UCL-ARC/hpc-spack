@@ -4,6 +4,11 @@ spack:
   view: false
 
   packages:
+    mpi:
+      require: 'openmpi'
+    openmpi:
+      require: 'arch=linux-rhel9-x86_64_v3'
+
     all:
       require:
       - 'target=x86_64_v3'
@@ -16,9 +21,9 @@ spack:
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
-      - castep@24.1 +libxc ^openblas threads=none ^openmpi -cuda
-      - castep@23.1 +libxc ^openblas threads=none ^openmpi -cuda
-      - cp2k@2024.3 -cuda ^openblas ^openmpi -cuda
+      - castep@24.1 +mpi +libxc ^openblas threads=none ^openmpi -cuda
+      - castep@23.1 +mpi +libxc ^openblas threads=none ^openmpi -cuda
+      - cp2k@2024.3 +mpi -cuda ^openblas threads=openmp ^openmpi -cuda
       - gatk@4.4.0.0
       - gromacs@2024.3 -double ^openmpi -cuda
       - gromacs@2023.5 -double +plumed ^openmpi -cuda
@@ -32,12 +37,13 @@ spack:
       #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
-      - netlib-scalapack@2.2.0
+      - netlib-scalapack@2.2.0 ^openblas threads=none ^openmpi -cuda
+      - netlib-scalapack@2.2.0 ^openblas threads=openmp ^openmpi -cuda
       - numactl@2.0.18
       - orca@avx2-6.0.1
       - picard@2.26.2
       - plumed@2.9.2
-      - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
+      - quantum-espresso@7.4 cflags='-O2' fflags='-O2' ^openmpi -cuda # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
       - samtools@1.17
     - - '%gcc@12.3.0'
 
