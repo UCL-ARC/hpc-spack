@@ -15,7 +15,7 @@ cd /home/ccspapp/Scratch/spack/0.23
 git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.23
 ```
 
-Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.23` for 0.23.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini).
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.23` for 0.23.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini) by default, but [deploy_sites.ini](spacksites/settings/deploy_sites.ini) can be specified instead. The deploy site config does not have spack_path_placeholder so builds cannot be reinstalled into longer paths. They may also define different further config files to be used.
 
 ```
 cd /home/ccspapp/Scratch/spack/0.23/hpc-spack
@@ -25,23 +25,33 @@ source spacksites/myriad-utilities/init-spacksites-rhel9.sh
 
 # initialise spacksites (if RHEL7)
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
+```
 
+Using the default ini file with padded paths:
+
+```
 # make your new site - we've been prefixing $site_name with initials.
-# You can set a different ini file as in the second command - a deploy site doesn't have the
-# path placeholder buffering - meaning packages can't be reinstalled into longer paths.
-# spacksites/settings/spack_sites.ini is the default ini file when none is specified.
 spacksites/spacksites create $site_name
+
+# install your first compiler into your site - will use the buildcache as long as it exists
+# $env_name will be the name of the environment you are creating, eg first_compiler.
+spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
+
+# get ready to run spack commands as normal for this site
+eval $(spacksites/spacksites spack-setup-env $site_name)
+```
+
+Using the build site ini file without padded paths or any other ini file you may have created:
+
+```
+# make your new site - we've been prefixing $site_name with initials.
 spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini create ${site_name}
 
 # install your first compiler into your site - will use the buildcache as long as it exists
 # $env_name will be the name of the environment you are creating, eg first_compiler.
-# Again, the different ini file should be passed in if specified above.
-spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
 spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini install-env ${site_name} compiler first_compiler.yaml
 
 # get ready to run spack commands as normal for this site
-# Again, the different ini file should be passed in if specified above.
-eval $(spacksites/spacksites spack-setup-env $site_name)
 eval $(spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini spack-setup-env ${site_name})
 ```
 
