@@ -20,18 +20,28 @@ Once the repo already exists, start from here. Our sites location is `/shared/uc
 ```
 cd /home/ccspapp/Scratch/spack/0.23/hpc-spack
 
-# initialise spacksites
+# initialise spacksites (if RHEL9)
+source spacksites/myriad-utilities/init-spacksites-rhel9.sh
+
+# initialise spacksites (if RHEL7)
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
 
-# make your new site - we've been prefixing $site_name with initials
+# make your new site - we've been prefixing $site_name with initials.
+# You can set a different ini file as in the second command - a deploy site doesn't have the
+# path placeholder buffering - meaning packages can't be reinstalled into longer paths.
 spacksites/spacksites create $site_name
+spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini create ${site_name}
 
 # install your first compiler into your site - will use the buildcache as long as it exists
 # $env_name will be the name of the environment you are creating, eg first_compiler.
+# Again, the different ini file should be passed in if specified above.
 spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
+spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini install-env ${site_name} compiler first_compiler.yaml
 
 # get ready to run spack commands as normal for this site
+# Again, the different ini file should be passed in if specified above.
 eval $(spacksites/spacksites spack-setup-env $site_name)
+eval $(spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini spack-setup-env ${site_name})
 ```
 
 You can now run `spack find` to show the installed packages, or `spack info --all $package` to show available versions of that package to install.
