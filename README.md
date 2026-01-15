@@ -29,6 +29,7 @@ source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
 # make your new site - we've been prefixing $site_name with initials.
 # You can set a different ini file as in the second command - a deploy site doesn't have the
 # path placeholder buffering - meaning packages can't be reinstalled into longer paths.
+# spacksites/settings/spack_sites.ini is the default ini file when none is specified.
 spacksites/spacksites create $site_name
 spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini create ${site_name}
 
