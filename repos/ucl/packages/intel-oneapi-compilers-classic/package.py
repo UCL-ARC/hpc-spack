@@ -84,7 +84,7 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
     def oneapi_compiler_prefix(self):
         oneapi_version = self.spec["intel-oneapi-compilers"].version
         # Intel used shorter versioning for dir name
-        if oneapi_version == "2024.2.1":
+        if str(oneapi_version) == "2024.2.1":
             oneapi_version = "2024.2"
         return self.spec["intel-oneapi-compilers"].prefix.compiler.join(str(oneapi_version))
 
@@ -123,11 +123,20 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
     def install(self, spec, prefix):
         # If we symlink top-level directories directly, files won't show up in views
         # Create real dirs and symlink files instead
-        self.symlink_dir(self.oneapi_compiler_prefix.linux.bin.intel64, prefix.bin)
-        self.symlink_dir(self.oneapi_compiler_prefix.linux.lib, prefix.lib)
-        self.symlink_dir(self.oneapi_compiler_prefix.linux.include, prefix.include)
-        self.symlink_dir(self.oneapi_compiler_prefix.linux.compiler, prefix.compiler)
-        self.symlink_dir(self.oneapi_compiler_prefix.documentation.en.man, prefix.man)
+        # Directories renamed in 2024.2
+        if str(self.spec["intel-oneapi-compilers"].version) == "2024.2.1":
+            self.symlink_dir(self.oneapi_compiler_prefix.bin, prefix.bin)
+            self.symlink_dir(self.oneapi_compiler_prefix.lib, prefix.lib)
+            self.symlink_dir(self.oneapi_compiler_prefix.include, prefix.include)
+            self.symlink_dir(self.oneapi_compiler_prefix.etc.compiler, prefix.compiler)
+            self.symlink_dir(self.oneapi_compiler_prefix.share.man, prefix.man)
+        else {
+            self.symlink_dir(self.oneapi_compiler_prefix.linux.bin.intel64, prefix.bin)
+            self.symlink_dir(self.oneapi_compiler_prefix.linux.lib, prefix.lib)
+            self.symlink_dir(self.oneapi_compiler_prefix.linux.include, prefix.include)
+            self.symlink_dir(self.oneapi_compiler_prefix.linux.compiler, prefix.compiler)
+            self.symlink_dir(self.oneapi_compiler_prefix.documentation.en.man, prefix.man)
+        }
 
     def symlink_dir(self, src, dest):
         # Create a real directory at dest
