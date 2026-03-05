@@ -83,6 +83,9 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
     @property
     def oneapi_compiler_prefix(self):
         oneapi_version = self.spec["intel-oneapi-compilers"].version
+        # Intel used shorter versioning for dir name
+        if oneapi_version == "2024.2.1":
+            oneapi_version = "2024.2"
         return self.spec["intel-oneapi-compilers"].prefix.compiler.join(str(oneapi_version))
 
     def setup_run_environment(self, env):
