@@ -7,10 +7,6 @@ import sys
 from llnl.util.lang import classproperty
 from llnl.util.link_tree import LinkTree
 
-#from spack_repo.builtin.build_systems.compiler import CompilerPackage
-#from spack_repo.builtin.build_systems.generic import Package
-#from spack_repo.builtin.build_systems.oneapi import IntelOneApiPackage
-
 from spack.package import *
 
 
@@ -54,10 +50,12 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
 
     stdcxx_libs = ("-cxxlib",)
 
-    provides("c", "cxx", when="@:2021.10")
+    provides("c", "cxx")
     provides("fortran")
 
-    version_map = {
+    # Versions before 2021 are in the `intel` package
+    # intel-oneapi versions before 2022 use intel@19.0.4
+    for ver, oneapi_ver in {
         "2021.1.2": "2021.1.2",
         "2021.2.0": "2021.2.0",
         "2021.3.0": "2021.3.0",
@@ -74,23 +72,19 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
         "2021.12.0": "2024.1.0",
         "2021.13.0": "2024.2.0",
         "2021.13.1": "2024.2.1",
-    }
-
-    # Versions before 2021 are in the `intel` package
-    # intel-oneapi versions before 2022 use intel@19.0.4
-    for ver, oneapi_ver in version_map.items():
+    }.items():
         # prefer 2021.10.0 because it is the last one that has a C compiler
         version(ver, preferred=(ver == "2021.10.0"))
-        depends_on("intel-oneapi-compilers@" + oneapi_ver, when="@" + ver, type="build")
+        depends_on("intel-oneapi-compilers@" + oneapi_ver, when="@" + ver, type="run")
 
     # icc@2021.6.0 does not support gcc@12 headers
     conflicts("%gcc@12:", when="@:2021.6.0")
 
     @property
     def oneapi_compiler_prefix(self):
-        return self["intel-oneapi-compilers"].component_prefix
+        oneapi_version = self.spec["intel-oneapi-compilers"].version
+        return self.spec["intel-oneapi-compilers"].prefix.compiler.join(str(oneapi_version))
 
-#    def setup_run_environment(self, env: EnvironmentModifications) -> None:
     def setup_run_environment(self, env):
         """Adds environment variables to the generated module file.
 
@@ -99,14 +93,16 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
            $ source {prefix}/{component}/{version}/env/vars.sh
         and from setting CC/CXX/F77/FC
         """
-        env.set("CC", self.prefix.bin.icc)
-        env.set("CXX", self.prefix.bin.icpc)
-        env.set("F77", self.prefix.bin.ifort)
-        env.set("FC", self.prefix.bin.ifort)
+        oneapi_pkg = self.spec["intel-oneapi-compilers"].package
 
-#    def setup_dependent_build_environment(
-#        self, env: EnvironmentModifications, dependent_spec: Spec
-#    ) -> None:
+        oneapi_pkg.setup_run_environment(env)
+
+        bin_prefix = oneapi_pkg.component_prefix.linux.bin.intel64
+        env.set("CC", bin_prefix.icc)
+        env.set("CXX", bin_prefix.icpc)
+        env.set("F77", bin_prefix.ifort)
+        env.set("FC", bin_prefix.ifort)
+
     def setup_dependent_build_environment(self, env, dependent_spec):
         super().setup_dependent_build_environment(env, dependent_spec)
         # Edge cases for Intel's oneAPI compilers when using the legacy classic compilers:
@@ -122,66 +118,27 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
             env.append_flags("SPACK_ALWAYS_FFLAGS", "-diag-disable=10448")
 
     def install(self, spec, prefix):
-        # List of all binaries from intel-oneapi-compilers related to ifort
-        binaries = [
-            "codecov",
-            "fortcom",
-            "fpp",
-            "ifort",
-            "ifort.cfg",
-            "map_opts",
-            "profdcg",
-            "profmerge",
-            "profmergesampling",
-            "proforder",
-            "tselect",
-            "xiar",
-            "xiar.cfg",
-            "xild",
-            "xild.cfg",
-        ]
+        # If we symlink top-level directories directly, files won't show up in views
+        # Create real dirs and symlink files instead
+        self.symlink_dir(self.oneapi_compiler_prefix.linux.bin.intel64, prefix.bin)
+        self.symlink_dir(self.oneapi_compiler_prefix.linux.lib, prefix.lib)
+        self.symlink_dir(self.oneapi_compiler_prefix.linux.include, prefix.include)
+        self.symlink_dir(self.oneapi_compiler_prefix.linux.compiler, prefix.compiler)
+        self.symlink_dir(self.oneapi_compiler_prefix.documentation.en.man, prefix.man)
 
-        # We do a full copy (not symlinks) to avoid a run dependency on intel-oneapi-compilers
-        # which would prevent mixing versions in a DAG
-        mkdirp(prefix.bin)
-        for binary in binaries:
-            install(self.oneapi_compiler_prefix.bin.join(binary), prefix.bin)
-        install_tree(self.oneapi_compiler_prefix.lib, prefix.lib)
-        install_tree(self.oneapi_compiler_prefix.opt, prefix.opt)
-        install_tree(self.oneapi_compiler_prefix.etc, prefix.etc)
-        install_tree(self.oneapi_compiler_prefix.share, prefix.share)
+    def symlink_dir(self, src, dest):
+        # Create a real directory at dest
+        mkdirp(dest)
 
-    @when("@:2021.10")
-    def install(self, spec, prefix):
-        # We do a full copy (not symlinks) to avoid a run dependency on intel-oneapi-compilers
-        # which would prevent mixing versions in a DAG
-        install_tree(self.oneapi_compiler_prefix.linux.bin.intel64, prefix.bin.intel64)
-        binaries = [
-            "codecov",
-            "fortcom",
-            "fpp",
-            "icc",
-            "icpc",
-            "ifort",
-            "mcpcom",
-            "profdcg",
-            "profmerge",
-            "profmergesampling",
-            "proforder",
-            "tselect",
-            "xiar",
-            "xild",
-        ]
-        for binary in binaries:
-            os.symlink(prefix.bin.intel64.join(binary), prefix.bin.join(binary))
-        install_tree(self.oneapi_compiler_prefix.linux.lib, prefix.lib)
-        install_tree(
-            self.oneapi_compiler_prefix.linux.compiler.lib.intel64_lin,
-            prefix.linux.compiler.lib.intel64_lin,
-        )
-        install_tree(self.oneapi_compiler_prefix.linux.include, prefix.include)
-        install_tree(self.oneapi_compiler_prefix.linux.compiler, prefix.compiler)
-        install_tree(self.oneapi_compiler_prefix.documentation.en.man, prefix.man)
+        # Symlink all files in src to dest keeping directories as dirs
+        for entry in os.listdir(src):
+            src_path = os.path.join(src, entry)
+            dest_path = os.path.join(dest, entry)
+            if os.path.isdir(src_path) and os.access(src_path, os.X_OK):
+                link_tree = LinkTree(src_path)
+                link_tree.merge(dest_path)
+            else:
+                os.symlink(src_path, dest_path)
 
     def _cc_path(self):
         return str(self.prefix.bin.icc)
@@ -194,15 +151,3 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
 
     def archspec_name(self):
         return "intel"
-
-    def _standard_flag(self, *, language, standard):
-        flags = {
-            "cxx": {
-                "11": "-std=c++11",
-                "14": "-std=c++14",
-                "17": "-std=c++17",
-                "18": "-std=c++18",
-            },
-            "c": {"99": "-std=c99", "11": "-std=c11", "17": "-std=c17", "18": "-std=c18"},
-        }
-        return flags[language][standard]
