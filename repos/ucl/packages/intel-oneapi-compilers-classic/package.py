@@ -130,13 +130,13 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
             self.symlink_dir(self.oneapi_compiler_prefix.include, prefix.include)
             self.symlink_dir(self.oneapi_compiler_prefix.etc.compiler, prefix.compiler)
             self.symlink_dir(self.oneapi_compiler_prefix.share.man, prefix.man)
-        else {
+        else: 
             self.symlink_dir(self.oneapi_compiler_prefix.linux.bin.intel64, prefix.bin)
             self.symlink_dir(self.oneapi_compiler_prefix.linux.lib, prefix.lib)
             self.symlink_dir(self.oneapi_compiler_prefix.linux.include, prefix.include)
             self.symlink_dir(self.oneapi_compiler_prefix.linux.compiler, prefix.compiler)
             self.symlink_dir(self.oneapi_compiler_prefix.documentation.en.man, prefix.man)
-        }
+        
 
     def symlink_dir(self, src, dest):
         # Create a real directory at dest
