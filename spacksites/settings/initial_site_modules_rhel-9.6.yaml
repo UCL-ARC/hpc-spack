@@ -36,7 +36,7 @@ modules:
         # Add omp for openmp variants.
         gcc: 'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
         intel-oneapi-compilers: 'compilers/intel-oneapi/{version}/{compiler.name}-{compiler.version}'
-        intel-oneapi-compilers-classic: 'compilers/intel-oneapi-classic/{version}/{compiler.name}-{compiler.version}'
+
         intel-oneapi-mpi: 'mpi/{name}/{version}/intel-oneapi-{compiler.version}'
         openmpi +cuda: 'mpi/{name}/{version}-cuda/{compiler.name}-{compiler.version}'
         openmpi: 'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
