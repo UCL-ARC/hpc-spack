@@ -100,11 +100,18 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
 
         oneapi_pkg.setup_run_environment(env)
 
-        bin_prefix = oneapi_pkg.component_prefix.linux.bin.intel64
-        env.set("CC", bin_prefix.icc)
-        env.set("CXX", bin_prefix.icpc)
-        env.set("F77", bin_prefix.ifort)
-        env.set("FC", bin_prefix.ifort)
+        if str(self.spec["intel-oneapi-compilers"].version) == "2024.2.1":
+            bin_prefix = oneapi_pkg.component_prefix.bin
+            env.set("CC", bin_prefix.icx)
+            env.set("CXX", bin_prefix.icpx)
+            env.set("F77", bin_prefix.ifort)
+            env.set("FC", bin_prefix.ifort)
+        else:
+            bin_prefix = oneapi_pkg.component_prefix.linux.bin.intel64
+            env.set("CC", bin_prefix.icc)
+            env.set("CXX", bin_prefix.icpc)
+            env.set("F77", bin_prefix.ifort)
+            env.set("FC", bin_prefix.ifort)
 
     def setup_dependent_build_environment(self, env, dependent_spec):
         super().setup_dependent_build_environment(env, dependent_spec)
@@ -153,10 +160,16 @@ class IntelOneapiCompilersClassic(Package, CompilerPackage):
                 os.symlink(src_path, dest_path)
 
     def _cc_path(self):
-        return str(self.prefix.bin.icc)
+        if str(self.spec["intel-oneapi-compilers"].version) == "2024.2.1":
+            return str(self.prefix.bin.icx)
+        else:
+            return str(self.prefix.bin.icc)
 
     def _cxx_path(self):
-        return str(self.prefix.bin.icpc)
+        if str(self.spec["intel-oneapi-compilers"].version) == "2024.2.1":
+            return str(self.prefix.bin.icpx)
+        else:
+            return str(self.prefix.bin.icpc)
 
     def _fortran_path(self):
         return str(self.prefix.bin.ifort)
