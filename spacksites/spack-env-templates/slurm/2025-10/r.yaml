@@ -1,25 +1,32 @@
 spack:
 
+  packages:
+    netcdf-c:
+      require: -mpi
+
   # R itself and non-R dependencies we need for packages
   specs:
   - matrix:
-    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=11 # newer java needed for some packages
+#    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=11 # newer java needed for some packages
+    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=17 # newer java needed for some packages
+      - bzip2
       - cmdstan
-      - gdal
+      - gdal +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
       - geos
       - ghostscript
-      - gmt
+      - gmt ^gdal +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
       - graphicsmagick
       - imagemagick
       - jags
       - jq
-      - mysql +client_only
+      - mysql +client_only ^icu4c@74.2
       - libwebp +libwebpdecoder +libwebpdemux +libwebpextras +libwebpmux +gif +jpeg +png +tiff
       - pcre2
-      - plink@1.9-beta6.27 # or it prefers 1.07
+      - plink@1.9-beta6.27
       - plink2
       - proj
-      - texlive
+      - texlive ^icu4c@74.2 cxxstd=17
+      - xz
       - udunits
     - - '%gcc@12.3.0'
   concretizer:
