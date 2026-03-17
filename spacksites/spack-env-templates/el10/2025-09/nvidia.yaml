@@ -1,0 +1,18 @@
+spack:
+  specs:
+  - matrix:
+    - - nvhpc +mpi default_cuda=12.6
+    - - '%gcc@12.3.0'
+
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-09/spack/var/spack/environments/base
+
+  modules:
+    default:
+
+      roots:
+        tcl: $env/modules
+

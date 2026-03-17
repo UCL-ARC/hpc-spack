@@ -1,0 +1,54 @@
+spack:
+  packages:
+    castep:
+      permissions:
+        read: group
+        group: ag-archpc-castep
+    orca:
+      permissions:
+        read: group
+        group: ag-archpc-orca
+    #vasp@5:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp5
+    #vasp@6.4.3:
+    #  permissions:
+    #    read: group
+    #    group: ag-archpc-vasp6
+    vasp:
+      permissions:
+        read: group
+        group: ag-archpc-vasp65
+
+  specs:
+  - matrix:
+    - - orca@6.0.1
+    - - '%gcc@12.3.0'
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2025-05/spack/var/spack/environments/base
+  - /lustre/apps/spack/0.23/deploy/2025-05/spack/var/spack/environments/ompi412
+  - /lustre/apps/spack/0.23/deploy/2025-05/spack/var/spack/environments/intel
+
+  modules:
+    default:
+      roots:
+        tcl: $spack/../modules
+#      tcl:
+#        exclude: ['glibc', 'gcc-runtime',
+#                  'gcc', 'intel-one-api', 'intel',
+#                  'openmpi', 'intel-mpi', 'intel-oneapi-mpi',
+#                  'boost', 'cgal', 'eigen', 'fftw', 'gsl', 'gulp', 'hdf5', 'htslib', 'libxc', 'mesa', 'metis', 'mumps',
+#                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip', 
+#                  'snappy', 'suitesparse', 'udunits', 'vtk']
+        intel-oneapi-mpi:
+          environment:
+            set:
+              SLURM_MPI_TYPE: 'pmi2'
+        openmpi:
+          environment:
+            set:
+              OMPI_MCA_btl: 'self,vader'
