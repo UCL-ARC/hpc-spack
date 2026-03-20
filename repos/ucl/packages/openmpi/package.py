@@ -1,13 +1,12 @@
 # Copyright Spack Project Developers. See COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
+import itertools
 import os
 import re
 import sys
 
-from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
-from spack_repo.builtin.build_systems.cuda import CudaPackage
-from spack_repo.builtin.build_systems.rocm import ROCmPackage
+import llnl.util.tty as tty
 
 from spack.package import *
 
@@ -452,6 +451,10 @@ class Openmpi(AutotoolsPackage, CudaPackage, ROCmPackage):
         version(
             "1.0", sha256="cf75e56852caebe90231d295806ac3441f37dc6d9ad17b1381791ebb78e21564"
         )  # libmpi.so.0.0.0
+
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build")  # generated
 
     patch("ad_lustre_rwcontig_open_source.patch", when="@1.6.5")
     patch("llnl-platforms.patch", when="@1.6.5")
@@ -994,7 +997,7 @@ with '-Wl,-commons,use_dylibs' and without
 
         return find_libraries(libraries, root=self.prefix, shared=True, recursive=True)
 
-    def setup_run_environment(self, env: EnvironmentModifications) -> None:
+    def setup_run_environment(self, env):
         # Because MPI is both a runtime and a compiler, we have to setup the
         # compiler components as part of the run environment.
         env.set("MPICC", join_path(self.prefix.bin, "mpicc"))
@@ -1008,9 +1011,7 @@ with '-Wl,-commons,use_dylibs' and without
         if self.spec.satisfies("@1.7:"):
             env.set("MPIFC", join_path(self.prefix.bin, "mpifort"))
 
-    def setup_dependent_build_environment(
-        self, env: EnvironmentModifications, dependent_spec: Spec
-    ) -> None:
+    def setup_dependent_build_environment(self, env, dependent_spec):
         # Use the spack compiler wrappers under MPI
         dependent_module = dependent_spec.package.module
         for var_name, attr_name in (
