@@ -8,6 +8,10 @@ import sys
 
 import llnl.util.tty as tty
 
+#from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
+#from spack_repo.builtin.build_systems.cuda import CudaPackage
+#from spack_repo.builtin.build_systems.rocm import ROCmPackage
+
 from spack.package import *
 
 
@@ -34,7 +38,59 @@ def slingshot_network():
 #    return False
 
 
+#def check_FI_HMEM_ROCR():
+#    if host_platform().name == "linux":
+#        fi_info = which("fi_info")
+#        if fi_info:
+#            output = fi_info("--caps", "FI_HMEM_ROCR", output=str, error=str, fail_on_error=False)
+#            # Check if there is any output indicating at least one provider
+#            if output.strip():
+#                return True
+#    return False
 
+
+class Openmpi(AutotoolsPackage, CudaPackage, ROCmPackage):
+    """An open source Message Passing Interface implementation.
+
+    The Open MPI Project is an open source Message Passing Interface
+    implementation that is developed and maintained by a consortium
+    of academic, research, and industry partners. Open MPI is
+    therefore able to combine the expertise, technologies, and
+    resources from all across the High Performance Computing
+    community in order to build the best MPI library available.
+    Open MPI offers advantages for system and software vendors,
+    application developers and computer science researchers.
+    """
+
+    homepage = "https://www.open-mpi.org"
+    url = "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.0.tar.bz2"
+    list_url = "https://www.open-mpi.org/software/ompi/"
+    git = "https://github.com/open-mpi/ompi.git"
+    cxxname = "mpic++"
+
+    maintainers("hppritcha", "naughtont3")
+
+    executables = ["^ompi_info$"]
+
+    tags = ["e4s"]
+
+    license("custom")
+
+    version("main", branch="main", submodules=True)
+
+    # Current
+    version(
+        "5.0.10", sha256="0acecc4fc218e5debdbcb8a41d182c6b0f1d29393015ed763b2a91d5d7374cc6"
+    )  # libmpi.so.40.40.7
+    version(
+        "5.0.9", sha256="dfb72762531170847af3e4a0f21d77d7b23cf36f67ce7ce9033659273677d80b"
+    )  # libmpi.so.40.40.7
+    version(
+        "5.0.8", sha256="53131e1a57e7270f645707f8b0b65ba56048f5b5ac3f68faabed3eb0d710e449"
+    )  # libmpi.so.40.40.7
+    version(
+        "5.0.7", sha256="119f2009936a403334d0df3c0d74d5595a32d99497f9b1d41e90019fee2fc2dd"
+    )  # libmpi.so.40.40.7
     version(
         "5.0.6", sha256="bd4183fcbc43477c254799b429df1a6e576c042e74a2d2f8b37d537b2ff98157"
     )  # libmpi.so.40.40.6
@@ -82,7 +138,49 @@ def slingshot_network():
     version(
         "4.1.1", sha256="e24f7a778bd11a71ad0c14587a7f5b00e68a71aa5623e2157bafee3d44c07cda"
     )  # libmpi.so.40.30.1
-    ver
+    version(
+        "4.1.0", sha256="73866fb77090819b6a8c85cb8539638d37d6877455825b74e289d647a39fd5b5"
+    )  # libmpi.so.40.30.0
+
+    # Last patch releases of retired versions
+    version(
+        "4.0.7", sha256="7d3ecc8389161eb721982c855f89c25dca289001577a01a439ae97ce872be997"
+    )  # libmpi.so.40.20.7
+    version(
+        "3.1.6", sha256="50131d982ec2a516564d74d5616383178361c2f08fdd7d1202b80bdf66a0d279"
+    )  # libmpi.so.40.10.4
+    version(
+        "3.0.5", sha256="f8976b95f305efc435aa70f906b82d50e335e34cffdbf5d78118a507b1c6efe8"
+    )  # libmpi.so.40.00.5
+    version(
+        "2.1.6", sha256="98b8e1b8597bbec586a0da79fcd54a405388190247aa04d48e8c40944d4ca86e"
+    )  # libmpi.so.20.10.3
+    version(
+        "2.0.4", sha256="4f82d5f7f294becbd737319f74801206b08378188a95b70abe706fdc77a0c20b"
+    )  # libmpi.so.20.0.4
+
+    # Older patch releases and "ancient" versions are deprecated
+    with default_args(deprecated=True):
+        version(
+            "4.0.6", sha256="94b7b59ae9860f3bd7b5f378a698713e7b957070fdff2c43453b6cbf8edb410c"
+        )  # libmpi.so.40.20.6
+        version(
+            "4.0.5", sha256="c58f3863b61d944231077f344fe6b4b8fbb83f3d1bc93ab74640bf3e5acac009"
+        )  # libmpi.so.40.20.5
+        version(
+            "4.0.4", sha256="47e24eb2223fe5d24438658958a313b6b7a55bb281563542e1afc9dec4a31ac4"
+        )  # libmpi.so.40.20.4
+        version(
+            "4.0.3", sha256="1402feced8c3847b3ab8252165b90f7d1fa28c23b6b2ca4632b6e4971267fd03"
+        )  # libmpi.so.40.20.3
+        version(
+            "4.0.2", sha256="900bf751be72eccf06de9d186f7b1c4b5c2fa9fa66458e53b77778dffdfe4057"
+        )  # libmpi.so.40.20.2
+        version(
+            "4.0.1", sha256="cce7b6d20522849301727f81282201d609553103ac0b09162cf28d102efb9709"
+        )  # libmpi.so.40.20.1
+        version(
+            "4.0.0", sha256="2f0b8a36cfeb7354b45dda3c5425ef8393c9b04115570b615213faaa3f97366b"
         )  # libmpi.so.40.20.0
 
         version(
@@ -130,7 +228,48 @@ def slingshot_network():
             "2.1.3", sha256="285b3e2a69ed670415524474496043ecc61498f2c63feb48575f8469354d79e8"
         )  # libmpi.so.20.10.2
         version(
-            "2.1.2", sha256="3cc5804984c5329bdf88ef
+            "2.1.2", sha256="3cc5804984c5329bdf88effc44f2971ed244a29b256e0011b8deda02178dd635"
+        )  # libmpi.so.20.10.2
+        version(
+            "2.1.1", sha256="bd7badd4ff3afa448c0d7f3ca0ee6ce003b957e9954aa87d8e4435759b5e4d16"
+        )  # libmpi.so.20.10.1
+        version(
+            "2.1.0", sha256="b169e15f5af81bf3572db764417670f508c0df37ce86ff50deb56bd3acb43957"
+        )  # libmpi.so.20.10.0
+
+        version(
+            "2.0.3", sha256="b52c0204c0e5954c9c57d383bb22b4181c09934f97783292927394d29f2a808a"
+        )  # libmpi.so.20.0.3
+        version(
+            "2.0.2", sha256="cae396e643f9f91f0a795f8d8694adf7bacfb16f967c22fb39e9e28d477730d3"
+        )  # libmpi.so.20.0.2
+        version(
+            "2.0.1", sha256="fed74f4ae619b7ebcc18150bb5bdb65e273e14a8c094e78a3fea0df59b9ff8ff"
+        )  # libmpi.so.20.0.1
+        version(
+            "2.0.0", sha256="08b64cf8e3e5f50a50b4e5655f2b83b54653787bd549b72607d9312be44c18e0"
+        )  # libmpi.so.20.0.0
+
+        # Ancient
+        version(
+            "1.10.7", sha256="a089ece151fec974905caa35b0a59039b227bdea4e7933069e94bee4ed0e5a90"
+        )  # libmpi.so.12.0.7
+        version(
+            "1.10.6", sha256="65606184a084a0eda6102b01e5a36a8f02d3195d15e91eabbb63e898bd110354"
+        )  # libmpi.so.12.0.6
+        version(
+            "1.10.5", sha256="a95fa355ed3a905c7c187bc452529a9578e2d6bae2559d8197544ab4227b759e"
+        )  # libmpi.so.12.0.5
+        version(
+            "1.10.4", sha256="fb3c0c4c77896185013b6091b306d29ba592eb40d8395533da5c8bc300d922db"
+        )  # libmpi.so.12.0.4
+        version(
+            "1.10.3", sha256="7484bb664312082fd12edc2445b42362089b53b17fb5fce12efd4fe452cc254d"
+        )  # libmpi.so.12.0.3
+        version(
+            "1.10.2", sha256="8846e7e69a203db8f50af90fa037f0ba47e3f32e4c9ccdae2db22898fd4d1f59"
+        )  # libmpi.so.12.0.2
+        version(
             "1.10.1", sha256="7919ecde15962bab2e26d01d5f5f4ead6696bbcacb504b8560f2e3a152bfe492"
         )  # libmpi.so.12.0.1
         version(
@@ -178,7 +317,50 @@ def slingshot_network():
             "1.7.2", sha256="82a1c477dcadad2032ab24d9be9e39c1042865965841911f072c49aa3544fd85"
         )  # libmpi.so.1.1.2
         version(
-            "1.7.1", sha256="554583008fa34ecdfaca22e46917cc3457
+            "1.7.1", sha256="554583008fa34ecdfaca22e46917cc3457a69cba08c29ebbf53eef4f4b8be171"
+        )  # libmpi.so.1.1.1
+        version(
+            "1.7", sha256="542e44aaef6546798c0d39c0fd849e9fbcd04a762f0ab100638499643253a513"
+        )  # libmpi.so.1.1.0
+
+        version(
+            "1.6.5", sha256="fe37bab89b5ef234e0ac82dc798282c2ab08900bf564a1ec27239d3f1ad1fc85"
+        )  # libmpi.so.1.0.8
+        version(
+            "1.6.4", sha256="40cb113a27d76e1e915897661579f413564c032dc6e703073e6a03faba8093fa"
+        )  # libmpi.so.1.0.7
+        version(
+            "1.6.3", sha256="0c30cfec0e420870630fdc101ffd82f7eccc90276bc4e182f8282a2448668798"
+        )  # libmpi.so.1.0.6
+        version(
+            "1.6.2", sha256="5cc7744c6cc4ec2c04bc76c8b12717c4011822a2bd7236f2ea511f09579a714a"
+        )  # libmpi.so.1.0.3
+        version(
+            "1.6.1", sha256="077240dd1ab10f0caf26931e585db73848e9815c7119b993f91d269da5901e3a"
+        )  # libmpi.so.1.0.3
+        version(
+            "1.6", sha256="6e0d8b336543fb9ab78c97d364484923167857d30b266dfde1ccf60f356b9e0e"
+        )  # libmpi.so.1.0.3
+
+        version(
+            "1.5.5", sha256="660e6e49315185f88a87b6eae3d292b81774eab7b29a9b058b10eb35d892ff23"
+        )  # libmpi.so.1.0.3
+        version(
+            "1.5.4", sha256="81126a95a51b8af4bb0ad28790f852c30d22d989713ec30ad22e9e0a79587ef6"
+        )  # libmpi.so.1.0.2
+        version(
+            "1.5.3", sha256="70745806cdbe9b945d47d9fa058f99e072328e41e40c0ced6dd75220885c5263"
+        )  # libmpi.so.1.0.1
+        version(
+            "1.5.2", sha256="7123b781a9fd21cc79870e7fe01e9c0d3f36935c444922661e24af523b116ab1"
+        )  # libmpi.so.1.0.1
+        version(
+            "1.5.1", sha256="c28bb0bd367ceeec08f739d815988fca54fc4818762e6abcaa6cfedd6fd52274"
+        )  # libmpi.so.1.0.0
+        version(
+            "1.5", sha256="1882b1414a94917ec26b3733bf59da6b6db82bf65b5affd7f0fcbd96efaca506"
+        )  # libmpi.so.1.0.0
+
         version(
             "1.4.5", sha256="a3857bc69b7d5258cf7fc1ed1581d9ac69110f5c17976b949cb7ec789aae462d"
         )  # libmpi.so.0.0.4
@@ -226,6 +408,43 @@ def slingshot_network():
         version(
             "1.2.6", sha256="e5b27af5a153a257b1562a97bbf7164629161033934558cefd8e1e644a9f73d3"
         )  # libmpi.so.0.0.0
+        version(
+            "1.2.5", sha256="3c3aed872c17165131c77bd7a12fe8aec776cb23da946b7d12840db93ab79322"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.2.4", sha256="594a3a0af69cc7895e0d8f9add776a44bf9ed389794323d0b1b45e181a97e538"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.2.3", sha256="f936ca3a197e5b2d1a233b7d546adf07898127683b03c4b37cf31ae22a6f69bb"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.2.2", sha256="aa763e0e6a6f5fdff8f9d3fc988a4ba0ed902132d292c85aef392cc65bb524e6"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.2.1", sha256="a94731d84fb998df33960e0b57ea5661d35e7c7cd9d03d900f0b6a5a72e4546c"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.2", sha256="ba0bfa3dec2ead38a3ed682ca36a0448617b8e29191ab3f48c9d0d24d87d14c0"
+        )  # libmpi.so.0.0.0
+
+        version(
+            "1.1.5", sha256="913deaedf3498bd5d06299238ec4d048eb7af9c3afd8e32c12f4257c8b698a91"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.1.4", sha256="21c37f85df7e959f17cc7cb5571d8db2a94ed2763e3e96e5d052aff2725c1d18"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.1.3", sha256="c33f8f5e65cfe872173616cca27ae8dc6d93ea66e0708118b9229128aecc174f"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.1.2", sha256="3bd8d9fe40b356be7f9c3d336013d3865f8ca6a79b3c6e7ef28784f6c3a2b8e6"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.1.1", sha256="dc31aaec986c4ce436dbf31e73275ed1a9391432dcad7609de8d0d3a78d2c700"
+        )  # libmpi.so.0.0.0
+        version(
+            "1.1", sha256="ebe14801d2caeeaf47b0e437b43f73668b711f4d3fcff50a0d665d4bd4ea9531"
+        )  # libmpi.so.0.0.0
 
         version(
             "1.0.2", sha256="ccd1074d7dd9566b73812d9882c84e446a8f4c77b6f471d386d3e3b9467767b8"
@@ -236,10 +455,6 @@ def slingshot_network():
         version(
             "1.0", sha256="cf75e56852caebe90231d295806ac3441f37dc6d9ad17b1381791ebb78e21564"
         )  # libmpi.so.0.0.0
-
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
 
     patch("ad_lustre_rwcontig_open_source.patch", when="@1.6.5")
     patch("llnl-platforms.patch", when="@1.6.5")
@@ -274,7 +489,57 @@ def slingshot_network():
     # gcc versions on x86_64, Refs. open-mpi/ompi#8603
     patch("opal_assembly_arch.patch", when="@4.0.0:4.0.5,4.1.0")
     # Fix reduce operations for unsigned long integers
-    #
+    # See https://github.com/open-mpi/ompi/issues/10648
+    patch(
+        "https://github.com/open-mpi/ompi/commit/8e6d9ba8058a0c128438dbc0cd6476f1abb1d4f1.patch?full_index=1",
+        sha256="12f3aabbcdb02f28138e250273c2f62591db4b1f9f8aa3dcc3ef9ed551f4f587",
+        when="@4.0.7,4.1.2:4.1.4",
+    )
+    # To fix an error in Open MPI configury related to findng dl lib.
+    # This is specific to the 5.0.0 release.
+    patch("fix-for-dlopen-missing-symbol-problem.patch", when="@5.0.0")
+    # Patches to accelerator CUDA component to link in libcuda
+    # when in non-standard location
+    patch("accelerator-cuda-fix-bug-in-makefile.patch", when="@5.0.0")
+    patch("btlsmcuda-fix-problem-with-makefile.patch", when="@5.0.0")
+    patch("accelerator-build-components-as-dso-s-by-default.patch", when="@5.0.0:5.0.1")
+
+    # OpenMPI 5.0.0-5.0.3 needs to change PMIX version check to compile w/ PMIX > 4.2.5
+    # https://github.com/open-mpi/ompi/issues/12537#issuecomment-2103350910
+    # https://github.com/openpmix/prrte/pull/1957
+    patch("pmix_getline_pmix_version.patch", when="@5.0.0:5.0.3")
+    patch("pmix_getline_pmix_version-prte.patch", when="@5.0.3")
+
+    # OpenMPI 5.0.7 specific patch - see https://github.com/open-mpi/ompi/pull/13106
+    patch(
+        "https://github.com/open-mpi/ompi/commit/d10e9765bdd28e62621395aef6bbb7710bae2e82.patch?full_index=1",
+        sha256="38529b557df029d6a987fa7e337db40b0ac1c1bb921776b95aacaa40e945cd21",
+        when="@4.1.8,5.0.7",
+    )
+
+    # Add missing header for memcpy
+    # https://github.com/open-mpi/ompi/commit/aa5577441ff1ab7f97f8b63e442b37457c7bd997
+    patch("add_string.patch", when="@5.0.1:5.0.8 +rocm")
+
+    FABRICS = (
+        "psm",
+        "psm2",
+        "verbs",
+        "mxm",
+        "ucx",
+        "ofi",
+        "fca",
+        "hcoll",
+        "ucc",
+        "xpmem",
+        "cma",
+        "knem",
+    )
+
+    variant(
+        "fabrics",
+        values=disjoint_sets(("auto",), FABRICS).with_non_feature_values(
+            "auto", "none"
         ),  # shared memory transports
         description="List of fabrics that are enabled; 'auto' lets openmpi determine",
     )
@@ -322,7 +587,64 @@ def slingshot_network():
     variant("romio", default=True, when="@:5", description="Enable ROMIO support")
     variant("romio", default=False, when="@5:", description="Enable ROMIO support")
     variant(
-        "romio-filesystem
+        "romio-filesystem",
+        description="Add the filesystem to romio",
+        values=disjoint_sets(
+            (
+                "daos",
+                "nfs",
+                "ufs",
+                "pvfs2",
+                "testfs",
+                "xfs",
+                "panfs",
+                "lustre",
+                "gpfs",
+                "ime",
+                "quobytefs",
+            )
+        ).with_non_feature_values("none"),
+    )
+
+    variant("rsh", default=True, description="Enable rsh (openssh) process lifecycle management")
+    variant(
+        "orterunprefix",
+        default=False,
+        when="@1.3:4",
+        description="Prefix Open MPI to PATH and LD_LIBRARY_PATH on local and remote hosts",
+    )
+    variant("ipv6", default=False, when="@4:", description="Enable IPv6 support")
+    # Adding support to build a debug version of OpenMPI that activates
+    # Memchecker, as described here:
+    #
+    # https://www.open-mpi.org/faq/?category=debugging#memchecker_what
+    #
+    # This option degrades run-time support, and thus is disabled by default
+    variant(
+        "memchecker",
+        default=False,
+        description="Memchecker support for debugging [degrades performance]",
+        sticky=True,
+    )
+
+    variant(
+        "legacylaunchers",
+        default=False,
+        when="@1.6:4 schedulers=slurm",
+        description="Do not remove mpirun/mpiexec when building with slurm",
+    )
+    # Variants to use internal packages
+    variant("internal-hwloc", default=False, description="Use internal hwloc")
+    variant("internal-pmix", default=False, description="Use internal pmix and prrte", when="@3:")
+    variant("internal-libevent", default=False, description="Use internal libevent")
+    variant("openshmem", default=False, description="Enable building OpenSHMEM")
+    variant("debug", default=False, description="Make debug build", when="build_system=autotools")
+
+    variant(
+        "two_level_namespace",
+        default=False,
+        description="""Build shared libraries and programs
+built with the mpicc/mpifort/etc. compiler wrappers
 with '-Wl,-commons,use_dylibs' and without
 '-Wl,-flat_namespace'.""",
     )
@@ -370,7 +692,50 @@ with '-Wl,-commons,use_dylibs' and without
     # "configure: error: OMPI does not currently support hwloc v2 API"
     # Future ompi releases may support it, needs to be verified.
     # See #7483 for context.
-    depends_on("hwloc@:1", when="@
+    depends_on("hwloc@:1", when="@:3 ~internal-hwloc")
+
+    depends_on("hwloc +cuda", when="+cuda ~internal-hwloc")
+    for tgt in ROCmPackage.amdgpu_targets:
+        depends_on(
+            f"hwloc +rocm amdgpu_target={tgt}", when=f"+rocm ~internal-hwloc amdgpu_target={tgt}"
+        )
+    depends_on("java", when="+java")
+    depends_on("sqlite", when="+sqlite3")
+    depends_on("zlib-api", when="@3:")
+    depends_on("valgrind~mpi", when="+memchecker")
+    depends_on("lustre", when="+lustre")
+
+    depends_on("opa-psm2", when="fabrics=psm2")
+    depends_on("rdma-core", when="fabrics=verbs")
+    depends_on("mxm", when="fabrics=mxm")
+    depends_on("binutils+libiberty", when="fabrics=mxm")
+    with when("fabrics=ucx"):
+        depends_on("ucx")
+        depends_on("ucx +cuda", when="+cuda")
+        depends_on("ucx +thread_multiple", when="+thread_multiple")
+        depends_on("ucx +thread_multiple", when="@3.0.0:")
+        depends_on("ucx@1.9.0:", when="@4.0.6:4.0")
+        depends_on("ucx@1.9.0:", when="@4.1.1:4.1")
+        depends_on("ucx@1.9.0:", when="@5.0.0:")
+    depends_on("libfabric", when="fabrics=ofi")
+    depends_on("fca", when="fabrics=fca")
+    depends_on("hcoll", when="fabrics=hcoll")
+    depends_on("ucc", when="fabrics=ucc")
+#    depends_on("ucc +rocm", when="fabrics=ucc +rocm")
+    depends_on("xpmem", when="fabrics=xpmem")
+    depends_on("knem", when="fabrics=knem")
+
+    depends_on("lsf", when="schedulers=lsf")
+    depends_on("pbs", when="schedulers=tm")
+    depends_on("slurm", when="schedulers=slurm")
+
+#    with when("+rocm"):
+#        libfabric_requirement = ""
+#        if is_CrayEX() or check_FI_HMEM_ROCR() or slingshot_network():
+#            libfabric_requirement = "fabrics=cxi"
+#        requires("fabrics=ucx ^ucx +rocm", f"^libfabric {libfabric_requirement}", policy="one_of")
+
+    # PMIx is unavailable for @1, and required for @2:
     # OpenMPI @2: includes a vendored version:
     with when("~internal-pmix"):
         depends_on("pmix", when="@3:")
@@ -383,13 +748,13 @@ with '-Wl,-commons,use_dylibs' and without
 
         # @:4 does not depend on prrte and used orte
 #        with when("@5"):
-
-            # When an external PMIx is used, also an external PRRTE should be used
-            # https://github.com/open-mpi/ompi/issues/13275#issuecomment-2907903468
+#
+#            # When an external PMIx is used, also an external PRRTE should be used
+#            # https://github.com/open-mpi/ompi/issues/13275#issuecomment-2907903468
 #            depends_on("prrte")
-
-            # only prrte knows about schedulers
-            # https://github.com/spack/spack-packages/pull/1145#issuecomment-3208378366
+#
+#            # only prrte knows about schedulers
+#            # https://github.com/spack/spack-packages/pull/1145#issuecomment-3208378366
 #            for scheduler in [s for s in SCHEDULERS if s not in ("loadleveler")] + ["none"]:
 #                depends_on(f"prrte schedulers={scheduler}", when=f"schedulers={scheduler}")
 
@@ -418,7 +783,60 @@ with '-Wl,-commons,use_dylibs' and without
     # fca support was added in 1.5.0 and removed in 5.0.0
     conflicts("fabrics=fca", when="@:1.4,5:")
     # hcoll support was added in 1.7.3:
-    conflicts("fabrics=hco
+    conflicts("fabrics=hcoll", when="@:1.7.2")
+    # ucc support was added in 4.1.4:
+    conflicts("fabrics=ucc", when="@:4.1.3")
+    # xpmem support was added in 1.7
+    conflicts("fabrics=xpmem", when="@:1.6")
+    # cma support was added in 1.7
+    conflicts("fabrics=cma", when="@:1.6")
+    # knem support was added in 1.5
+    conflicts("fabrics=knem", when="@:1.4")
+
+    conflicts(
+        "schedulers=loadleveler",
+        when="@3:",
+        msg="The loadleveler scheduler is not supported with openmpi(>=3).",
+    )
+
+    conflicts(
+        "schedulers=auto",
+        when="~internal-pmix",
+        msg="External pmix/prrte requires specifying schedulers explicitly (including 'none').",
+    )
+
+    # According to this comment on github:
+    #
+    # https://github.com/open-mpi/ompi/issues/4338#issuecomment-383982008
+    #
+    # adding --enable-static silently disables slurm support via pmi/pmi2
+    # for versions older than 3.0.3,3.1.3,4.0.0
+    # Presumably future versions after 11/2018 should support slurm+static
+    conflicts("+static", when="schedulers=slurm @:3.0.2,3.1:3.1.2,4.0.0")
+
+    # Building against an external PMIx with an internal Libevent or HWLOC is unsupported
+    conflicts("~internal-pmix", "+internal-hwloc")
+    conflicts("~internal-pmix", "+internal-libevent")
+
+    # May be able to get working for LLVM 18/19 using FC=flang-new
+    conflicts("%fortran=clang %llvm@:19")
+
+    filter_compiler_wrappers("openmpi/*-wrapper-data*", relative_root="share")
+
+    extra_install_tests = "examples"
+
+    @classmethod
+    def determine_version(cls, exe):
+        output = Executable(exe)(output=str, error=str)
+        match = re.search(r"Open MPI: (\S+)", output)
+        return Version(match.group(1)) if match else None
+
+    @classmethod
+    def determine_variants(cls, exes, version):
+        results = []
+        for exe in exes:
+            variants = []
+            output = Executable(exe)("-a", output=str, error=str)
             # Some of these options we have to find by hoping the
             # configure string is in the ompi_info output. While this
             # is usually true, it's not guaranteed.  For anything that
@@ -466,7 +884,65 @@ with '-Wl,-commons,use_dylibs' and without
                 else:
                     variants.append("~thread_multiple")
 
+            # cuda
+            match = re.search(
+                r'parameter "mpi_built_with_cuda_support" ' + r'\(current value: "(\S+)"', output
+            )
+            if match and is_enabled(match.group(1)):
+                variants.append("+cuda")
+            else:
+                variants.append("~cuda")
 
+            # rocm
+            match = re.search(
+                r'parameter "mpi_built_with_rocm_support" ' + r'\(current value: "(\S+)"', output
+            )
+            if match and is_enabled(match.group(1)):
+                variants.append("+rocm")
+            else:
+                variants.append("~rocm")
+
+            # wrapper-rpath
+            if version in ver("1.7.4:"):
+                match = re.search(r"\bWrapper compiler rpath: (\S+)", output)
+                if match and is_enabled(match.group(1)):
+                    variants.append("+wrapper-rpath")
+                else:
+                    variants.append("~wrapper-rpath")
+
+            # cxx
+            if version in ver(":4"):
+                match = re.search(r"\bC\+\+ bindings: (\S+)", output)
+                if match and match.group(1) == "yes":
+                    variants.append("+cxx")
+                else:
+                    variants.append("~cxx")
+
+            # cxx_exceptions
+            if version in ver(":4"):
+                match = re.search(r"\bC\+\+ exceptions: (\S+)", output)
+                if match and match.group(1) == "yes":
+                    variants.append("+cxx_exceptions")
+                else:
+                    variants.append("~cxx_exceptions")
+
+            # lustre
+            if re.search(r"--with-lustre", output):
+                variants.append("+lustre")
+
+            # memchecker
+            match = re.search(r"Memory debugging support: (\S+)", output)
+            if match and is_enabled(match.group(1)):
+                variants.append("+memchecker")
+            else:
+                variants.append("~memchecker")
+
+            # pmi
+            if version in ver("1.5.5:4"):
+                if re.search(r"\bMCA (?:ess|prrte): pmi", output):
+                    variants.append("+pmi")
+                else:
+                    variants.append("~pmi")
 
             # fabrics
             used_fabrics = []
@@ -514,7 +990,56 @@ with '-Wl,-commons,use_dylibs' and without
     @property
     def libs(self):
         query_parameters = self.spec.last_query.extra_parameters
+        libraries = ["libmpi"]
 
+        if "cxx" in query_parameters:
+            libraries = ["libmpi_cxx"] + libraries
+
+        return find_libraries(libraries, root=self.prefix, shared=True, recursive=True)
+
+    def setup_run_environment(self, env):
+        # Because MPI is both a runtime and a compiler, we have to setup the
+        # compiler components as part of the run environment.
+        env.set("MPICC", join_path(self.prefix.bin, "mpicc"))
+        env.set("MPICXX", join_path(self.prefix.bin, self.cxxname))
+        env.set("MPIF77", join_path(self.prefix.bin, "mpif77"))
+        env.set("MPIF90", join_path(self.prefix.bin, "mpif90"))
+        # Open MPI also has had mpifort since v1.7, so we can set MPIFC to that
+        # Note: that mpif77 and mpif90 are deprecated since v1.7, but careful
+        # testing would be needed to change the MPIF77 and MPIF90 above. For now
+        # we just *add* functionality
+        if self.spec.satisfies("@1.7:"):
+            env.set("MPIFC", join_path(self.prefix.bin, "mpifort"))
+
+    def setup_dependent_build_environment(
+        self, env, dependent_spec
+    ):
+        # Use the spack compiler wrappers under MPI
+        dependent_module = dependent_spec.package.module
+        for var_name, attr_name in (
+            ("OMPI_CC", "spack_cc"),
+            ("OMPI_CXX", "spack_cxx"),
+            ("OMPI_FC", "spack_fc"),
+            ("OMPI_F77", "spack_f77"),
+        ):
+            if hasattr(dependent_module, attr_name):
+                env.set(var_name, getattr(dependent_module, attr_name))
+
+        # See https://www.open-mpi.org/faq/?category=building#installdirs
+        for suffix in [
+            "PREFIX",
+            "EXEC_PREFIX",
+            "BINDIR",
+            "SBINDIR",
+            "LIBEXECDIR",
+            "DATAROOTDIR",
+            "DATADIR",
+            "SYSCONFDIR",
+            "SHAREDSTATEDIR",
+            "LOCALSTATEDIR",
+            "LIBDIR",
+            "INCLUDEDIR",
+            "INFODIR",
             "MANDIR",
             "PKGDATADIR",
             "PKGLIBDIR",
@@ -562,7 +1087,62 @@ with '-Wl,-commons,use_dylibs' and without
             return "--without-ucx"
         return "--with-ucx={0}".format(self.spec["ucx"].prefix)
 
-    def with_or_witho
+    def with_or_without_ofi(self, activated):
+        # Up through version 3.0.3 this option was name --with-libfabric.
+        # In version 3.0.4, the old name was deprecated in favor of --with-ofi.
+        opt = "ofi" if self.spec.satisfies("@3.0.4:") else "libfabric"
+        if not activated:
+            return "--without-{0}".format(opt)
+        return "--with-{0}={1}".format(opt, self.spec["libfabric"].prefix)
+
+    def with_or_without_fca(self, activated):
+        if not activated:
+            return "--without-fca"
+        return f"--with-fca={self.spec['fca'].prefix}"
+
+    def with_or_without_hcoll(self, activated):
+        if not activated:
+            return "--without-hcoll"
+        return f"--with-hcoll={self.spec['hcoll'].prefix}"
+
+    def with_or_without_ucc(self, activated):
+        if not activated:
+            return "--without-ucc"
+        return f"--with-ucc={self.spec['ucc'].prefix}"
+
+    def with_or_without_xpmem(self, activated):
+        s1 = "xpmem"
+        if self.spec.satisfies("+cray-xpmem"):
+            s1 = "cray-xpmem"
+        if not activated:
+            return f"--without-{s1}"
+        return f"--with-{s1}={self.spec['xpmem'].prefix}"
+
+    def with_or_without_knem(self, activated):
+        if not activated:
+            return "--without-knem"
+        return f"--with-knem={self.spec['knem'].prefix}"
+
+    def with_or_without_lsf(self, activated):
+        if not activated:
+            return "--without-lsf"
+        return f"--with-lsf={self.spec['lsf'].prefix}"
+
+    def with_or_without_tm(self, activated):
+        if not activated:
+            return "--without-tm"
+        return f"--with-tm={self.spec['pbs'].prefix}"
+
+    @when("@main")
+    def autoreconf(self, spec, prefix):
+        perl = which("perl", required=True)
+        perl("autogen.pl")
+        if spec.satisfies("+two_level_namespace platform=darwin"):
+            filter_file(r"-flat_namespace", "-commons,use_dylibs", "configure")
+
+    @when("@5.0.0:5.0.1")
+    def autoreconf(self, spec, prefix):
+        perl = which("perl", required=True)
         perl("autogen.pl", "--force")
         if spec.satisfies("+two_level_namespace platform=darwin"):
             filter_file(r"-flat_namespace", "-commons,use_dylibs", "configure")
@@ -610,7 +1190,59 @@ with '-Wl,-commons,use_dylibs' and without
 
         # Fabrics
         if "fabrics=auto" not in spec:
-            config_args.extend(self.with_or_without("fab
+            config_args.extend(self.with_or_without("fabrics"))
+
+        if spec.satisfies("@2.0.0:"):
+            config_args.append(self.with_or_without_xpmem("fabrics=xpmem" in spec))
+
+        # Schedulers
+        if "schedulers=auto" not in spec:
+            config_args.extend(self.with_or_without("schedulers"))
+
+        if spec.satisfies("schedulers=lsf"):
+            config_args.append(f"--with-lsf-libdir={spec['lsf'].libs.directories[0]}")
+
+        config_args.extend(self.enable_or_disable("memchecker"))
+        if spec.satisfies("+memchecker"):
+            config_args.extend(["--enable-debug"])
+
+        # Package dependencies
+        for dep in ["lustre", "valgrind"]:
+            if spec.satisfies(f"%{dep}"):
+                config_args.append(f"--with-{dep}={spec[dep].prefix}")
+
+        # libevent support
+        if spec.satisfies("+internal-libevent"):
+            config_args.append("--with-libevent=internal")
+        elif spec.satisfies("%libevent"):
+            config_args.append(f"--with-libevent={spec['libevent'].prefix}")
+
+        # PMIx/PRRTE support
+        if spec.satisfies("+internal-pmix"):
+            config_args.append("--with-pmix=internal")
+            config_args.append("--with-prrte=internal")
+        else:
+            if spec.satisfies("%pmix"):
+                config_args.append(f"--with-pmix={spec['pmix'].prefix}")
+            if spec.satisfies("%prrte"):
+                config_args.append(f"--with-prrte={spec['prrte'].prefix}")
+
+        if spec.satisfies("%zlib-api"):
+            config_args.append(f"--with-zlib={spec['zlib-api'].prefix}")
+
+        # Hwloc support
+        if spec.satisfies("+internal-hwloc"):
+            config_args.append("--with-hwloc=internal")
+        elif spec.satisfies("%hwloc"):
+            config_args.append(f"--with-hwloc={spec['hwloc'].prefix}")
+
+        # Java support
+        if spec.satisfies("+java"):
+            config_args.extend(
+                ["--enable-java", "--enable-mpi-java", f"--with-jdk-dir={spec['java'].home}"]
+            )
+        elif spec.satisfies("@1.7.4:"):
+            config_args.extend(["--disable-java", "--disable-mpi-java"])
 
         # Romio
         if spec.satisfies("~romio"):
@@ -658,7 +1290,49 @@ with '-Wl,-commons,use_dylibs' and without
             if spec.satisfies("@1.7.2"):
                 # There was a bug in 1.7.2 when --enable-static is used
                 config_args.append("--enable-mca-no-build=pml-bfo")
-        elif spec.
+        elif spec.satisfies("@1.7:"):
+            config_args.append("--without-cuda")
+
+        # ROCm support
+        # See https://docs.open-mpi.org/en/v5.0.x/tuning-apps/networking/rocm.html
+        if "+rocm" in spec:
+            config_args.append("--with-rocm={0}".format(spec["hip"].prefix))
+        elif spec.satisfies("@5:"):
+            config_args.append("--without-rocm")
+
+        if spec.satisfies("%nvhpc@:20.11"):
+            # Workaround compiler issues
+            config_args.append("CFLAGS=-O1")
+
+        if "+openshmem" in spec:
+            config_args.append("--enable-oshmem")
+
+        if "+wrapper-rpath" in spec:
+            config_args.append("--enable-wrapper-rpath")
+
+            # Disable new dynamic tags in the wrapper (--disable-new-dtags)
+            # In the newer versions this can be done with a configure option
+            # (for older versions, we rely on filter_compiler_wrappers() and
+            # filter_pc_files()):
+            if spec.satisfies("@3.0.5:"):
+                config_args.append("--disable-wrapper-runpath")
+        else:
+            config_args.append("--disable-wrapper-rpath")
+            config_args.append("--disable-wrapper-runpath")
+
+        config_args.extend(self.enable_or_disable("mpi-cxx", variant="cxx"))
+        config_args.extend(self.enable_or_disable("cxx-exceptions", variant="cxx_exceptions"))
+
+        config_args.extend(self.enable_or_disable("mpi-fortran", variant="fortran"))
+
+        #
+        # the Spack path padding feature causes issues with Open MPI's lex based parsing system
+        # used by the compiler wrappers.  Crank up lex buffer to 1MB to handle this.
+        # see https://spack.readthedocs.io/en/latest/binary_caches.html#relocation
+        #
+
+        if spec.satisfies("@5.0.0:"):
+            config_args.append("CFLAGS=-DYY_BUF_SIZE=1048576")
 
         #
         # disable romio for 5.0.0 or newer if using Intel OneAPI owing to a problem
@@ -706,7 +1380,71 @@ with '-Wl,-commons,use_dylibs' and without
                 self.prefix.bin.shmemrun,
                 self.prefix.bin.oshrun,
             ]
-            script_stub = join_pa
+            script_stub = join_path(os.path.dirname(__file__), "nolegacylaunchers.sh")
+            for exe in exe_list:
+                try:
+                    os.remove(exe)
+                except OSError:
+                    tty.debug("File not present: " + exe)
+                else:
+                    copy(script_stub, exe)
+
+    @run_after("install")
+    def setup_install_tests(self):
+        """
+        Copy the example files after the package is installed to an
+        install test subdirectory for use during `spack test run`.
+        """
+        cache_extra_test_sources(self, self.extra_install_tests)
+
+    def run_installed_binary(self, bin, options, expected):
+        """run and check outputs for the installed binary"""
+        exe_path = join_path(self.prefix.bin, bin)
+        if not os.path.exists(exe_path):
+            raise SkipTest(f"{bin} is not installed")
+
+        exe = which(exe_path, required=True)
+        out = exe(*options, output=str.split, error=str.split)
+        check_outputs(expected, out)
+
+    def test_mpirun(self):
+        """test installed mpirun"""
+        options = ["-n", "1", "ls", ".."]
+        self.run_installed_binary("mpirun", options, [f"openmpi-{self.spec.version}"])
+
+    def test_opmpi_info(self):
+        """test installed ompi_info"""
+        self.run_installed_binary("ompi_info", [], [f"Ident string: {self.spec.version}", "MCA"])
+
+    def test_version(self):
+        """check versions of installed software"""
+        comp_vers = str(self.spec.compiler.version)
+        spec_vers = str(self.spec.version)
+        checks = {
+            # Binaries available in at least versions 2.0.0 through 4.0.3
+            "mpiCC": comp_vers,
+            "mpic++": comp_vers,
+            "mpicc": comp_vers,
+            "mpicxx": comp_vers,
+            "mpiexec": spec_vers,
+            "mpif77": comp_vers,
+            "mpif90": comp_vers,
+            "mpifort": comp_vers,
+            "mpirun": spec_vers,
+            "ompi_info": spec_vers,
+            "ortecc": comp_vers,
+            "orterun": spec_vers,
+        }
+
+        for bin in checks:
+            expected = checks[bin]
+            with test_part(
+                self, f"test_version_{bin}", purpose=f"ensure version of {bin} is {expected}"
+            ):
+                self.run_installed_binary(bin, ["--version"], [expected])
+
+    @property
+    def _cached_tests_work_dir(self):
         """The working directory for cached test sources."""
         return join_path(self.test_suite.current_test_cache_dir, self.extra_install_tests)
 
@@ -769,5 +1507,3 @@ def is_enabled(text):
     if text in set(["t", "true", "enabled", "yes", "1"]):
         return True
     return False
-
-
