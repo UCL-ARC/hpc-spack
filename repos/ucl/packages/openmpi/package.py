@@ -819,7 +819,7 @@ with '-Wl,-commons,use_dylibs' and without
     conflicts("~internal-pmix", "+internal-libevent")
 
     # May be able to get working for LLVM 18/19 using FC=flang-new
-    conflicts("%fortran=clang %llvm@:19")
+#    conflicts("%fortran=clang %llvm@:19")
 
     filter_compiler_wrappers("openmpi/*-wrapper-data*", relative_root="share")
 
