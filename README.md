@@ -1,24 +1,24 @@
 # hpc-spack
 Solutions - HPC's Spack config
 
-There should be a branch of this repo for each major Spack release. Branch 0.23 covers all 0.23.x Spack versions.
+There should be a branch of this repo for each major Spack release. Branch 1.1 covers all 1.1.x Spack versions.
 
 ## Using spacksites to work with central installs as ccspapp
 
 The very first user of this version of Spack and this repo should create an Spack-versioned directory to 
-check out into, clone this repo and switch to the desired branch. This example is for Spack 0.23.x:
+check out into, clone this repo and switch to the desired branch. This example is for Spack 1.1.x:
 
 ```
-mkdir -p /home/ccspapp/Scratch/spack/0.23
-cd /home/ccspapp/Scratch/spack/0.23
+mkdir -p /home/ccspapp/Scratch/spack/1.1
+cd /home/ccspapp/Scratch/spack/1.1
 
-git clone https://github.com/UCL-ARC/hpc-spack.git --branch 0.23
+git clone https://github.com/UCL-ARC/hpc-spack.git --branch 1.1
 ```
 
-Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/0.23` for 0.23.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini) by default, but [deploy_sites.ini](spacksites/settings/deploy_sites.ini) can be specified instead. The deploy site config does not have spack_path_placeholder so builds cannot be reinstalled into longer paths. They may also define different further config files to be used.
+Once the repo already exists, start from here. Our sites location is `/shared/ucl/apps/spack/1.1` for 1.1.x which is defined in [spack_sites.ini](spacksites/settings/spack_sites.ini) by default, but [deploy_sites.ini](spacksites/settings/deploy_sites.ini) can be specified instead. The deploy site config does not have spack_path_placeholder so builds cannot be reinstalled into longer paths. They may also define different further config files to be used.
 
 ```
-cd /home/ccspapp/Scratch/spack/0.23/hpc-spack
+cd /home/ccspapp/Scratch/spack/1.1/hpc-spack
 
 # initialise spacksites (if RHEL9)
 source spacksites/myriad-utilities/init-spacksites-rhel9.sh
@@ -69,7 +69,7 @@ On new releases of Spack, rebuild the build cache, see if there are package vers
 
 ### Buildcache
 
-Our Spack-versioned buildcache is at `/shared/ucl/apps/spack/0.23/buildcache` for 0.23.x.
+Our Spack-versioned buildcache is at `/apps/spack/1.1/buildcache` for 1.1.x.
 
 This is specified in [initial_site_mirrors.yaml](spacksites/settings/initial_site_mirrors.yaml) and gets copied into `$site_name/spack/etc/spack/mirrors.yaml` in any sites you create.
 
@@ -77,19 +77,19 @@ To push a package to the buildcache as ccspapp:
 
 ```
 # take my site-installed gcc@12.3.0 and all its dependencies, and put it into a buildcache at this location
-spack buildcache push /shared/ucl/apps/spack/0.23/buildcache gcc@12.3.0
+spack buildcache push /apps/spack/1.1/buildcache gcc@12.3.0
 ```
 
 Or do this for an entire environment, in this case called `myriad`: 
 
 ```
-spack -e myriad buildcache push /shared/ucl/apps/spack/0.23/buildcache
+spack -e myriad buildcache push /apps/spack/1.1/buildcache
 ```
 
 Once packages are pushed, update the index so they show in `spack buildcache list`:
 
 ```
-spack buildcache update-index /shared/ucl/apps/spack/0.23/buildcache/
+spack buildcache update-index /apps/spack/1.1/buildcache/
 ```
 
 ### Local package repositories
@@ -114,9 +114,9 @@ Spack will search through the repos in order to find requested specs, so it will
 # show repos for the active site
 spack repo list
 ==> 3 package repositories.
-ucl.arc.hpc        /lustre/scratch/scratch/ccspapp/spack/0.23/hpc-spack/repos/ucl
-ucl.arc.hpc.dev    /lustre/scratch/scratch/ccspapp/spack/0.23/hpc-spack/repos/dev
-builtin            /lustre/shared/ucl/apps/spack/0.23/hk-initial-stack/spack/var/spack/repos/builtin
+ucl.arc.hpc        /lustre/scratch/scratch/ccspapp/spack/1.1/hpc-spack/repos/ucl
+ucl.arc.hpc.dev    /lustre/scratch/scratch/ccspapp/spack/1.1/hpc-spack/repos/dev
+builtin            /lustre/apps/spack/1.1/hk-initial-stack/spack/var/spack/repos/builtin
 ```
 
 If you have an existing site and we have added new repos that it does not have, add them to
@@ -140,7 +140,7 @@ When there is a major version release, we need to:
  - Update the buildcache location in [initial_site_mirrors.yaml](spacksites/settings/initial_site_mirrors.yaml)
  - Check whether the major changes/deprecations for the new version require any alterations to the spack commands spacksites runs, [initial_site_modules.yaml](spacksites/settings/initial_site_modules.yaml), any other config or format changes or changes in default behaviour.
  - Check out the new branch in a new directory, as when starting from scratch above.
- - Create the new sites_root in `/shared/ucl/apps/$version`
+ - Create the new sites_root in `/apps/$version`
  - Create a new buildcache in the sites_root, checking whether the versions we build are still available in the new Spack version and updating our site .yaml files if they do not.
  - Check our `ucl` local package repo to see if specs we got from `develop` now exist in builtin. If they do, delete the local one.
 
@@ -187,8 +187,8 @@ eval $(spacksites/spacksites spack-setup-env $site_name)
 
 #### Trust the buildcache
 
-The public gpg key for the buildcache exists in `/shared/ucl/apps/spack/0.23/buildcache/build_cache/_pgp/` 
-for version 0.23. This key belongs to the `ccspapp` user.
+The public gpg key for the buildcache exists in `/apps/spack/1.1/buildcache/build_cache/_pgp/` 
+for version 1.1.x. This key belongs to the `ccspapp` user.
 
 ```
 # To use the buildcache you need to trust our existing public gpg key
@@ -211,4 +211,4 @@ You can set a different build_stage in your site's `config.yaml` file (suggested
 
 Spack's default config.yaml for your site is in `$site_root/$site_name/etc/spack/defaults/config.yaml`. Each site has its own.
 
-Note: spacksites deliberately ignores any other local Spack config files to avoid clashes with other Spack setups you may have: [Personal spack config - ignored](spacksites/README.md#personal-spack-config---ignored) 
+Note: spacksites deliberately ignores any other local Spack config files to avoid clashes with other Spack setups you may have: [Personal spack config - ignored](spacksites/README.md#personal-spack-config---ignored). However, in 0.23 and 1.1 it will still consider `~/.spack` and bootstrap from there, so there will be issues if trying to swap back and forth between those since there are major changes. 
