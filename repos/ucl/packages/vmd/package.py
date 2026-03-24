@@ -1,9 +1,10 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright Spack Project Developers. See COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
+# UCL added 1.9.4a55, 2.0.0a8 
 import os
+
+from spack_repo.builtin.build_systems.generic import Package
 
 from spack.package import *
 
@@ -33,7 +34,6 @@ class Vmd(Package):
         url="file//{0}/vmd-1.9.4a55.bin.LINUXAMD64-CUDA102-OptiX650-OSPRay185-RTXRTRT.opengl.tar.gz".format(
             os.getcwd()
         ),
-
     )
     version(
         "1.9.3",
@@ -49,16 +49,15 @@ class Vmd(Package):
     depends_on("libxinerama", type=("run", "link"))
     depends_on("gl@3:", type=("run", "link"))
     depends_on("patchelf", type="build")
+    depends_on("gmake", type="build")
 
-    def setup_build_environment(self, env):
+    def setup_build_environment(self, env: EnvironmentModifications) -> None:
         env.set("VMDINSTALLBINDIR", self.prefix.bin)
         env.set("VMDINSTALLLIBRARYDIR", self.prefix.lib64)
 
     def install(self, spec, prefix):
         configure = Executable("./configure")
-        # LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC CUDA CXX11 IMD LIBSBALL XINERAMA XINPUT LIBTACHYON LIBPNG ZLIB VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT
-        #configure("LINUXAMD64")
-        configure()
+        configure("LINUXAMD64")
         with working_dir(join_path(self.stage.source_path, "src")):
             make("install")
 
@@ -73,5 +72,5 @@ class Vmd(Package):
         )
         patchelf("--set-rpath", rpath, join_path(self.prefix, "lib64", "vmd_LINUXAMD64"))
 
-    def setup_run_environment(self, env):
+    def setup_run_environment(self, env: EnvironmentModifications) -> None:
         env.set("PLUGINDIR", self.spec.prefix.lib64.plugins)
