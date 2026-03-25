@@ -2,8 +2,11 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
+# UCL: package now has variants and lists gnutls and openssl as conditional dependencies
+#      GnuTLS has precedence by default over OpenSSL if both libraries are installed.
 import sys
+
+from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
 
 from spack.package import *
 
