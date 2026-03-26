@@ -1,14 +1,14 @@
-# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
-#
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright Spack Project Developers. See COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-# UCL-dev: remove openmpi dependency when pmix
+# UCL: depend on pmix not on openmpi when pmi=pmix
 
 import os
 import platform
 import shutil
 import sys
+
+from spack_repo.builtin.build_systems.generic import Package
 
 from spack.package import *
 
@@ -45,10 +45,6 @@ class Charmpp(Package):
     version("6.6.1", sha256="2aa16fd3015dce0a0932ab5253578a72ddbcb889bc0d23584c42b28446915467")
     version("6.6.0", sha256="c916010f2d4cc2c6bd30ea19764839d0298fb56d1696d8ff08d9fa9a61dfb1c9")
     version("6.5.1", sha256="68aa43e2a6e476e116a7e80e385c25c6ac6497807348025505ba8bfa256ed34a")
-
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
 
     # Support OpenMPI; see
     # <https://github.com/UIUC-PPL/charm/issues/1206>
@@ -99,7 +95,7 @@ class Charmpp(Package):
     variant(
         "pmi",
         default="none",
-        values=("none", "simplepmi", "slurmpmi", "slurmpmi2", "pmix", "cray-pmi"),
+        values=("none", "simplepmi", "slurmpmi2", "pmix", "cray-pmi"),
         description="The ucx/ofi/gni backends need PMI to run!",
     )
 
@@ -116,6 +112,23 @@ class Charmpp(Package):
     variant("production", default=True, description="Build charm++ with all optimizations")
     variant("tracing", default=False, description="Enable tracing modules")
 
+    # Applies only to versions 8.0.0 and later
+    variant(
+        "fortran", default=True, description="Enable Fortran support (false applies only to @8:)"
+    )
+
+    depends_on("c", type="build")  # generated
+    depends_on("cxx", type="build")  # generated
+    depends_on("fortran", type="build", when="+fortran")
+    # Fortran is required for version earlier than 8.0.0
+    conflicts("~fortran", when="@:7")
+    # charmpp build was failing with clang based compilers for -DNETWORK=mpi as discussed in
+    # https://github.com/charmplusplus/charm/issues/3645
+    # Fix was suggested in https://github.com/charmplusplus/charm/pull/3646 and the same has
+    # been implemented in v8.0.0
+    conflicts("%fortran=intel-oneapi-compilers", when="@8: +fortran")
+    conflicts("%fortran=aocc", when="@8: +fortran")
+
     # Versions 7.0.0+ use CMake by default when it's available. It's more
     # robust.
     depends_on("cmake@3.4:", when="@7.0.0:", type="build")
@@ -126,23 +139,22 @@ class Charmpp(Package):
 
     depends_on("ucx", when="backend=ucx")
     depends_on("libfabric", when="backend=ofi")
-    depends_on("slurm@:17-11-9-2", when="pmi=slurmpmi")
     depends_on("slurm@17-11-9-2:", when="pmi=slurmpmi2")
-    depends_on("pmix", when="pmi=pmix")
 
     # FIXME : As of now spack's OpenMPI recipe does not have a PMIx variant
     # But if users have external installs of OpenMPI with PMIx support, this
     # will allow them to build charm++ with it.
     #depends_on("openmpi", when="pmi=pmix")
+    depends_on("pmix", when="pmi=pmix")
 
     depends_on("mpi", when="pmi=simplepmi")
-    depends_on("mpi", when="pmi=slurmpmi")
     depends_on("mpi", when="pmi=slurmpmi2")
     depends_on("cray-mpich", when="pmi=cray-pmi")
 
     # Git versions of Charm++ require automake and autoconf
     depends_on("automake", when="@develop")
     depends_on("autoconf", when="@develop")
+    depends_on("gmake", type="build")
 
     conflicts("~tracing", "+papi")
 
@@ -278,12 +290,10 @@ class Charmpp(Package):
     #            build-target=LIBS backend={0}'.format(b))
 
     def install(self, spec, prefix):
-        if not ("backend=mpi" in self.spec) or not ("backend=netlrts" in self.spec):
+        if "backend=mpi" not in self.spec or "backend=netlrts" not in self.spec:
             if self.spec.satisfies("+pthreads"):
                 raise InstallError(
-                    "The pthreads option is only\
-                                    available on the Netlrts and MPI \
-                                    network layers."
+                    "The pthreads option is only available on the Netlrts and MPI network layers."
                 )
 
         if (
@@ -293,23 +303,15 @@ class Charmpp(Package):
         ):
             if self.spec.satisfies("pmi=none"):
                 raise InstallError(
-                    "The UCX/OFI/GNI backends need \
-                                    PMI to run. Please add pmi=... \
-                                    Note that PMIx is the preferred \
-                                    option."
+                    "The UCX/OFI/GNI backends need PMI to run. Please add pmi=... "
+                    "Note that PMIx is the preferred option."
                 )
 
-        if (
-            ("pmi=simplepmi" in self.spec)
-            or ("pmi=slurmpmi" in self.spec)
-            or ("pmi=slurmpmi2" in self.spec)
-        ):
+        if ("pmi=simplepmi" in self.spec) or ("pmi=slurmpmi2" in self.spec):
             if self.spec.satisfies("^openmpi"):
                 raise InstallError(
-                    "To use any process management \
-                                    interface other than PMIx, \
-                                    a non OpenMPI based MPI must be \
-                                    present on the system"
+                    "To use any process management interface other than PMIx, "
+                    "a non OpenMPI based MPI must be present on the system"
                 )
 
         target = spec.variants["build-target"].value
@@ -320,23 +322,16 @@ class Charmpp(Package):
         # here.
         options = [os.path.basename(self.compiler.cc)]
 
-        if "@:6.8.2 %aocc" not in spec:
+        if "@:6.8.2 %aocc" not in spec and spec.satisfies("+fortran"):
             options.append(os.path.basename(self.compiler.fc))
 
         options.append("-j%d" % make_jobs)
-
-        # 7.0.0+ use buildcmake and have an install step if install_prefix is specified
-        #if self.spec.satisfies("@7.0.0:"):
-        #    options.append("--install-prefix=%s" % prefix)
-        #else:
         options.append("--destination=%s" % builddir)
 
-        if spec.satisfies("pmi=slurmpmi"):
-            options.append("slurmpmi")
         if spec.satisfies("pmi=slurmpmi2"):
             options.append("slurmpmi2")
         if spec.satisfies("pmi=pmix"):
-            #options.append("ompipmix")
+            #options.append("ompipmix")  # pmix not via openmpi
             #options.extend(["--basedir=%s" % spec["openmpi"].prefix])
             options.append("openpmix")
             options.extend(["--basedir=%s" % spec["pmix"].prefix])
@@ -366,7 +361,7 @@ class Charmpp(Package):
                 # This is a Charm++ limitation; it would lead to a
                 # build error
                 raise InstallError(
-                    "The +tcp variant requires " "the backend=netlrts communication mechanism"
+                    "The +tcp variant requires the backend=netlrts communication mechanism"
                 )
             options.append("tcp")
         if spec.satisfies("+omp"):
@@ -383,11 +378,7 @@ class Charmpp(Package):
         if spec.satisfies("+tracing"):
             options.append("--enable-tracing")
 
-        # charmpp build was failing with clang based compilers for -DNETWORK=mpi as discussed in
-        # https://github.com/charmplusplus/charm/issues/3645
-        # Fix was suggested in https://github.com/charmplusplus/charm/pull/3646 and the same has
-        # been implemented in v8.0.0
-        if self.spec.satisfies("@8.0.0: %aocc"):
+        if self.spec.satisfies("@8: ~fortran"):
             options.append("--disable-fortran")
 
         # Call "make" via the build script
@@ -399,9 +390,8 @@ class Charmpp(Package):
         build = Executable(join_path(".", "build"))
         build(target, self.charmarch, *options)
 
-        # Before 7.x Charm++'s install script does not copy files, it only creates
+        # Charm++'s install script does not copy files, it only creates
         # symbolic links. Fix this.
-        #if self.spec.satisfies("@:6"):
         for dirpath, dirnames, filenames in os.walk(builddir):
             for filename in filenames:
                 filepath = join_path(dirpath, filename)
@@ -412,7 +402,7 @@ class Charmpp(Package):
                         copy(filepath, tmppath)
                         os.remove(filepath)
                         os.rename(tmppath, filepath)
-                    except (IOError, OSError):
+                    except OSError:
                         pass
 
         tmp_path = join_path(builddir, "tmp")
@@ -439,7 +429,9 @@ class Charmpp(Package):
             parallel=False,
         )
 
-    def setup_dependent_build_environment(self, env, dependent_spec):
+    def setup_dependent_build_environment(
+        self, env: EnvironmentModifications, dependent_spec: Spec
+    ) -> None:
         if not self.spec.satisfies("backend=mpi"):
             env.set("MPICC", self.prefix.bin.ampicc)
             env.set("MPICXX", self.prefix.bin.ampicxx)
