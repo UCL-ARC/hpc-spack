@@ -1,0 +1,77 @@
+toolchains:
+  gcc_ompi:
+  - spec: "%c=gcc"
+    when: "%c"
+  - spec: "%cxx=gcc"
+    when: "%cxx"
+  - spec: "%fortran=gcc"
+    when: "%fortran"
+  - spec: %mpi=openmpi@4 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+    when: %mpi
+
+# gcc_ompi_cuda
+
+  intel_ifx_impi:
+  - spec: %c=intel-oneapi-compilers @2024.2.1
+    when: %c
+  - spec: %cxx=intel-oneapi-compilers @2024.2.1
+    when: %cxx
+  - spec: %fortran=intel-oneapi-compilers @2024.2.1
+    when: %fortran
+  - spec: %mpi=intel-oneapi-mpi @2021.14.0 +external-libfabric
+    when: %mpi
+# might want a separate toolchain for intel AND mkl
+# intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+#  - spec: %blas=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+#    when: %blas
+#  - spec: %fftw=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+#    when: %fftw
+#  - spec: %lapack=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+#    when: %lapack
+#  - spec: %scalapack=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+#    when: %scalapack
+
+  intel_ifx_ompi:
+  - spec: %c=intel-oneapi-compilers @2024.2.1
+    when: %c
+  - spec: %cxx=intel-oneapi-compilers @2024.2.1
+    when: %cxx 
+  - spec: %fortran=intel-oneapi-compilers @2024.2.1
+    when: %fortran
+  - spec: %mpi=openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+    when: %mpi
+# intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+#  - spec: %blas=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+#    when: %blas
+#  - spec: %fftw=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+#    when: %fftw
+#  - spec: %lapack=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+#    when: %lapack
+#  - spec: %scalapack=intel-oneapi-mkl @2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+#    when: %scalapack
+
+  intel_icx_ifort:
+  - spec: %c=intel-oneapi-compilers @2024.2.1
+    when: %c
+  - spec: %cxx=intel-oneapi-compilers @2024.2.1
+    when: %cxx
+  - spec: %fortran=intel-compilers-classic @2021.13.1
+    when: %fortran
+# may not be able to specify this here since built with mixed chain itself
+# instead build openmpi with this toolchain
+#    - spec: %mpi=openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers %intel_icx_ifort
+#      when: %mpi
+
+  intel_icx_ifort_ompi:
+  - spec: %c=intel-oneapi-compilers @2024.2.1
+    when: %c
+  - spec: %cxx=intel-oneapi-compilers @2024.2.1
+    when: %cxx
+  - spec: %fortran=intel-compilers-classic @2021.13.1
+    when: %fortran
+  - spec: %mpi=openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers %intel_icx_ifort
+    when: %mpi
+
+# nvhpc +mpi default_cuda=12.6
+
+
