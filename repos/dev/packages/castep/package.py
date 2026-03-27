@@ -1,14 +1,19 @@
-# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2026 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
+# UCL: from PR https://github.com/pjpbyrne/spack-packages/tree/39b0b17fc02456f2832b8569cc1e87df964b7639/repos/spack_repo/builtin/packages/castep
+import glob
+import math
 import os
+import re
+
+from spack_repo.builtin.build_systems.cmake import CMakePackage, generator
 
 from spack.package import *
 
 
-class Castep(CMakePackage, MakefilePackage):
+class Castep(CMakePackage):
     """
     CASTEP is a leading code for calculating the
     properties of materials from first principles.
@@ -20,190 +25,290 @@ class Castep(CMakePackage, MakefilePackage):
     """
 
     homepage = "http://castep.org"
-    url = f"file://{os.getcwd()}/CASTEP-21.11.tar.gz"
+    url = f"file://{os.getcwd()}/CASTEP-25.12.tar.gz"
     manual_download = True
 
-    
+    maintainers("pjpbyrne")
+
+    # Versions
+    version("26.11", sha256="cd38ec9e87fd92b91fe7910179acad6486ee57935832846959151ec406fb5fb6")
+    version("25.12", sha256="e21177bfe4cb3f3d098b666c90771e3da2826503b002b8e325e3ca1e230cfc7d")
+    version("25.11", sha256="af6851a973ef83bbd725f6f33ff7616dd9d589bd75cf74cd106b13c3369167f6")
     version("24.1", sha256="97d77a4f3ce3f5c5b87e812f15a2c2cb23918acd7034c91a872b6d66ea0f7dbb")
     version("23.1", sha256="7fba0450d3fd71586c8498ce51975bbdde923759ab298a656409280c29bf45b5")
-    version("21.11", sha256="d909936a51dd3dff7a0847c2597175b05c8d0018d5afe416737499408914728f")
-    version(
-        "20.1", sha256="fa0f615ed1992ebf583ed3a2a4596085c2ebd59530271e70cc3a36789ba8180b",
-        url=f"file://{os.getcwd()}/castep-20.1.tar.xz"
-    )
-    version(
-        "19.1.1.rc2", sha256="1fce21dc604774e11b5194d5f30df8a0510afddc16daf3f8b9bbb3f62748f86a"
-    )
 
-    variant("mpi", default=True, description="Enable MPI build")
-    #variant("foxcml", default=False, description="Enable CML, link against FoX libraries")
-    variant("grimmed3", default=True, description="Enable Grimme DFT+D library")
+    # Builder Depdencies
+    generator("ninja", "make", default="make")
 
-    variant("grimmed4", default=True, when="@23:", description="Enable Grimme D4 library")
-    variant("dlmg", default=True, description="Enable DLMG Functionality functionals")
+    with when("generator=make"):
+        depends_on("cmake@3.25:", type="build")
+        depends_on("gmake@4.2:", type="build", when="generator=make")
 
+    with when("generator=ninja"):
+        depends_on("ninja", type="build")
+        depends_on("cmake@3.27.9:", type="build")
+
+    # List of the main variant options
     variant(
-        "libxc", default=False, when="@23:",
-        description="Enable libxc library of additional XC functionals"
+        "build_type",
+        default="fast",
+        description="CASTEP build type",
+        values=("debug", "intermediate", "fast"),
     )
-
-    variant("openmp", default=True, when="build_system=cmake", description="Enable OpenMP"),
-
-    # Patch available alongside source, manual download
-    patch(
-        f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
-        sha256="a7860dc6677955d9bc877859666c4e8aa59635723968661674283a3939d7a66b",
-        archive_sha256="5f31daf4733f8ee906cba0ff092e317b9cbaa100666533b2dce39f1f829646c2",
-        when="@23.1",
+    variant("mpi", description="Build with MPI parallelism", default=True)
+    variant("libxc", description="Build with libXC support", default=False)
+    variant("openmp", description="Use OpenMP threading", default=True)
+    variant(
+        "grimmed3",
+        description="Compile with support for Grimme D3 dispersion scheme",
+        default=True,
     )
-
-    # Fixes generation of buildinfo_data.f90 in the cmake build 
-    # can be either case of [Nn]ot a git repo
-    patch("castep_2023.1.1_buildinfo.patch", when="@23.1")
-
-    # Patches the cmake install step for libxc's mod files.
-    patch("castep_cmake_libxc523.patch", when="@24")
-    patch("castep_cmake_libxc522.patch", when="@23")
-
-    build_system(
-        conditional("cmake", when="@23:"),
-        conditional("makefile", when="@:22"),
-        default="cmake",
+    variant(
+        "grimmed4",
+        description="Compile with support for Grimme D4 dispersion scheme",
+        default=True,
     )
+    variant("dlmg", description="Compile with support for open boundary conditions", default=True)
+    variant("tools", default=True, description="Build the executable auxilliary programs")
+    variant("utilities", default=True, description="Build the third-party scripts and utilities")
 
-    with when("build_system=cmake"):
-        depends_on("cmake@3.18:", type="build")
-
-    depends_on("rsync", type="build")
+    # Depedencies
+    depends_on("c", type="build")
     depends_on("fortran", type="build")
-    depends_on("c", type="build") # for Utility
-    depends_on("blas")
-    depends_on("lapack")
-    depends_on("fftw-api")
+    depends_on("awk@3:", type="build")
     depends_on("perl", type=("build", "run"))
-    depends_on("python@3", type=("build", "run"))
-    depends_on("mpi", type=("build", "link", "run"), when="+mpi")
+    depends_on("lapack")
+    depends_on("blas")
+    depends_on("fftw-api@3")
 
-    # castep strongly prefers to build libxc itself - would also need -DEXTERNAL_LIBXC_LIBRARY=ON
-    # or make equivalent and ensure it can find the include files.
-    #depends_on("libxc@5.2", type=("build", "link", "run"), when="+libxc")
+    extends("python", type=("build", "run"))
+    depends_on("py-pip", type="build")
+    depends_on("py-numpy", type=("build", "run"))
+    depends_on("py-scipy", type=("build", "run"))
+    depends_on("py-matplotlib", type=("build", "run"))
+    depends_on("py-setuptools", type=("build", "run"), when="@:24")
 
-    # don't have a FoX CML package atm, only C++ fox-toolkit
-    #depends_on("foxcml", type=("build", "link", "run"), when="+foxcml")
+    # Ensure mpi has been compiled with fortran support...
+    with when("+mpi"):
+        depends_on("mpi", type=("build", "link", "run"))
+        depends_on("mpich+fortran", when="%mpi=mpich")
+        depends_on("openmpi+fortran", when="%mpi=openmpi")
 
-    parallel = True
+    # To use FFT mkl option only allowed when also using mkl as lapack/blas
+    requires(
+        "%lapack=intel-oneapi-mkl",
+        when="%fftw-api=intel-oneapi-mkl",
+        msg="MKL must be used as the BLAS/LAPACK library to use it for FFTs",
+    )
 
+    # Block older compiler versions that are not supported (and explicitly do not work)
+    conflicts("%oneapi", when="@:23", msg="Intel LLVM requires CASTEP 24 or newer")
+    conflicts("%llvm", when="@:25", msg="LLVM(Flang) requires CASTEP 26 or newer")
 
-class CMakeBuilder(spack.build_systems.cmake.CMakeBuilder):
+    # Fortran dependencies must be compiled with the same compiler
+    sub_packages = {
+        "mpi": ["openmpi", "mpich"],
+        "blas": ["openblas", "flexiblas"],
+        "lapack": ["openblas", "flexiblas"],
+        "fftw-api": ["fftw"],
+    }
 
-    # Is ok with default subdir build but requires -B to be set.
-    def cmake_args(self):
-        args = [
-            "-B .",
-            self.define_from_variant("WITH_MPI", "mpi"),
-            self.define_from_variant("WITH_LIBXC", "libxc"),
-            self.define_from_variant("WITH_OpenMP", "openmp"),
-            #self.define_from_variant("WITH_FOXCML", "foxcml"),
-            #self.define_from_variant("WITH_QUIP", "quip"),
-            self.define_from_variant("WITH_GRIMMED3", "grimmed3"),
-            self.define_from_variant("WITH_GRIMMED4", "grimmed4"),
-            self.define_from_variant("WITH_DLMG", "dlmg"),
-        ]
-        return args
+    for compiler in ["gcc", "llvm", "intel", "oneapi"]:
+        for virtual_package, package_providers in sub_packages.items():
+            for actual_package in package_providers:
+                depends_on(
+                    f"{actual_package}%fortran={compiler}",
+                    when=f"%fortran={compiler} %{virtual_package}={actual_package}",
+                )
 
+    # Special rules for mkl
+    requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%lapack=intel-oneapi-mkl")
+    requires(
+        "%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%fftw-api=intel-oneapi-mkl"
+    )
+    requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%mpi=intel-oneapi-mpi")
 
-class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
+    # Fix some issues with the build time test and utility python scripts with python 3.13
+    patch("Replace_pipes_with_shex_in_testcode.patch", when="@:24 %python@3.13:")
+    patch(
+        "Fix-castepconv-strings-with-invalid-escape-character.patch", when="@:26.11 %python@3.13:"
+    )
 
-    # dl_mg is 2.0.3 for 20.1, 21.11; then 3.0.0 for 23.1.
-    # There is a base linux_x86_64_gfortran.mk and a gfortran9.0.mk for 19, then a 
-    # gfortran10.mk for 20.1 onwards.
-    def edit(self, spec, prefix):
-        if spec.satisfies("%gcc"):
-            if self.spec.satisfies("@19:21"):
-                dlmakefile = FileFilter("LibSource/dl_mg-2.0.3/platforms/castep.inc")
-            #elif self.spec.satisfies("@23:"):
-            #    dlmakefile = FileFilter("LibSource/dl_mg-3.0.0/platforms/castep.inc")
+    # Patch to fix broken wrapper script that doesnt pass arguments in 26.11
+    patch("Fixed-arguments-not-being-passed-to-python-scripts.patch", when="@=26.11")
 
-            if self.spec.satisfies("@20:"):
-                if spec.satisfies("%gcc@10:"):
-                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran10.mk")
-                else:
-                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
-                    platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
-            elif self.spec.satisfies("@19"):
-                if spec.satisfies("%gcc@9:"):
-                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran9.0.mk")
-                else:
-                    platfile = FileFilter("obj/platforms/linux_x86_64_gfortran.mk")
-                dlmakefile.filter(r"MPIFLAGS = -DMPI", "MPIFLAGS = -fallow-argument-mismatch -DMPI")
-                platfile.filter(r"^\s*FFLAGS_E\s*=.*", "FFLAGS_E = -fallow-argument-mismatch ")
-
-            platfile.filter(r"^\s*OPT_CPU\s*=.*", "OPT_CPU = ")
-
-        elif spec.satisfies("%intel"):
-            if self.spec.satisfies("@20:"):
-                platfile = FileFilter("obj/platforms/linux_x86_64_ifort.mk")
-            else:
-                platfile = FileFilter("obj/platforms/linux_x86_64_ifort19.mk")
-            platfile.filter(r"^\s*OPT_CPU\s*=.*", "OPT_CPU = ")
+    # Patches to correct python script installation directory
+    patch("Fix_python_install_25.patch", when="@25")
+    patch("Fix_python_install_24.patch", when="@24")
+    patch("Fix_python_install_23.patch", when="@23")
 
     @property
     def build_targets(self):
-        spec = self.spec
-        targetlist = [f"PWD={self.stage.source_path}"]
-
-        if "+mpi" in spec:
-            targetlist.append("COMMS_ARCH=mpi")
-
-        # "system" for existing libxc, "compile" to build own
-        if "+libxc" in spec:
-            targetlist.append("LIBXC=system")
-
-        if "+grimmed3" in spec:
-            targetlist.append("GRIMMED3=compile")
-        else:
-            targetlist.append("GRIMMED3=none")
-
-        if "+grimmed4" in spec:
-            targetlist.append("GRIMMED4=compile")
-        else:
-            targetlist.append("GRIMMED4=none")
-
-        if "+dlmg" in spec:
-            targetlist.append("DL_MG=compile")
-        else:
-            targetlist.append("DL_MG=none")
-
-        targetlist.append(f"FFTLIBDIR={spec['fftw-api'].prefix.lib}")
-        targetlist.append(f"MATHLIBDIR={spec['blas'].prefix.lib}")
-
-        if "^mkl" in spec:
-            targetlist.append("FFT=mkl")
-            if self.spec.satisfies("@20:"):
-                targetlist.append("MATHLIBS=mkl")
-            else:
-                targetlist.append("MATHLIBS=mkl10")
-        else:
-            targetlist.append("FFT=fftw3")
-            targetlist.append("MATHLIBS=openblas")
-
-        if spec.satisfies("target=x86_64:"):
-            if spec.satisfies("platform=linux"):
-                if spec.satisfies("%gcc"):
-                    if self.spec.satisfies("@20:") and spec.satisfies("%gcc@10:"):
-                        targetlist.append("ARCH=linux_x86_64_gfortran10")
-                    elif self.spec.satisfies("@19") and spec.satisfies("%gcc@9:"):
-                        targetlist.append("ARCH=linux_x86_64_gfortran9.0")
-                    else:
-                        targetlist.append("ARCH=linux_x86_64_gfortran")
-                if spec.satisfies("%intel"):
-                    if self.spec.satisfies("@20:"):
-                        targetlist.append("ARCH=linux_x86_64_ifort")
-                    else:
-                        targetlist.append("ARCH=linux_x86_64_ifort19")
-
+        """Generate targets for castep build stage"""
+        targetlist = ["castep"]
+        if self.spec.satisfies("+tools"):
+            targetlist.append("tools")
+        if self.spec.satisfies("+utilities"):
+            targetlist.append("utilities")
         return targetlist
 
-    def install(self, spec, prefix):
-        mkdirp(prefix.bin)
-        make("install", "install-tools", *self.build_targets, "INSTALL_DIR={0}".format(prefix.bin))
+    def cmake_args(self):
+        """
+        Generate cmake arguments for castep configure stage.
+        lapack/blas/fft names are translated into their internal variants.
+        """
+
+        # Internal names for blas libraries
+        castep_math_libs = {
+            "openblas": "OpenBLAS",
+            "intel-oneapi-mkl": "Intel",
+            "atlas": "ATLAS",
+            "flexiblas": "FlexiBLAS",
+            "libflame": "FLAME",
+            "amdlibflame": "FLAME",
+            "nvhpc": "NVHPC",
+            "cray-libsci": "SciLib",
+            "blis": "BLIS",
+            "amdblix": "BLIS",
+            "essl": "ESSL",
+        }
+
+        # Internal name for fft libraries
+        castep_fft_libs = {"intel-oneapi-mkl": "mkl", "fftw": "fftw3"}
+
+        args = [
+            "-DBUILD={0}".format(self.spec.variants["build_type"].value),
+            self.define_from_variant("WITH_MPI", "mpi"),
+            self.define_from_variant("WITH_LIBXC", "libxc"),
+            self.define_from_variant("WITH_OpenMP", "openmp"),
+            self.define_from_variant("WITH_GRIMMED3", "grimmed3"),
+            self.define_from_variant("WITH_GRIMMED4", "grimmed4"),
+            self.define_from_variant("WITH_DLMG", "dlmg"),
+            self.define("WITH_MACE", False),  # Seems to be broken
+        ]
+
+        # Specify lapack/blas and fftw precisely if known
+        mathlib = castep_math_libs.get(self.spec["blas"].name, None)
+        if mathlib:
+            args.append(self.define("MATHLIBS", mathlib))
+
+        fftlib = castep_fft_libs.get(self.spec["fftw-api"].name, None)
+        if fftlib:
+            args.append(self.define("FFT", fftlib))
+
+        return args
+
+    @property
+    def castep_exe(self):
+        """Get the main executable filename"""
+        if self.spec.satisfies("+mpi"):
+            return "castep.mpi"
+        else:
+            return "castep.serial"
+
+    @property
+    def sanity_check_is_file(self):
+        """List of files to check on a completed install"""
+        # Main castep executable
+        bin_files = [self.castep_exe]
+
+        # Fortran tool check
+        if self.spec.satisfies("+tools"):
+            bin_files.append("phonon_kpoints")
+
+        if self.spec.satisfies("+utilities"):
+            # Python script check
+            bin_files.append("cif2cell")
+
+            # Perl script check
+            bin_files.append("dos.pl")
+
+        return [join_path("bin", f) for f in bin_files]
+
+    #################################################
+    # Tests that are run at build/installation time #
+    #################################################
+
+    def check(self) -> None:
+        """Run the check-quick target."""
+        with working_dir(self.build_directory):
+            if self.generator == "Unix Makefiles":
+                self._if_make_target_execute("check-quick")
+            elif self.generator == "Ninja":
+                self._if_ninja_target_execute("check-quick")
+
+    @run_after("install")
+    @on_package_attributes(run_tests=True)
+    def test_castep_executable(self):
+        """Test that the executable launches and returns a version number"""
+        spec_version = re.compile(r"CASTEP version: " + str(self.spec.version))
+        castep = Executable(join_path(self.prefix.bin, self.castep_exe))
+        output = castep("-v", output=str)
+        check_outputs(spec_version, output)
+
+    @run_after("install")
+    def prepare_postinstal_tests(self):
+        """Store a simple test of basic castep functionality"""
+        cache_extra_test_sources(self, join_path("Test", "Electronic", "Si2-den"))
+
+    ############################################
+    # Tests that can be run at some later time #
+    ############################################
+
+    def test_castep_si2(self):
+        """
+        Run a simple Si2 test case and verify the total energy matches that from the benchmark
+        """
+        test_dir = join_path(
+            self.test_suite.current_test_cache_dir, "Test", "Electronic", "Si2-den"
+        )
+        energy_re = re.compile(r"Final energy =\s+(\S+)\s+eV")
+        seedname = "Si2-den-NCP"
+
+        # Quick calculation only converges to 1e-6 so 100x that should always be safe
+        relative_tolerance = 1e-4
+
+        def get_energy_from_file(filename: str) -> float:
+            with open(filename) as f:
+                for line in f:
+                    m = re.search(energy_re, line)
+                    if m:
+                        return float(m.group(1))
+            raise KeyError(f"Total energy not found in {filename}")
+
+        with working_dir(test_dir):
+            # Get reference data
+            bench_file = glob.glob("benchmark*param")[0]
+            benchmark_energy = get_energy_from_file(bench_file)
+
+            # Get castep data
+            castep = which(self.castep_exe, required=True)
+            castep(seedname)
+            castep_file = f"{seedname}.castep"
+            castep_energy = get_energy_from_file(castep_file)
+
+            assert math.isclose(castep_energy, benchmark_energy, rel_tol=relative_tolerance), (
+                f"Expected {benchmark_energy} eV, got {castep_energy} eV.\n"
+                f"Output file: {join_path(test_dir, castep_file)}"
+            )
+
+    def test_elastics_wrapper(self):
+        """Check that the python script elastics.py installed correctly"""
+        if self.spec.satisfies("+utilities"):
+            elastics = Executable(join_path(self.prefix.bin, "elastics.py"))
+            elastics("-h")
+        else:
+            raise SkipTest("Test only available with utilities installed.")
+
+    def test_castepconv_wrapper(self):
+        """
+        Check that the python script wrapper installed correctly and
+        passes arguments for castepconv.py
+        """
+        if self.spec.satisfies("+utilities"):
+            castepconv = Executable(join_path(self.prefix.bin, "castepconv.py"))
+            castepconv("-h")
+        else:
+            raise SkipTest("Test only available with utilities installed.")
+
+    # Utility functions
