@@ -17,9 +17,11 @@ spack:
   - matrix:
     - - orca@6.0.1
     - - '%gcc@12.3.0'
+
   concretizer:
     unify: when_possible
   view: false
+
   include_concrete:
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/intel
@@ -29,7 +31,9 @@ spack:
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/moreapps
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/r452
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/ompi418
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/nvidia  modules:
+  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/nvidia  
+
+modules:
     default:
       roots:
         tcl: $spack/../modules
