@@ -2,6 +2,9 @@ spack:
   specs:
   - matrix:
     - - libnsl
+      - xcb-util
+      - xcb-util-cursor
+      - libxcursor
     - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
