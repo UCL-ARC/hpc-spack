@@ -35,7 +35,7 @@ spack:
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/nsl
   - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/namd
 
-modules:
+  modules:
     default:
       roots:
         tcl: $spack/../modules
