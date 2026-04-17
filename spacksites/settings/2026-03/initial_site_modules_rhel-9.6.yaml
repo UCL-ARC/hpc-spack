@@ -53,6 +53,7 @@ modules:
         namd ^mpi ^charmpp backend=ofi: '{name}/{version}-{^mpi.name}-ofi/{compiler.name}-{compiler.version}'
         namd ^mpi ^charmpp backend=ucx: '{name}/{version}-{^mpi.name}-ucx/{compiler.name}-{compiler.version}'
         namd ^mpi ^charmpp backend=verbs: '{name}/{version}-{^mpi.name}-verbs/{compiler.name}-{compiler.version}'
+        namd ^mpi ^charmpp+smp backend=mpi: '{name}/{version}-{^mpi.name}-smp/{compiler.name}-{compiler.version}'
         namd ^charmpp backend=ofi: '{name}/{version}-ofi/{compiler.name}-{compiler.version}'
         namd ^charmpp backend=ucx: '{name}/{version}-ucx/{compiler.name}-{compiler.version}'
         namd ^charmpp backend=verbs: '{name}/{version}-verbs/{compiler.name}-{compiler.version}'
