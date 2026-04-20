@@ -1,0 +1,22 @@
+spack:
+
+  specs:
+
+  # make a compiler with ifort from the oneapi install. Compilers entry will need manual editing
+  # as it expects an icc for an intel@=2021.13.1 compiler so will add this as another oneapi.
+  - matrix:
+    - - intel-oneapi-compilers-classic
+    - - '%oneapi@2024.2.1'
+
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/intel
+
+  modules:
+    default:
+
+      roots:
+        tcl: $env/modules
+
