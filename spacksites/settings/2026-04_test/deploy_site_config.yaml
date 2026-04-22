@@ -1,0 +1,10 @@
+# A deployment site should have no placeholder padding.
+# Generally everything should have been pushed to a buildcache with padded paths
+# first, and the deployment stage should be reinstalling those prebuilt packages.
+
+config:
+  build_stage: $spack/../build_stage
+  build_jobs: 6
+  install_tree:
+    padded_length: False
+ 
