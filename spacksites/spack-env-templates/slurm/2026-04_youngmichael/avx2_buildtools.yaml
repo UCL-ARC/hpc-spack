@@ -1,0 +1,52 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
+
+  specs:
+  - matrix:
+    - - apr
+      - apr-util
+      - autoconf
+      - autoconf-archive
+      - automake
+      - berkeley-db
+      - bzip2
+      - cmake
+      - curl
+      - diffutils
+      - gawk
+      - gdbm
+      - git@2.46.2
+      - gmake
+      - gmp
+      - gzip@1.13
+      - libtool
+      - m4
+      - mpc
+      - mpfr
+      - ncurses
+      - perl@5.38.0
+      - perl@5.40.0
+      - pkgconf
+      - readline
+      - subversion
+      - texinfo
+      - zlib-ng
+      - zstd
+    - - '%gcc@12.3.0'
+  - gcc@12.3.0 +binutils
+
+  # Intel compilers built with gcc
+  - matrix:
+    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
+  #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/second_compiler

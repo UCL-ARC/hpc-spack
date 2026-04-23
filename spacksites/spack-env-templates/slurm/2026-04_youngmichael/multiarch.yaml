@@ -1,0 +1,29 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
+
+  # All the GCC multi-kernel libraries and MPIs to be used by the other environments are built here.
+  # (Minus special-case MPI versions only used by one application).
+  # This should be included in any environment requiring fftw, openblas or these MPIs.
+
+  specs:
+  # Packages built with GCC
+  - matrix:
+    - - fftw@3.3.10 -mpi -openmp
+      - fftw@3.3.10 -mpi +openmp
+      # - julia ^llvm~clang~gold~polly ^openblas threads=openmp
+      - openblas@0.3.28 +dynamic_dispatch threads=none
+      - openblas@0.3.28 +dynamic_dispatch threads=openmp
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - python@3.11.6
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+

@@ -1,0 +1,23 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3'
+
+  # the Michael avx2 end applications and Young GPU applications
+  specs:
+
+  # Packages built with Intel compiler
+  - matrix:
+    - - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
+      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
+      - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi ^rsync%gcc
+      - hdf5 +fortran +mpi +hl
+    - - '%oneapi@2024.2.1'
+
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/multiarch_intel
