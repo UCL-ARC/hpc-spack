@@ -64,6 +64,11 @@ packages:
     prefer:
     - '@4.1.6'
 
+  # must build with make -j1
+  quantum-espresso:
+    package_attributes:
+      parallel: false
+
   # group restrictions
   castep:
     permissions:
