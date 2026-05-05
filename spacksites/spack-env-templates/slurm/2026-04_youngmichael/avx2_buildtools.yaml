@@ -3,42 +3,7 @@ spack:
     unify: when_possible
   view: false
 
-  packages:
-    castep:
-      permissions:
-        read: group
-        group: ag-archpc-castep
-
-    orca:
-      permissions:
-        read: group
-        group: ag-archpc-orca
-
-    vasp@6:
-      permissions:
-        read: group
-        group: ag-archpc-vasp6
-
-    # must build with make -j1
-    quantum-espresso:
-      package_attributes:
-        parallel: false
-
-    # make sure everything uses zlib-ng with +new_strategies so we don't end up with multiple binutils
-    zlib-api:
-      require: 'zlib-ng'
-
-    zlib-ng:
-      require:
-      - spec: +new_strategies
-
-    # if anything demands a different openmpi, make sure it has the right options
-    openmpi:
-      require:
-      - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
-      prefer:
-      - '@4.1.6'
-
+packages:
     all:
       require:
       - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
