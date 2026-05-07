@@ -2,7 +2,7 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-# UCL: added VASP 6.5.1, added oneapi and intel compiler arch files to edit(), undeprecate 5.x 
+# UCL: added VASP 6.6.0, 6.5.1, added oneapi and intel compiler arch files to edit(), undeprecate 5.x 
 
 import os
 
@@ -22,6 +22,7 @@ class Vasp(MakefilePackage, CudaPackage):
     maintainers("snehring")
     manual_download = True
 
+    version("6.6.0", sha256="9566f59b0ae2fc60f670a91153655d09dba13fe6cc6c54e9ca6bd03bbcd86384")
     version("6.5.1", sha256="a53fd9dd2a66472a4aa30074dbda44634fc663ea2628377fc01d870e37136f61")
     version("6.4.3", sha256="fe30e773f2a3e909b5e0baa9654032dfbdeff7ec157bc348cee7681a7b6c24f4")
     version("6.3.2", sha256="f7595221b0f9236a324ea8afe170637a578cdd5a837cc7679e7f7812f6edf25a")
