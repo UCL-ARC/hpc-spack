@@ -13,7 +13,8 @@ spack:
 
   # Packages built with Intel compiler
   - matrix:
-    - - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
+    - - vasp@6.6.0 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
+      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
       - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi ^rsync%gcc
       - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi ^rsync%gcc
       - hdf5 +fortran +mpi +hl
