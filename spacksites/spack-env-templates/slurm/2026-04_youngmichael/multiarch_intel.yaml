@@ -22,4 +22,4 @@ spack:
     - - '%oneapi@2024.2.1'
 
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
