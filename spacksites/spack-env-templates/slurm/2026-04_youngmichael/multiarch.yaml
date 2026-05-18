@@ -25,5 +25,5 @@ spack:
     - - '%gcc@12.3.0'
 
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
 
