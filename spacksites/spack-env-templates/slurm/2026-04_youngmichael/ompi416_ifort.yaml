@@ -1,0 +1,19 @@
+spack:
+  # OpenMPI 4.1.6 with ifort for CRYSTAL (4.1.2 didn't build with icx but this does)
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
+
+  specs:
+  - matrix:
+    - - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+    - - '%intel@2021.13.1'
+
+  concretizer:
+    unify: when_possible
+  view: false
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_intel_classic
+
