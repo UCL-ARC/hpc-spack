@@ -32,9 +32,10 @@ spack:
       - hdf5 +fortran +mpi +hl ^openmpi -cuda
       - htslib@1.17
       - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^openmpi -cuda
+      - libnsl
       - libxc@6.2.2
-      - namd@3.0.1 ^charmpp backend=ucx pmi=pmix ^fftw -mpi
-      #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi
+      - libxcursor
+      - namd@3.0.2 ^charmpp backend=mpi ^fftw -mpi
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
       - netlib-scalapack@2.2.0 ^openblas threads=none ^openmpi -cuda
@@ -45,11 +46,13 @@ spack:
       - plumed@2.9.2
       - quantum-espresso@7.4 cflags='-O2' fflags='-O2' ^openmpi -cuda # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
       - samtools@1.17
+      - xcb-util
+      - xcb-util-cursor
     - - '%gcc@12.3.0'
 
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/multiarch
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_first
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu-on-gpu
-  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_third
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/multiarch
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_first
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu-on-gpu
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_third
