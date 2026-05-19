@@ -17,10 +17,10 @@ spack:
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
-      - castep@25.12 +mpi +libxc 
-      - castep@26.11 +mpi +libxc 
-      - castep@24.1 +mpi +libxc #^openblas threads=none
-      - castep@23.1 +mpi +libxc #^openblas threads=none
+      - castep@25.12 +mpi +libxc ^openblas threads=none
+      - castep@26.11 +mpi +libxc ^openblas threads=none 
+      - castep@24.1 +mpi +libxc ^openblas threads=none
+      - castep@23.1 +mpi +libxc ^openblas threads=none
       - cp2k@2024.3 +mpi ^openblas threads=openmp
       - cp2k@2025.2 +mpi
       - gatk@4.4.0.0
