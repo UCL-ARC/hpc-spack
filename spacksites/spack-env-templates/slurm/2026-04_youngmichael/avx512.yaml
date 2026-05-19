@@ -17,10 +17,15 @@ spack:
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
-      - castep@24.1 +mpi +libxc ^openblas threads=none
-      - castep@23.1 +mpi +libxc ^openblas threads=none
+      - castep@25.12 +mpi +libxc 
+      - castep@26.11 +mpi +libxc 
+      - castep@24.1 +mpi +libxc #^openblas threads=none
+      - castep@23.1 +mpi +libxc #^openblas threads=none
       - cp2k@2024.3 +mpi ^openblas threads=openmp
+      - cp2k@2025.2 +mpi
       - gatk@4.4.0.0
+      - glpk@5.0 +gmp
+      - grace@5.1.25
       - gromacs@2024.3 -double
       - gromacs@2023.5 -double +plumed 
       - gsl@2.8
@@ -35,10 +40,17 @@ spack:
       - netlib-scalapack@2.2.0 ^openblas threads=none
       - netlib-scalapack@2.2.0 ^openblas threads=openmp
       - numactl@2.0.18
+      - openbabel@3.1.1 +openmp
+      - openfoam@2512 +int64
+      - openfoam@2312 +int64
+      - openfoam@2112 +int64
+      - parallel@20240822
+      - paraview@5.13.1 +python ^[virtuals=gl] osmesa ^llvm
       - picard@2.26.2
       - plumed@2.9.2
       - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
       - samtools@1.17
+      - vmd@2.0.0a8
     - - 'target=x86_64_v4 %gcc@12.3.0'
 
   include_concrete:
