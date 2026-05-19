@@ -8,6 +8,8 @@ spack:
       require: 'openmpi'
     openmpi:
       require: 'arch=linux-rhel9-x86_64_v3'
+    fftw-api:
+      require: 'fftw'
 
   # the Young avx512 end CPU applications
   specs:
@@ -18,7 +20,7 @@ spack:
       - bedtools2@2.31.0
       - bwa@0.7.17
       - castep@25.12 +mpi +libxc ^openblas threads=none
-      - castep@26.11 +mpi +libxc ^openblas threads=none 
+      - castep@26.11 +mpi +libxc ^openblas threads=none
       - castep@24.1 +mpi +libxc ^openblas threads=none
       - castep@23.1 +mpi +libxc ^openblas threads=none
       - cp2k@2024.3 +mpi ^openblas threads=openmp
