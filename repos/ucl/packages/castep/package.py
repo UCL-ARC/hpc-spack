@@ -2,7 +2,7 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-# UCL: from PR https://github.com/pjpbyrne/spack-packages/tree/39b0b17fc02456f2832b8569cc1e87df964b7639/repos/spack_repo/builtin/packages/castep
+# UCL: from PR https://github.com/pjpbyrne/spack-packages/tree/39b0b17fc02456f2832b8569cc1e87df964b7639/repos/spack_repo/builtin/packages/castep, commented out compiler match checks
 import glob
 import math
 import os
@@ -91,15 +91,15 @@ class Castep(CMakePackage):
     # Ensure mpi has been compiled with fortran support...
     with when("+mpi"):
         depends_on("mpi", type=("build", "link", "run"))
-        depends_on("mpich+fortran", when="%mpi=mpich")
-        depends_on("openmpi+fortran", when="%mpi=openmpi")
+    #    depends_on("mpich+fortran", when="%mpich")
+    #    depends_on("openmpi+fortran", when="%openmpi")
 
     # To use FFT mkl option only allowed when also using mkl as lapack/blas
-    requires(
-        "%lapack=intel-oneapi-mkl",
-        when="%fftw-api=intel-oneapi-mkl",
-        msg="MKL must be used as the BLAS/LAPACK library to use it for FFTs",
-    )
+    #requires(
+    #    "%lapack=intel-oneapi-mkl",
+    #    when="%fftw-api=intel-oneapi-mkl",
+    #    msg="MKL must be used as the BLAS/LAPACK library to use it for FFTs",
+    #)
 
     # Block older compiler versions that are not supported (and explicitly do not work)
     conflicts("%oneapi", when="@:23", msg="Intel LLVM requires CASTEP 24 or newer")
@@ -113,20 +113,20 @@ class Castep(CMakePackage):
         "fftw-api": ["fftw"],
     }
 
-    for compiler in ["gcc", "llvm", "intel", "oneapi"]:
-        for virtual_package, package_providers in sub_packages.items():
-            for actual_package in package_providers:
-                depends_on(
-                    f"{actual_package}%fortran={compiler}",
-                    when=f"%fortran={compiler} %{virtual_package}={actual_package}",
-                )
+    #for compiler in ["gcc", "llvm", "intel", "oneapi"]:
+    #    for virtual_package, package_providers in sub_packages.items():
+    #        for actual_package in package_providers:
+    #            depends_on(
+    #                f"{actual_package}%fortran={compiler}",
+    #                when=f"%fortran={compiler} %{virtual_package}={actual_package}",
+    #            )
 
     # Special rules for mkl
-    requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%lapack=intel-oneapi-mkl")
-    requires(
-        "%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%fftw-api=intel-oneapi-mkl"
-    )
-    requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%mpi=intel-oneapi-mpi")
+    #requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%lapack=intel-oneapi-mkl")
+    #requires(
+    #    "%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%fftw-api=intel-oneapi-mkl"
+    #)
+    #requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%mpi=intel-oneapi-mpi")
 
     # Fix some issues with the build time test and utility python scripts with python 3.13
     patch("Replace_pipes_with_shex_in_testcode.patch", when="@:24 %python@3.13:")
