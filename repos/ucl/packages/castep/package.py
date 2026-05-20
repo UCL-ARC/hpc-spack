@@ -128,6 +128,18 @@ class Castep(CMakePackage):
     #)
     #requires("%fortran=intel", "%fortran=oneapi", "%fortran=gcc", when="%mpi=intel-oneapi-mpi")
 
+    # Patch available alongside source, manual download
+    patch(
+        f"file://{os.getcwd()}/Castep_23.1_build_fixes.diff.gz",
+        sha256="a7860dc6677955d9bc877859666c4e8aa59635723968661674283a3939d7a66b",
+        archive_sha256="5f31daf4733f8ee906cba0ff092e317b9cbaa100666533b2dce39f1f829646c2",
+        when="@23.1",
+    )
+
+    # Patches the cmake install step for libxc's mod files.
+    patch("castep_cmake_libxc523.patch", when="@24")
+    patch("castep_cmake_libxc522.patch", when="@23")
+
     # Fix some issues with the build time test and utility python scripts with python 3.13
     patch("Replace_pipes_with_shex_in_testcode.patch", when="@:24 %python@3.13:")
     patch(
