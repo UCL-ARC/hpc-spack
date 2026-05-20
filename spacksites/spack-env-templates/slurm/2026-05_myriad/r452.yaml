@@ -1,4 +1,7 @@
 spack:
+  concretizer:
+    unify: when_possible
+  view: false
 
   packages:
     netcdf-c:
@@ -29,10 +32,8 @@ spack:
       - xz
       - udunits
     - - '%gcc@12.3.0'
-  concretizer:
-    unify: when_possible
-  view: false
+
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
-  - /lustre/apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/moreapps
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/moreapps
 

@@ -7,4 +7,3 @@ spack:
   - matrix:
     - - gcc@12.3.0 +binutils
     - - '%gcc@12.3.0'
-

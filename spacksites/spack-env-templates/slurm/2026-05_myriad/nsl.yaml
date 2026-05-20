@@ -1,4 +1,8 @@
 spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
   specs:
   - matrix:
     - - libnsl
@@ -6,9 +10,7 @@ spack:
       - xcb-util-cursor
       - libxcursor
     - - '%gcc@12.3.0'
-  concretizer:
-    unify: when_possible
-  view: false
+
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
 

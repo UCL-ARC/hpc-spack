@@ -1,12 +1,13 @@
 spack:
-
-  specs:
-  - matrix:
-    - - openmpi@4.1.2 fabrics=ucx schedulers=slurm +legacylaunchers
-      - orca@5.0.4
-    - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
   view: false
+
+  specs:
+  - matrix:
+    - - openmpi@4.1.2 fabrics=ucx,cma schedulers=slurm +legacylaunchers
+      - orca@5.0.4
+    - - '%gcc@12.3.0'
+
   include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base

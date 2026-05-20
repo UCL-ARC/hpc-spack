@@ -60,7 +60,7 @@ packages:
 
   openmpi:
     require:
-    - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
+    - spec: 'fabrics=ucx,cma schedulers=slurm +legacylaunchers'
     prefer:
     - '@4.1.6'
 

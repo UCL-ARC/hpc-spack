@@ -2,15 +2,15 @@ mirrors:
 
   buildcache:
     fetch:
-      url: file:///lustre/apps/spack/0.23/buildcache
+      url: file:///apps/spack/0.23/buildcache
     push:
-      url: file:///lustre/apps/spack/0.23/buildcache
+      url: file:///apps/spack/0.23/buildcache
 
   buildcache-private:
     fetch:
-      url: file:///lustre/apps/spack/0.23/buildcache-private
+      url: file:///apps/spack/0.23/buildcache-private
     push:
-      url: file:///lustre/apps/spack/0.23/buildcache-private
+      url: file:///apps/spack/0.23/buildcache-private
 
 #  old_buildcache:
 #    fetch:
@@ -19,7 +19,7 @@ mirrors:
 #      url: file:///shared/ucl/apps/spack/0.23/buildcache
 
   pkgstore: 
-    url: file:///lustre/apps/pkg-store/spack-mirror
+    url: file:///apps/pkg-store/spack-mirror
 
 #  manylinuxcache:
 #    url: https://binaries.spack.io/develop/developer-tools-manylinux2014

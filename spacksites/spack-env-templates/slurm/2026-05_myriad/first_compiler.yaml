@@ -2,6 +2,7 @@ spack:
   concretizer:
     unify: when_possible
   view: false
+
   specs:
     - gcc@12.3.0 +binutils
     - autoconf@2.69
