@@ -8,6 +8,8 @@ spack:
       require: 'openmpi'
     openmpi:
       require: 'arch=linux-rhel9-x86_64_v3'
+    fftw-api:
+      require: 'fftw'
 
     all:
       require:
@@ -21,10 +23,15 @@ spack:
       - beast2@2.7.4
       - bedtools2@2.31.0
       - bwa@0.7.17
+      - castep@26.11 +mpi +libxc ^openblas threads=none ^openmpi -cuda
+      - castep@25.12 +mpi +libxc ^openblas threads=none ^openmpi -cuda
       - castep@24.1 +mpi +libxc ^openblas threads=none ^openmpi -cuda
       - castep@23.1 +mpi +libxc ^openblas threads=none ^openmpi -cuda
       - cp2k@2024.3 +mpi -cuda ^openblas threads=openmp ^openmpi -cuda
+      - cp2k@2025.2 +mpi ^openmpi -cuda
       - gatk@4.4.0.0
+      - glpk@5.0 +gmp
+      - grace@5.1.25
       - gromacs@2024.3 -double ^openmpi -cuda
       - gromacs@2023.5 -double +plumed ^openmpi -cuda
       - gsl@2.8
@@ -41,11 +48,18 @@ spack:
       - netlib-scalapack@2.2.0 ^openblas threads=none ^openmpi -cuda
       - netlib-scalapack@2.2.0 ^openblas threads=openmp ^openmpi -cuda
       - numactl@2.0.18
+      - openbabel@3.1.1 +openmp
+      - openfoam@2512 +int64
+      - openfoam@2312 +int64
+      - openfoam@2112 +int64
       - orca@avx2-6.0.1
+      - parallel@20240822
+      - paraview@5.13.1 +python ^[virtuals=gl] osmesa ^llvm
       - picard@2.26.2
       - plumed@2.9.2
       - quantum-espresso@7.4 cflags='-O2' fflags='-O2' ^openmpi -cuda # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
       - samtools@1.17
+      - vmd@2.0.0a8
       - xcb-util
       - xcb-util-cursor
     - - '%gcc@12.3.0'
