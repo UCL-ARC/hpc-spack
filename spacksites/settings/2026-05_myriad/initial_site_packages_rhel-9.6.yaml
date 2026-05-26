@@ -70,19 +70,19 @@ packages:
       parallel: false
 
   # group restrictions
-  castep:
-    permissions:
-      read: group
-      group: ag-archpc-castep
-  orca:
-    permissions:
-      read: group
-      group: ag-archpc-orca
-  # restrict vasp to highest version and alter after since there can be only one
-  vasp:
-    permissions:
-      read: group
-      group: ag-archpc-vasp65
+  # castep:
+  #   permissions:
+  #     read: group
+  #     group: ag-archpc-castep
+  # orca:
+  #   permissions:
+  #     read: group
+  #     group: ag-archpc-orca
+  # # restrict vasp to highest version and alter after since there can be only one
+  # vasp:
+  #   permissions:
+  #     read: group
+  #     group: ag-archpc-vasp65
 
 
   all:
