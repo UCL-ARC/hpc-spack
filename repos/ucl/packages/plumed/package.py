@@ -191,6 +191,9 @@ class Plumed(AutotoolsPackage):
         values=("none", "cpu", "cuda", "opencl"),
         description="Activates FireArray support",
     )
+    # hacked this bit in
+    variant("pytorch", default=False, description="Activates PyTorch support", when="@2.9:")
+    depends_on("py-torch", when="+pytorch")
 
     # Dependencies. LAPACK and BLAS are recommended but not essential.
     depends_on("zlib-api")
@@ -299,6 +302,25 @@ class Plumed(AutotoolsPackage):
             if "intel-mpi" in spec:
                 configure_opts.extend(["STATIC_LIBS=-mt_mpi"])
 
+        # This bit hacked in
+        enable_libtorch = self.spec.satisfies("+pytorch")
+
+        if enable_libtorch:
+            pytorch_path = Path(spec["py-torch"].package.cmake_prefix_paths[0]).parent.parent
+            extra_ldflags.append(spec["py-torch"].libs.search_flags)
+            extra_libs.append(spec["py-torch"].libs.link_flags)
+            extra_ldflags.append(spec["python"].libs.search_flags)
+            extra_libs.append(spec["python"].libs.link_flags)
+            # Add include paths manually
+            # Spack HeaderList.cpp_flags does not support include paths within include paths
+            extra_cppflags.extend(
+                [
+                    f"-I{pytorch_path / 'include'}",
+                    f"-I{pytorch_path / 'include' / 'torch' / 'csrc' / 'api' / 'include'}",
+                    spec["python"].headers.include_flags,
+                ]
+            )
+
         extra_libs = []
         # Set flags to help find gsl
         if "+gsl" in spec:
@@ -320,6 +342,7 @@ class Plumed(AutotoolsPackage):
                 "--enable-gsl={0}".format("yes" if "+gsl" in spec else "no"),
                 "--enable-af_cpu={0}".format("yes" if "arrayfire=cpu" in spec else "no"),
                 "--enable-af_cuda={0}".format("yes" if "arrayfire=cuda" in spec else "no"),
+                "--enable-libtorch={0}".format("yes" if enable_libtorch else "no"),
                 "--enable-af_ocl={0}".format("yes" if "arrayfire=ocl" in spec else "no"),
             ]
         )
@@ -333,6 +356,9 @@ class Plumed(AutotoolsPackage):
             selected_modules = "reset"
         # Custom set of modules
         else:
+            if spec.satisfies("+pytorch"):
+                optional_modules += ("pytorch",)
+
             selected_modules = "none"
             for mod in optional_modules:
                 selected_modules += ":+{0}".format(mod)
