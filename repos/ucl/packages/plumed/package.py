@@ -302,6 +302,10 @@ class Plumed(AutotoolsPackage):
             if "intel-mpi" in spec:
                 configure_opts.extend(["STATIC_LIBS=-mt_mpi"])
 
+        extra_libs = []
+        extra_ldflags = []
+        extra_cppflags = []
+
         # This bit hacked in
         enable_libtorch = self.spec.satisfies("+pytorch")
 
@@ -321,7 +325,6 @@ class Plumed(AutotoolsPackage):
                 ]
             )
 
-        extra_libs = []
         # Set flags to help find gsl
         if "+gsl" in spec:
             gsl_libs = spec["gsl"].libs
@@ -334,6 +337,10 @@ class Plumed(AutotoolsPackage):
 
         if extra_libs:
             configure_opts.append("LDFLAGS={0}".format(" ".join(extra_libs)))
+            configure_opts.append("LIBS={0}".format(" ".join(extra_libs)))
+
+        if extra_ldflags:
+            configure_opts.append("LDFLAGS={0}".format(" ".join(extra_ldflags)))
 
         # Additional arguments
         configure_opts.extend(
