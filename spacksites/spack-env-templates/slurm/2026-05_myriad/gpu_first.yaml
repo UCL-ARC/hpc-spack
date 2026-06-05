@@ -14,14 +14,18 @@ spack:
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
-    - - 'cuda@12.6.2' # v12.6.2 is latest available in Spack v0.23
+    - - 'cuda@13.3.0'
+      - nvhpc +mpi default_cuda=13.3
       # - 'cuda@13.1' # matches CUDA driver version
-      - namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^charmpp +cuda backend=multicore
+      #- namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^charmpp +cuda backend=multicore
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
-      - gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90
-      - gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
-      - openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
+      #- gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90
+      #- gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
+      #- openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
       # - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
     - - '%gcc@12.3.0'
   # nvhpc packages
   #- 'vasp@6.4.3 %nvhpc +cuda cuda_arch=70,80 +hdf5'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base

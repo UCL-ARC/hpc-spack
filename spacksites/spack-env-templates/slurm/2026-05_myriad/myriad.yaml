@@ -3,25 +3,20 @@ spack:
     unify: when_possible
   view: false
 
-  specs:
-  - matrix:
-    - - orca@6.0.1
-    - - '%gcc@12.3.0'
-
   include_concrete:
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/intel
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/intel_classic
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi412
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi416_ifort
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/moreapps
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/r452
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi418
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/nvidia
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/nsl
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi412
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi416_ifort
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/moreapps
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/r452
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/ompi418
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/nvidia
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/nsl
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_first
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu-on-gpu
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_third
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu-on-gpu
+#  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_third
 
   modules:
     default:
