@@ -77,7 +77,8 @@ spack:
       - plumed@2.9.2
       - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
     - - '%gcc@12.3.0'
-  - gcc@12.3.0 +binutils
+# I'm not sure why there was a gcc defined here, that should be done from second_compiler
+#  - gcc@12.3.0 +binutils
 
   # Intel compilers built with gcc
   - matrix:

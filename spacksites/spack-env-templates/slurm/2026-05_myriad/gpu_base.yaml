@@ -1,0 +1,23 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+
+    fftw-api:
+      require: 'fftw'
+
+    openmpi:
+      require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
+
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - cuda@12.9.1
+      - cuda@13.3.0
+      - nvhpc +mpi default_cuda=13.3
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
