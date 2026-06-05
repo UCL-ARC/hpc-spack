@@ -15,6 +15,7 @@ spack:
       - openfoam@2512 +int64
       - openfoam@2312 +int64
       - openfoam@2112 +int64
+      - orca@6.0.1
       - parallel@20240822
       - paraview@5.13.1 +python ^[virtuals=gl] osmesa ^llvm
       - vmd@2.0.0a8
