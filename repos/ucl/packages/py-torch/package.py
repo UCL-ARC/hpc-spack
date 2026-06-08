@@ -355,7 +355,7 @@ class PyTorch(PythonPackage, CudaPackage, ROCmPackage):
     depends_on("ucc", when="+ucc")
     depends_on("ucx", when="+ucc")
     depends_on("mkl", when="+mkldnn")
-    depends_on("cusparselt", when="+cusparselt")
+    #depends_on("cusparselt", when="+cusparselt")
 
     # Test dependencies
     with default_args(type="test"):
@@ -727,7 +727,7 @@ class PyTorch(PythonPackage, CudaPackage, ROCmPackage):
             env.set("CUDNN_INCLUDE_DIR", self.spec["cudnn"].prefix.include)
             env.set("CUDNN_LIBRARY", self.spec["cudnn"].libs[0])
 
-        enable_or_disable("cusparselt")
+        #enable_or_disable("cusparselt")
         enable_or_disable("fbgemm")
         enable_or_disable("kineto")
         enable_or_disable("magma")
