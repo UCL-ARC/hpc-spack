@@ -5,14 +5,15 @@
 import os
 import sys
 
-from spack_repo.builtin.build_systems.cuda import CudaPackage
-from spack_repo.builtin.build_systems.python import PythonPackage
-from spack_repo.builtin.build_systems.rocm import ROCmPackage
+#from spack_repo.builtin.build_systems.cuda import CudaPackage
+#from spack_repo.builtin.build_systems.python import PythonPackage
+#from spack_repo.builtin.build_systems.rocm import ROCmPackage
 
 from spack.package import *
 
 
-class PyTorch(PythonPackage, CudaPackage, ROCmPackage):
+#class PyTorch(PythonPackage, CudaPackage, ROCmPackage):
+class PyTorch():
     """Tensors and Dynamic neural networks in Python with strong GPU acceleration."""
 
     homepage = "https://pytorch.org/"
