@@ -132,7 +132,8 @@ class PyTorch(PythonPackage, CudaPackage, ROCmPackage):
     _desc = "Build the flash_attention kernel for scaled dot product attention"
     variant("flash_attention", default=True, description=_desc, when="@1.13:+cuda")
     variant("flash_attention", default=True, description=_desc, when="@1.13:+rocm")
-    variant("cusparselt", default=True, description="Use NVIDIA cuSPARSELt", when="@2.1: +cuda")
+    # Had to comment the below out, that package doesn't exist in v0.23
+    # variant("cusparselt", default=True, description="Use NVIDIA cuSPARSELt", when="@2.1: +cuda")
     # py-torch has strict dependencies on old protobuf/py-protobuf versions that
     # cause problems with other packages that require newer versions of protobuf
     # and py-protobuf --> provide an option to use the internal/vendored protobuf.
