@@ -16,7 +16,7 @@ spack:
   - matrix:
     - - cuda@12.9.1
       - cuda@13.3.0
-      - nvhpc +mpi default_cuda=13.3
+      - nvhpc +mpi default_cuda=12.9
     - - '%gcc@12.3.0'
 
   include_concrete:

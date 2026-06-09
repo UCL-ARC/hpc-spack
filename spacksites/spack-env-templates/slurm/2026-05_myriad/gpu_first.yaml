@@ -8,22 +8,23 @@ spack:
     fftw-api:
       require: 'fftw'
 
-    openmpi:
-      require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
+    # openmpi:
+    #   require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
 
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
-    - - namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^charmpp +cuda backend=multicore
+    - - namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^cuda@12.9.1 ^charmpp +cuda backend=multicore
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
-      - gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90
+      # - lammps@20240829.1 +cuda +mpi +openmp cuda_arch=70,80,90 ^cuda@12.9.1 ^openmpi@4.1.6 +cuda 
+      - gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90 ^cuda@12.9.1
       #- gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
       - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
       #- openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
       # - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
     - - '%gcc@12.3.0'
   # nvhpc packages
-  - 'vasp@6.4.3 %nvhpc +cuda cuda_arch=70,80,90 +hdf5'
+  - 'vasp@6.4.3 %nvhpc +cuda cuda_arch=70,80,90 +hdf5 ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
 
   include_concrete:
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_base

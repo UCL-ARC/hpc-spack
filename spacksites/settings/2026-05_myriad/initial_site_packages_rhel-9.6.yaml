@@ -87,4 +87,6 @@ packages:
 
   all:
     compiler: [gcc@12.3.0]
+    require:
+      - 'target=x86_64_v4'
 
