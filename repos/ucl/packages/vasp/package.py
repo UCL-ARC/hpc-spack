@@ -365,6 +365,13 @@ class Vasp(MakefilePackage, CudaPackage):
     def setup_build_environment(self, spack_env):
         if self.spec.satisfies("%nvhpc +cuda"):
             spack_env.set("NVHPC_CUDA_HOME", self.spec["cuda"].prefix)
+            spack_env.set("NVCOMPILER_COMM_LIBS_HOME",
+                          os.path.join(
+                              self.spec["nvhpc"].prefix,
+                              "Linux_x86_64",
+                              str(self.spec["nvhpc"].version),
+                              "comm_libs",
+                              self.spec["cuda"].version.up_to(2).string))
 
     def build(self, spec, prefix):
         # 5.x does not build successfully in parallel
