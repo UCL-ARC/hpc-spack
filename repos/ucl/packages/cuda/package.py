@@ -869,8 +869,8 @@ class Cuda(Package):
 
     def setup_dependent_build_environment(self, env, dependent_spec):
         if "cxx" in dependent_spec:
-            env.set("CUDAHOSTCXX", dependent_spec["cxx"].package.cxx)
-        #env.set("CUDAHOSTCXX", dependent_spec.package.compiler.cxx)
+        #env.set("CUDAHOSTCXX", dependent_spec["cxx"].package.cxx)
+           env.set("CUDAHOSTCXX", dependent_spec.package.compiler.cxx)
         env.set("CUDA_HOME", self.prefix)
         env.set("NVHPC_CUDA_HOME", self.prefix)
 
