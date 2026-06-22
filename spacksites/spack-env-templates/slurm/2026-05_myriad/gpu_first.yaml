@@ -23,8 +23,6 @@ spack:
       #- openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
       # - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
     - - '%gcc@12.3.0'
-  # nvhpc packages
-  - 'vasp@6.4.3 %nvhpc +cuda cuda_arch=70,80,90 +hdf5 ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
 
   include_concrete:
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_base
