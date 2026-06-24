@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+
+    fftw-api:
+      require: 'fftw'
+
   specs:
   # depend on gpu-on-gpu packages
   - matrix:

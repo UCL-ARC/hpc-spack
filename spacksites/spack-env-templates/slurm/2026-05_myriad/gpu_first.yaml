@@ -16,7 +16,7 @@ spack:
   - matrix:
     - - namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^cuda@12.9.1 ^charmpp +cuda backend=multicore
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 60, 70 and 80 - can use the lowest
-      # - lammps@20240829.1 +cuda +mpi +openmp cuda_arch=70,80,90 ^cuda@12.9.1 ^openmpi@4.1.6 +cuda 
+      # - lammps@20240829.1 amoeba+asphere+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell+cuda+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep+granular+interlayer+kokkos+kspace+lepton+machdyn+manybody+mc+meam+mesont+misc+ml-iap+ml-pod+ml-snap+ml-uf3+mofff+molecule+mpi+openmp+opt+orient+peri+phonon+plugin+python+qeq+reaction+reaxff+replica+rheo+rigid+shock+sph+spin+srd+tally+uef+voronoi+yaff cuda_arch=90 fft=fftw3 fft_kokkos=cufft ^kokkos +cuda +wrapper cuda_arch=90 ^openmpi +cuda ^python@3.11.6
       - gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90 ^cuda@12.9.1
       #- gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
       - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
