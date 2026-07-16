@@ -17,4 +17,4 @@ spack:
     - - '%gcc@12.3.0'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu-on-gpu
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu-on-gpu

@@ -10,7 +10,7 @@ spack:
     - - '%intel@2021.13.1'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/intel
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/intel_classic
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel_classic
 
 

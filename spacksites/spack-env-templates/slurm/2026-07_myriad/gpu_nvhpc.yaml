@@ -7,4 +7,4 @@ spack:
   - 'vasp@6.4.3 %nvhpc +cuda cuda_arch=70,80,90 +hdf5 ^[virtuals=mpi] nvhpc ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_base
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_base
