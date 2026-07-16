@@ -1,0 +1,24 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  - matrix:
+    - - intel-oneapi-mpi@2021.14.0 # +external-libfabric
+      # VASP is tested with 2023.2.0. +cluster gives scalapack
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+      - openmpi@4.1.6 fabrics=ucx,cma schedulers=slurm +legacylaunchers
+      - vasp@6.6.0 +hdf5 ^hdf5%oneapi@2024.2.1 ^intel-oneapi-mpi ^rsync%gcc # avoid picking hdf5 built with gcc
+      - vasp@6.5.1 +hdf5 ^hdf5%oneapi@2024.2.1 ^intel-oneapi-mpi ^rsync%gcc
+      - vasp@6.4.3 +hdf5 ^hdf5%oneapi@2024.2.1 ^intel-oneapi-mpi ^rsync%gcc
+      - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi ^rsync%gcc
+      - hdf5 +fortran +mpi +hl
+#      - plumed@2.9.2
+    - - '%oneapi@2024.2.1' # VASP is tested with 2024.2
+  #- intel@20.0.4 # last old Intel - check if we can remove
+  #- intel-oneapi-compilers@2024.2.1
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base

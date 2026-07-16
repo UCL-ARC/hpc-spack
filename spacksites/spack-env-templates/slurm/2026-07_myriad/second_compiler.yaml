@@ -1,0 +1,9 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  - matrix:
+    - - gcc@12.3.0 +binutils
+    - - '%gcc@12.3.0'
