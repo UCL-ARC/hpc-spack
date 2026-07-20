@@ -8,8 +8,8 @@ spack:
     fftw-api:
       require: 'fftw'
 
-    # openmpi:
-    #   require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
+    openmpi:
+      require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
 
   specs:
   # CUDA packages, compile them with gcc@12
@@ -17,11 +17,12 @@ spack:
     - - namd@3.0.2 +cuda +single_node_gpu cuda_arch=70,80,90 ^cuda@12.9.1 ^charmpp +cuda backend=multicore
       # kokkos will require only one cuda_arch as different bit sizes for some types betw 70 and 90 - can use the lowest
       # build the gpu package sans kokkos
-      - lammps@20240829.1 +cuda +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace -kokkos +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +plumed -poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff cuda_arch=70,80,90 fft=fftw3 ^openmpi +cuda ^python@3.11.6
+      - lammps@20240829.1 +cuda +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace -kokkos +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +plumed -poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff cuda_arch=70,80,90 fft=fftw3 ^openmpi@5.0.10 +cuda ^python@3.11.6
       - gromacs@2024.3 -mpi +cuda cuda_arch=70,80,90 ^cuda@12.9.1
-      #- gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
-      - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
-      #- openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
+      - gromacs@2023.5 +cuda cuda_arch=70,80,90 +plumed ^openmpi@5.0.10 +cuda
+      - py-mpi4py@4.0.1 ^openmpi@5.0.10 +cuda
+      # - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
+      - openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
       # - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
     - - '%gcc@12.3.0'
 
