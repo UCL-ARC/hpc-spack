@@ -1,0 +1,22 @@
+spack:
+  packages:
+    mpi:
+      require: 'openmpi'
+    openmpi:
+      require: 'arch=linux-rhel9-x86_64_v3'
+    all:
+      require:
+      - 'target=x86_64_v3'
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  - matrix:
+    - - cuda@12.9.1
+      - cuda@13.3.0
+      - nvhpc +mpi default_cuda=12.9
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
