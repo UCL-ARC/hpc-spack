@@ -1,0 +1,16 @@
+mirrors:
+
+  buildcache:
+    fetch:
+      url: file:///lustre/scratch/ccaeorb/spack/0.23/buildcache
+    push:
+      url: file:///lustre/scratch/ccaeorb/spack/0.23/buildcache
+
+  buildcache-private:
+    fetch:
+      url: file:///lustre/scratch/ccaeorb/spack/0.23/buildcache-private
+    push:
+      url: file:///lustre/scratch/ccaeorb/spack/0.23/buildcache-private
+
+  pkgstore: 
+    url: file:///lustre/apps/pkg-store/spack-mirror
