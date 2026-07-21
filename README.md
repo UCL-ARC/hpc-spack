@@ -27,7 +27,7 @@ source spacksites/myriad-utilities/init-spacksites-rhel9.sh
 source spacksites/myriad-utilities/init-spacksites-on-myriad.sh
 ```
 
-Using the default ini file with padded paths:
+Using the default ini file with Spack-placeholder padded paths (if you are building a cluster-deployed stack, do not do this and go to the next step!):
 
 ```
 # make your new site - we've been prefixing $site_name with initials.
@@ -41,18 +41,18 @@ spacksites/spacksites install-env $site_name $env_name first_compiler.yaml
 eval $(spacksites/spacksites spack-setup-env $site_name)
 ```
 
-Using the build site ini file without padded paths or any other ini file you may have created:
+Using a specific build site's ini file without padded paths or any other ini file you may have created:
 
 ```
 # make your new site - we've been prefixing $site_name with initials.
-spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini create ${site_name}
+spacksites/spacksites --config-file spacksites/settings/2026-05_myriad/deploy_sites.ini create ${site_name}
 
 # install your first compiler into your site - will use the buildcache as long as it exists
 # $env_name will be the name of the environment you are creating, eg first_compiler.
-spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini install-env ${site_name} compiler first_compiler.yaml
+spacksites/spacksites --config-file spacksites/settings/2026-05_myriad/deploy_sites.ini install-env ${site_name} compiler first_compiler.yaml
 
 # get ready to run spack commands as normal for this site
-eval $(spacksites/spacksites --config-file spacksites/settings/deploy_sites.ini spack-setup-env ${site_name})
+eval $(spacksites/spacksites --config-file spacksites/settings/2026-05_myriad/deploy_sites.ini spack-setup-env ${site_name})
 ```
 
 You can now run `spack find` to show the installed packages, or `spack info --all $package` to show available versions of that package to install.
