@@ -23,7 +23,7 @@ spack:
       - py-mpi4py@4.0.1 ^openmpi@5.0.10 +cuda
       # - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
       - openmpi@5.0.10 +cuda fabrics=ucx,cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
-      # - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
+      - plumed@2.9.2 +pytorch ^py-torch +cuda ^openmpi@5.0.10 +cuda ^python@3.11.6
     - - '%gcc@12.3.0'
 
   include_concrete:
