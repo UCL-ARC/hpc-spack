@@ -70,6 +70,7 @@ class Vasp(MakefilePackage, CudaPackage):
     )
     variant("shmem", default=True, description="Enable use_shmem build flag")
     variant("hdf5", default=False, when="@6.2:", description="Enabled HDF5 support")
+    variant("wannier90", default=False, description="Enable wannier90 support")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
