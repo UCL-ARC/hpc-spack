@@ -39,7 +39,7 @@ spack:
       - vcftools@0.1.16
       - bwa@0.7.17
       - plink@1.07
-      - plink@1.9-beta6.10
+      - plink@1.9-beta6.27
       - plink2@2.0.0-a.6.9
       - emacs@29.4
       - cmake
@@ -58,6 +58,7 @@ spack:
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
       - picard@2.26.2
+      - rust@1.81.0
       - samtools@1.17
       - subversion
       - subread@2.0.6
