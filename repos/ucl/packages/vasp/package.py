@@ -90,8 +90,9 @@ class Vasp(MakefilePackage, CudaPackage):
     depends_on("scalapack", when="+scalapack")
     # wiki (and makefiles) suggest scalapack is expected in 6:
     depends_on("scalapack", when="@6:")
-    depends_on("nccl", when="@6.3: +cuda")
+    depends_on("nccl", when="+cuda")
     depends_on("hdf5+fortran+mpi", when="+hdf5")
+    depends_on("wannier90", when="+wannier90")
     # at the very least the nvhpc mpi seems required
     depends_on("nvhpc+mpi+lapack+blas", when="%nvhpc")
 
@@ -99,12 +100,12 @@ class Vasp(MakefilePackage, CudaPackage):
         "%gcc@:8", msg="GFortran before 9.x does not support all features needed to build VASP"
     )
     conflicts("+vaspsol", when="+cuda", msg="+vaspsol only available for CPU")
-    requires("%nvhpc", when="@6.3: +cuda", msg="vasp requires nvhpc to build the openacc build")
+    requires("%nvhpc", when="+cuda", msg="vasp requires nvhpc to build the openacc build")
     # the mpi compiler wrappers in nvhpc assume nvhpc is the underlying compiler, seemingly
     conflicts("^[virtuals=mpi] nvhpc", when="%gcc", msg="nvhpc mpi requires nvhpc compiler")
     conflicts("^[virtuals=mpi] nvhpc", when="%aocc", msg="nvhpc mpi requires nvhpc compiler")
     conflicts(
-        "cuda_arch=none", when="@6.3: +cuda", msg="CUDA arch required when building openacc port"
+        "cuda_arch=none", when="+cuda", msg="CUDA arch required when building openacc port"
     )
 
     def edit(self, spec, prefix):
@@ -288,27 +289,29 @@ class Vasp(MakefilePackage, CudaPackage):
                 llibs.append(spec["scalapack"].libs.ld_flags)
 
         if spec.satisfies("+cuda"):
-            if spec.satisfies("@6.3:"):
-                # openacc
-                cpp_options.extend(["-D_OPENACC", "-DUSENCCL"])
-                llibs.extend(["-cudalib=cublas,cusolver,cufft,nccl", "-cuda"])
-                fc.append("-acc")
-                fcl.append("-acc")
-                cuda_flags = [f"cuda{str(spec['cuda'].version.dotted[0:2])}", "rdc"]
-                for f in spec.variants["cuda_arch"].value:
-                    cuda_flags.append(f"cc{f}")
-                fc.append(f"-gpu={','.join(cuda_flags)}")
-                fcl.append(f"-gpu={','.join(cuda_flags)}")
-                fcl.extend(list(self.compiler.stdcxx_libs))
-                cc = [spec["mpi"].mpicc, "-acc"]
-                if spec.satisfies("+openmp"):
-                    cc.append(omp_flag)
-                filter_file("^CC[ \t]*=.*$", f"CC = {' '.join(cc)}", make_include)
-
+            # openacc
+            if spec.satisfies("@6.5.0:"):
+                cpp_options.extend(["-DACC_OFFLOAD", "-DNVCUDA", "-DUSENCCL"])
             else:
-                # old cuda thing
-                cflags.extend(["-DGPUSHMEM=300", "-DHAVE_CUBLAS"])
-                filter_file(r"^CUDA_ROOT[ \t]*\?=.*$", spec["cuda"].prefix, make_include)
+                cpp_options.extend(["-D_OPENACC", "-DUSENCCL"])
+            llibs.extend(["-cudalib=cublas,cusolver,cufft,nccl", "-cuda"])
+            fc.append("-acc")
+            fcl.append("-acc")
+            cuda_flags = [f"cuda{str(spec['cuda'].version.dotted[0:2])}", "rdc"]
+            for f in spec.variants["cuda_arch"].value:
+                cuda_flags.append(f"cc{f}")
+            fc.append(f"-gpu={','.join(cuda_flags)}")
+            fcl.append(f"-gpu={','.join(cuda_flags)}")
+            fcl.extend(list(self.compiler.stdcxx_libs))
+            cc = [spec["mpi"].mpicc, "-acc"]
+            if spec.satisfies("+openmp"):
+                cc.append(omp_flag)
+            filter_file("^CC[ \t]*=.*$", f"CC = {' '.join(cc)}", make_include)
+
+            # else:
+            #     # old cuda thing
+            #     cflags.extend(["-DGPUSHMEM=300", "-DHAVE_CUBLAS"])
+            #     filter_file(r"^CUDA_ROOT[ \t]*\?=.*$", spec["cuda"].prefix, make_include)
 
         if spec.satisfies("+vaspsol"):
             cpp_options.append("-Dsol_compat")
@@ -318,6 +321,10 @@ class Vasp(MakefilePackage, CudaPackage):
             cpp_options.append("-DVASP_HDF5")
             llibs.append(spec["hdf5:fortran"].libs.ld_flags)
             incs.append(spec["hdf5"].headers.include_flags)
+
+        if spec.satisfies("+wannier90"):
+            cpp_options.append("-DVASP2WANNIER90")
+            llibs.append(spec["wannier90"].libs.ld_flags)
 
         if spec.satisfies("%gcc@10:"):
             fflags.append("-fallow-argument-mismatch")
