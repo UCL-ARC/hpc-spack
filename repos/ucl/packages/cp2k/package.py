@@ -9,7 +9,8 @@ import sys
 import spack.platforms
 import spack.util.environment
 import spack.util.executable
-from spack.build_environment import dso_suffix
+from spack.util.environment import set_env
+from spack.build_environment import shared_library_suffix
 from spack.build_systems import cmake, makefile
 
 #from spack_repo.builtin.build_systems import cmake, makefile
