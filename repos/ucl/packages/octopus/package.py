@@ -436,7 +436,7 @@ class Octopus(CMakePackage, AutotoolsPackage, CudaPackage):
             out = exe(output=str.split, error=str.split)
             check_outputs(expected, out)
 
-class CMakeBuilder(CMakeBuilder):
+class CMakeBuilder(cmake.CMakeBuilder):
     def invert_bool_variant(self, cmake_var, variant):
         """
         Octopus will search for all optional dependencies by default.
@@ -501,7 +501,7 @@ class CMakeBuilder(CMakeBuilder):
         return args
 
 
-class AutotoolsBuilder(AutotoolsBuilder):
+class AutotoolsBuilder(autotools.AutotoolsBuilder):
     def configure_args(self):
         spec = self.spec
         lapack = spec["lapack"].libs
