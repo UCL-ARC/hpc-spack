@@ -396,7 +396,7 @@ class Octopus(CMakePackage, AutotoolsPackage, CudaPackage):
             "Running octopus",
             "CalculationMode = recipe",
             "DISCLAIMER: The authors do not guarantee that the implementation",
-            "recipe leads to an edible dish, for it is clearly "system-dependent".',
+            'recipe leads to an edible dish, for it is clearly "system-dependent".',
             "Calculation ended on",
         ]
 
