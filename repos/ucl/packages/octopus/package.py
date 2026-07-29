@@ -8,8 +8,8 @@ import os
 import llnl.util.filesystem as fs
 import llnl.util.tty as tty
 
+from spack.build_systems import autotools, cmake
 from spack.package import *
-
 
 class Octopus(CMakePackage, AutotoolsPackage, CudaPackage):
     """A real-space finite-difference (time-dependent) density-functional
@@ -436,7 +436,7 @@ class Octopus(CMakePackage, AutotoolsPackage, CudaPackage):
             out = exe(output=str.split, error=str.split)
             check_outputs(expected, out)
 
-class CMakeBuilder(cmake.CMakeBuilder):
+class CMakeBuilder(CMakeBuilder):
     def invert_bool_variant(self, cmake_var, variant):
         """
         Octopus will search for all optional dependencies by default.
@@ -501,7 +501,7 @@ class CMakeBuilder(cmake.CMakeBuilder):
         return args
 
 
-class AutotoolsBuilder(autotools.AutotoolsBuilder):
+class AutotoolsBuilder(AutotoolsBuilder):
     def configure_args(self):
         spec = self.spec
         lapack = spec["lapack"].libs
