@@ -54,7 +54,8 @@ spack:
       - htslib@1.17
       - openmpi@4.1.6 fabrics=ucx,cma schedulers=slurm +legacylaunchers
       - python@3.11.6
-      - py-jax@0.4.31
+      # - py-jax@0.4.31 will serve in gpu env
+      - ncdu@1.22 
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
       - picard@2.26.2
