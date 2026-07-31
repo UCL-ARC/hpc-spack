@@ -3,11 +3,15 @@ spack:
     all:
       require:
       - 'target=x86_64_v3'
+
   specs:
   # depend on gpu-on-gpu packages
   - matrix:
     - - 'cp2k@2024.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr@2.6.0 cuda_arch=80 ^libxsmm@1.17 ^openmpi@4.1.6 +cuda cuda_arch=60,70,80'
+      - 'cp2k@2025.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr@2.6.0 cuda_arch=80 ^libxsmm@1.17 ^openmpi@4.1.6 +cuda cuda_arch=80'
+      - 'gromacs@2023.5 +cuda cuda_arch=80 +plumed ^plumed@2.9.1 +pytorch ^openmpi@4.1.6 +cuda'
     - - '%gcc@12.3.0'
+
   concretizer:
     unify: when_possible
   view: false
