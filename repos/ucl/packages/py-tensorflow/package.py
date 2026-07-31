@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 import glob
+import subprocess
 import os
 import sys
 import tempfile
@@ -48,7 +49,7 @@ class PyTensorflow(Package, CudaPackage, ROCmPackage, PythonExtension):
     maintainers("adamjstewart", "aweits")
 
     version("2.18.1", sha256="467c512b631e72ad5c9d5c16b23669bcf89675de630cfbb58f9dde746d34afa8")
-    version("2.18.0", sha256="d7876f4bb0235cac60eb6316392a7c48676729860da1ab659fb440379ad5186d")
+    # version("2.18.0", sha256="d7876f4bb0235cac60eb6316392a7c48676729860da1ab659fb440379ad5186d")
     version("2.17.1", sha256="2d3cfb48510f92f3a52fb05b820481c6f066a342a9f5296fe26d72c4ea757700")
     version("2.17.0", sha256="9cc4d5773b8ee910079baaecb4086d0c28939f024dd74b33fc5e64779b6533dc")
     version("2.16.2", sha256="023849bf253080cb1e4f09386f5eb900492da2288274086ed6cfecd6d99da9eb")
@@ -727,12 +728,10 @@ class PyTensorflow(Package, CudaPackage, ROCmPackage, PythonExtension):
         env.set("TEST_TMPDIR", tmp_path)
 
     def configure(self, spec, prefix):
-        # NOTE: configure script is interactive. If you set the appropriate
-        # environment variables, this interactivity is skipped. If you don't,
-        # Spack hangs during the configure phase. Use `spack build-env` to
-        # determine which environment variables must be set for a particular
-        # version.
-        configure()
+        # NOTE: configure script is interactive. If you set the appropriate environment variables,
+        # this interactivity is skipped. Use `spack build-env` to determine which environment
+        # variables must be set for a particular version.
+        configure(input=subprocess.DEVNULL)
 
     @run_after("configure")
     def post_configure_fixes(self):
