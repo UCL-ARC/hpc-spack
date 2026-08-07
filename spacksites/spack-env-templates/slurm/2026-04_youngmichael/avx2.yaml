@@ -47,7 +47,9 @@ spack:
       - netcdf-fortran@4.6.1
       - netlib-scalapack@2.2.0 ^openblas threads=none ^openmpi -cuda
       - netlib-scalapack@2.2.0 ^openblas threads=openmp ^openmpi -cuda
+      - nwchem@7.2.3
       - numactl@2.0.18
+      - octopus@16.4 +mpi ^openmpi@4.1.6
       - openbabel@3.1.1 +openmp
       - openfoam@2512 +int64
       - openfoam@2312 +int64

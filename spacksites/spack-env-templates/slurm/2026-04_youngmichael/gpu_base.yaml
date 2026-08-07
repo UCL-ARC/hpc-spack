@@ -1,21 +1,23 @@
 spack:
-  packages:
-    mpi:
-      require: 'openmpi'
-    openmpi:
-      require: 'arch=linux-rhel9-x86_64_v3'
-    all:
-      require:
-      - 'target=x86_64_v3'
   concretizer:
     unify: when_possible
   view: false
 
+  packages:
+    fftw-api:
+      require: 'fftw'
+
+    all:
+      require:
+      - 'target=x86_64_v3'
+
   specs:
   - matrix:
-    - - cuda@12.9.1
+    - - cuda@12.4
+      - cuda@12.9.1
       - cuda@13.3.0
-      - nvhpc +mpi default_cuda=12.9
+      - openmpi@4.1.6 +cuda cuda_arch=80 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - nvhpc@26.3 default_cuda=12.9 +mpi
     - - '%gcc@12.3.0'
 
   include_concrete:
