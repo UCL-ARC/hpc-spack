@@ -8,7 +8,7 @@ spack:
   # depend on gpu-on-gpu packages
   - matrix:
     - - 'cp2k@2024.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr@2.6.0 cuda_arch=80 ^libxsmm@1.17 ^openmpi@4.1.6 +cuda cuda_arch=80'
-      - 'cp2k@2025.2 +cuda +mpi +openmp cuda_arch=80 build_system=cmake ^dbcsr cuda_arch=80 ^openmpi@4.1.6 +cuda cuda_arch=80'
+      - 'cp2k@2025.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr@2.8.0 cuda_arch=80 ^libxsmm@1.17 ^openmpi@4.1.6 +cuda cuda_arch=80'
       - 'gromacs@2023.5 +mpi +cuda cuda_arch=80 +plumed ^plumed@2.9.2 +pytorch ^py-torch@2.5.1 +cuda +cudnn cuda_arch=80 ^cuda@12.4 ^openmpi@4.1.6 +cuda cuda_arch=80'
     - - '%gcc@12.3.0'
 
