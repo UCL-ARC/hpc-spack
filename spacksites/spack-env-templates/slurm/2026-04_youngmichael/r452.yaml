@@ -1,8 +1,16 @@
 spack:
+  concretizer:
+    unify: when_possible
+  view: false
 
   packages:
-    netcdf-c:
-      require: -mpi
+    mpi:
+      require: 'openmpi'
+    openmpi:
+      require: 'arch=linux-rhel9-x86_64_v3'
+    fftw-api:
+      require: 'fftw'
+
     all:
       require:
       - 'target=x86_64_v3'
@@ -10,7 +18,6 @@ spack:
   # R itself and non-R dependencies we need for packages
   specs:
   - matrix:
-#    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=11 # newer java needed for some packages
     - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=17 # newer java needed for some packages
       - bzip2
       - cmdstan
@@ -32,8 +39,8 @@ spack:
       - xz
       - udunits
     - - '%gcc@12.3.0'
-  concretizer:
-    unify: when_possible
-  view: false
+
   include_concrete:
   - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
+  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2
+  - /lustre/apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/multiarch

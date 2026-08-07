@@ -3,7 +3,7 @@ spack:
     unify: when_possible
   view: false
 
-packages:
+  packages:
     all:
       require:
       - 'target=x86_64_v3' # incs the Broadwell and AMD EPYC (zen3)
@@ -30,6 +30,7 @@ packages:
       - m4
       - mpc
       - mpfr
+      - ncdu
       - ncurses
       - perl@5.38.0
       - perl@5.40.0

@@ -15,7 +15,8 @@ spack:
   specs:
   # Packages built with GCC
   - matrix:
-    - - fftw@3.3.10 -mpi -openmp
+    - - emacs
+      - fftw@3.3.10 -mpi -openmp
       - fftw@3.3.10 -mpi +openmp
       # - julia ^llvm~clang~gold~polly ^openblas threads=openmp
       - openblas@0.3.28 +dynamic_dispatch threads=none
