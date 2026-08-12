@@ -96,7 +96,7 @@ class Vasp(MakefilePackage, CudaPackage):
     depends_on("wannier90", when="+wannier90")
     # The +mpi variant of wannier90 3.x does not work with VASP
     # https://vasp.at/wiki/Makefile.include#Wannier90_(optional)
-    conflicts("^wannier90@3:+mpi", msg="The +mpi variant of wannier90 3.x does not work with VASP")
+    # conflicts("^wannier90@3:+mpi", msg="The +mpi variant of wannier90 3.x does not work with VASP")
     # at the very least the nvhpc mpi seems required
     depends_on("nvhpc+mpi+lapack+blas", when="%nvhpc")
 
