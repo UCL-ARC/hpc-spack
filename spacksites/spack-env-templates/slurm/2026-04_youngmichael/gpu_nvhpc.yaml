@@ -5,11 +5,15 @@ spack:
       - 'target=x86_64_v3'
 
   specs:
+  - matrix:
+    - - 'nccl@2.22.3-1 +cuda cuda_arch=80 ^cuda@12.6.2'
+      - 'netlib-scalapack@2.2.0 ^openmpi@4.1.6'
+    - - '%gcc@12.3.0'
   # nvhpc packages
   - matrix:
-    - - 'vasp@6.4.3 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^nccl%gcc cuda_arch=80 ^cuda@12.9.1 ^openmpi@4.1.6 +cuda cuda_arch=80'
-      - 'vasp@6.5.1 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^nccl%gcc cuda_arch=80 ^cuda@12.9.1 ^openmpi@4.1.6 +cuda cuda_arch=80'
-      - 'vasp@6.6.1 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^nccl%gcc cuda_arch=80 ^cuda@12.9.1 ^openmpi@4.1.6 +cuda cuda_arch=80'
+    - - 'vasp@6.4.3 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^netlib-scalapack@2.2.0%gcc ^cuda@12.6.2 ^openmpi@4.1.6 ^nccl@2.22.3-1%gcc@12.3.0 +cuda cuda_arch=80'
+      - 'vasp@6.5.1 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^netlib-scalapack@2.2.0%gcc ^cuda@12.6.2 ^openmpi@4.1.6 ^nccl@2.22.3-1%gcc@12.3.0 +cuda cuda_arch=80'
+      - 'vasp@6.6.1 +cuda cuda_arch=80 +hdf5 ^hdf5%gcc ^netlib-scalapack@2.2.0%gcc ^cuda@12.6.2 ^openmpi@4.1.6 ^nccl@2.22.3-1%gcc@12.3.0 +cuda cuda_arch=80'
     - - '%nvhpc'
 
   concretizer:
@@ -18,3 +22,4 @@ spack:
 
   include_concrete:
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_base
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2
