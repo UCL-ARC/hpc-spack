@@ -7,10 +7,9 @@ spack:
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
-    - - gromacs@2024.3 +mpi +cuda cuda_arch=80 ^openmpi@4.1.6 +cuda cuda_arch=80
-      - gromacs@2024.3 -mpi +cuda cuda_arch=80
-      - lammps@20240829.1 +cuda cuda_arch=80 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^openmpi@4.1.6 +cuda cuda_arch=80
-      - py-torch@2.5.1 +cuda cuda_arch=80 +cudnn ^cuda@12.4.1 ^openmpi@4.1.6 +cuda cuda_arch=80
+    - - gromacs@2024.3 +mpi +cuda cuda_arch=80 ^openmpi@4.1.6 +cuda cuda_arch=80 ^cuda@12.6.2
+      - gromacs@2024.3 -mpi +cuda cuda_arch=80 ^cuda@12.6.2
+      - py-torch@2.5.1 +cuda cuda_arch=80 +cudnn ^cuda@12.6.2 ^openmpi@4.1.6 +cuda cuda_arch=80
     - - '%gcc@12.3.0'
 
   concretizer:
@@ -19,4 +18,5 @@ spack:
 
   include_concrete:
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/gpu_base
+  - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/multiarch
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2
