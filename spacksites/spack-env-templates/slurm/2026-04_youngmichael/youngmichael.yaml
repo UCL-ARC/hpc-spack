@@ -5,12 +5,6 @@ spack:
     unify: when_possible
   view: false
   include_concrete:
-
-avx2_buildtools.yaml     avx512_intel.yaml    gpu_first.yaml   multiarch_intel.yaml       ompi418.yaml
-avx2_intel_classic.yaml  avx512.yaml          gpu_nvhpc.yaml   multiarch.yaml             r452.yaml
-avx2_intel.yaml          first_compiler.yaml  gpu-on-gpu.yaml  ompi412-youngmichael.yaml  second_compiler.yaml
-avx2.yaml                gpu_base.yaml        gpu_third.yaml   ompi416_ifort.yaml         youngmichael.yaml
-
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_buildtools
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_intel_classic
   - /apps/spack/0.23/deploy/2026-04/spack/var/spack/environments/avx2_intel
