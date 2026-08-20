@@ -21,7 +21,7 @@ class Mrtrix3(Package):
 
     version(
         "3.0.8",
-        sha256="v9c694934781c287c51a0d35ad5d7687b529e5c04e3b2ac0985599b0c48644721",
+        sha256="9c694934781c287c51a0d35ad5d7687b529e5c04e3b2ac0985599b0c48644721",
         preferred=True,
     )
 
