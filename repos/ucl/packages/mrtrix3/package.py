@@ -30,7 +30,7 @@ class Mrtrix3(Package):
     depends_on("python@2.7:", type=("build", "run"))
     depends_on("py-numpy", type=("build", "run"))
     depends_on("glu")
-    depends_on("qt@4.7:")
+    #depends_on("qt@4.7:")
     # MRTrix <= 3.0.3 can't build with eigen >= 3.4 due to conflicting declarations
     depends_on("eigen@3.3", when="@3.0.3")
     depends_on("eigen@3.4:", when="@3.0.4:")
