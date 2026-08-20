@@ -14,7 +14,7 @@ class Mrtrix3(Package):
     density."""
 
     homepage = "https://www.mrtrix.org/"
-    url = "wget https://github.com/MRtrix3/mrtrix3/archive/refs/tags/3.0.8.tar.gz"
+    url = "https://github.com/MRtrix3/mrtrix3/archive/refs/tags/3.0.8.tar.gz"
     git = "https://github.com/MRtrix3/mrtrix3.git"
 
     license("MPL-2.0")
