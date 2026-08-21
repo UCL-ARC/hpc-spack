@@ -8,6 +8,9 @@ spack:
     fftw-api:
       require: 'fftw'
 
+    openmpi:
+      require: '' # don't use the default openmpi
+
   specs:
   # depend on gpu-on-gpu packages
   - matrix:

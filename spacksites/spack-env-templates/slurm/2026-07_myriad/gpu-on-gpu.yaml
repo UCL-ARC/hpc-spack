@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+
+    openmpi:
+      require: '' # don't use the default openmpi
+
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
