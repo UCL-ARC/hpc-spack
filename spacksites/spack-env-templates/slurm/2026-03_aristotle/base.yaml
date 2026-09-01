@@ -29,10 +29,12 @@ spack:
       require:
       - spec: +new_strategies
 
-    # if anything demands a different openmpi, make sure it has the right options
+    # NOTE: new aristotles are RHEL9 VMs in an ssh-load-balanced cluster
+    # As standalone VMs they don't need slurm or physical network fabric
+    # so slurm/network fabrics are purposely set to none/tcp
     openmpi:
       require:
-      - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
+      - spec: 'fabrics=tcp schedulers=none +legacylaunchers'
       prefer:
       - '@4.1.6'
 
