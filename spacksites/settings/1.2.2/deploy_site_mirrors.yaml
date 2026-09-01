@@ -1,0 +1,18 @@
+mirrors:
+
+  buildcache:
+    fetch:
+      url: file:///apps/spack/1.2.2/buildcache
+    push:
+      url: file:///apps/spack/1.2.2/buildcache
+
+  buildcache-private:
+    fetch:
+      url: file:///apps/spack/1.2.2/buildcache-private
+    push:
+      url: file:///apps/spack/1.2.2/buildcache-private
+
+  pkgstore: 
+    url: file:///apps/pkg-store/spack-mirror
+
+

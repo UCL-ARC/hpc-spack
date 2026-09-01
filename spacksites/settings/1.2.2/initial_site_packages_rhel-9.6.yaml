@@ -86,5 +86,5 @@ packages:
 
 
   all:
-    compiler: [gcc@12.3.0]
+    compiler: [gcc@14.2.0]
 
