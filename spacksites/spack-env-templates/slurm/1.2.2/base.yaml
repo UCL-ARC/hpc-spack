@@ -1,0 +1,97 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+
+    # must build with make -j1
+    quantum-espresso:
+      package_attributes:
+        parallel: false
+
+    # make sure everything uses zlib-ng with +new_strategies so we don't end up with multiple binutils
+    zlib-api:
+      require: 'zlib-ng'
+
+    zlib-ng:
+      require:
+      - spec: +new_strategies
+
+    # if anything demands a different openmpi, make sure it has the right options
+    # Myriad: check that this is correct
+    openmpi:
+      require:
+      - spec: 'fabrics=ucx,cma schedulers=slurm +legacylaunchers'
+      prefer:
+      - '@4.1.6'
+
+    fftw-api:
+      require: 'fftw'
+
+  specs:
+  - matrix:
+    - - apr
+      - apr-util
+      - bcftools@1.16
+      - beast2@2.7.4
+      - bedtools2@2.31.0
+      - vcftools@0.1.16
+      - bwa@0.7.17
+      - plink@1.07
+      - plink@1.9-beta6.27
+      - plink2@2.0.0-a.6.9
+      - emacs@29.4
+      - cmake
+      - curl +libidn2
+      - fftw@3.3.10 -mpi -openmp
+      - gatk@4.4.0.0
+      - git@2.46.2
+      - gsl@2.8
+      - gzip@1.13
+      - hdf5 +cxx +fortran -mpi +hl
+      - hdf5 +fortran +mpi +hl
+      - htslib@1.17
+      - openmpi@4.1.6 fabrics=ucx,cma schedulers=slurm +legacylaunchers
+      - python@3.11.6
+      # - py-jax@0.4.31 will serve in gpu env
+      - ncdu@1.22 
+      - netcdf-c@4.9.2 -mpi
+      - netcdf-fortran@4.6.1
+      - picard@2.26.2
+      - rust@1.81.0
+      - samtools@1.17
+      - subversion
+      - subread@2.0.6
+      # stop it picking an openblas with threads=openmp purely for package reuse
+      - castep@25.12 +mpi +libxc ^openblas threads=none
+      - castep@26.11 +mpi +libxc ^openblas threads=none
+      - castep@24.1 +mpi +libxc ^openblas threads=none
+      - castep@23.1 +mpi +libxc ^openblas threads=none
+      - cp2k@2024.3 +mpi ^openblas threads=openmp
+      - cp2k@2025.2 +mpi
+      # - gromacs@2024.3 -mpi -double
+      - gromacs@2023.5 -double +plumed
+      - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +plumed +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff
+      - libxc@6.2.2
+      - namd@3.0.2 ^charmpp backend=multicore ^fftw -mpi
+      #- namd@3.0.1 ^charmpp backend=ucx pmi=pmix ^fftw -mpi
+      #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi # not working outside dev
+      - netlib-scalapack@2.2.0
+      - numactl@2.0.18
+      - openblas@0.3.28 threads=none
+      - openblas@0.3.28 threads=openmp
+      - plumed@2.9.2
+      - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
+    - - '%gcc@12.3.0'
+# I'm not sure why there was a gcc defined here, that should be done from second_compiler
+#  - gcc@12.3.0 +binutils
+
+  # Intel compilers built with gcc
+  - matrix:
+    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
+  #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/second_compiler

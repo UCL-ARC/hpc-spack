@@ -1,0 +1,16 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  - matrix:
+    - - libnsl
+      - xcb-util
+      - xcb-util-cursor
+      - libxcursor
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/base
+

@@ -1,0 +1,20 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+
+    openmpi:
+      require: '' # don't use the default openmpi
+
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    # Fix `openblas` as blas provider, to avoid picking other unusual implementations
+    - - 'dbcsr@2.8.0 +openmp +mpi +cuda cuda_arch=90 -examples ^openblas@0.3.28 threads=openmp ^openmpi@5.0.10 +cuda ^cuda@12.9.1' # only one CUDA arch allowed
+      - 'py-alphafold@2.2.4 +cuda ^py-scipy@1.11.4 ^py-pythran@0.12.2 ^openmm@7.5.1 +cuda ^openblas ^llvm -gold ^py-jaxlib +cuda cuda_arch=70,80,90 ^py-tensorflow +cuda cuda_arch=70,80,90 ^cuda@12.5.1 ^hmmer -mpi ^hh-suite -mpi'
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_first

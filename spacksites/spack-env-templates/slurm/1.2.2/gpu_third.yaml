@@ -1,0 +1,23 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+
+    fftw-api:
+      require: 'fftw'
+
+    openmpi:
+      require: '' # don't use the default openmpi
+
+  specs:
+  # depend on gpu-on-gpu packages
+  - matrix:
+    - - 'cp2k@2025.2 +cuda +mpi +openmp ~sirius cuda_arch=90 build_system=cmake ^dbcsr@2.8.0 cuda_arch=90 ^libxsmm@1.17 ^openmpi@5.0.10 +cuda ^cuda@12.9.1'
+      # - 'cp2k@2025.2 +cuda +mpi +openmp ~sirius cuda_arch=80 build_system=cmake ^dbcsr@2.8.0 cuda_arch=80 ^libxsmm@1.17 ^openmpi@5.0.10 +cuda'
+      # - 'cp2k@2025.2 +cuda +mpi +openmp ~sirius cuda_arch=70 build_system=cmake ^dbcsr@2.8.0 cuda_arch=70 ^libxsmm@1.17 ^openmpi@5.0.10 +cuda'
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu-on-gpu

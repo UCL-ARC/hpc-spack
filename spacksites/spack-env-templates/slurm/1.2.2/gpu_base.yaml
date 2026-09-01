@@ -1,0 +1,16 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  # CUDA packages, compile them with gcc@12
+  - matrix:
+    - - cuda@12.5.1 # for octopus, py-jaxlib, py-tensorflow and py-alphafold
+      - cuda@12.9.1
+      - cuda@13.3.0
+      - nvhpc +mpi default_cuda=12.9
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/base
