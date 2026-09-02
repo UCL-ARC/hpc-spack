@@ -46,10 +46,6 @@ spack:
 #                  'boost', 'cgal', 'eigen', 'fftw', 'gsl', 'gulp', 'hdf5', 'htslib', 'libxc', 'mesa', 'metis', 'mumps',
 #                  'netcdf-c', 'netcdf-fortran', 'netlib-scalapack', 'numactl', 'openblas', 'parmetis', 'quip', 
 #                  'snappy', 'suitesparse', 'udunits', 'vtk']
-        intel-oneapi-mpi:
-          environment:
-            set:
-              SLURM_MPI_TYPE: 'pmi2'
         openmpi:
           environment:
             set:
