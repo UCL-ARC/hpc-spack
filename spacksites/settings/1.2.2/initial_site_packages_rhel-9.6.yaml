@@ -84,7 +84,6 @@ packages:
       read: group
       group: ag-archpc-vasp65
 
-
-  all:
-    compiler: [gcc@14.2.0]
+#  all:
+#    compiler: [gcc@14.2.0]
 
