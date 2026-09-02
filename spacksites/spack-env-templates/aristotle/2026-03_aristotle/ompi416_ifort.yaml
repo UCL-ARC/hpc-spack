@@ -2,7 +2,7 @@ spack:
   # OpenMPI 4.1.6 with ifort for CRYSTAL (4.1.2 didn't build with icx but this does)
   specs:
   - matrix:
-    - - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+    - - openmpi@4.1.6 fabrics=tcp schedulers=none +legacylaunchers
     - - '%intel@2021.13.1'
 
   concretizer:

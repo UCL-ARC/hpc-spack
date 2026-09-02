@@ -16,9 +16,6 @@ modules:
       intel-oneapi-mpi:
         conflict:
           - 'mpi'
-        environment:
-          set:
-            SLURM_MPI_TYPE: 'pmi2'
       openmpi:
         conflict:
           - 'mpi'
