@@ -11,6 +11,10 @@ spack:
     openmpi:
       require: '' # don't use the default openmpi with legacylaunchers as they are not supported with openmpi 5.x
 
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   # CUDA packages, compile them with gcc@12
   - matrix:
@@ -25,7 +29,7 @@ spack:
       # - openmpi@4.1.6 +cuda fabrics=ucx,cma schedulers=slurm +legacylaunchers
       - openmpi@5.0.10 +cuda fabrics=cma schedulers=slurm # +legacylaunchers is not supported with openmpi 5.x
       - plumed@2.9.2 +pytorch ^py-torch +cuda cuda_arch=70,80,90 ^openmpi@5.0.10 +cuda ^python@3.11.6 ^cuda@12.9.1
-    - - '%gcc@12.3.0'
+    - - '%gcc@14.2.0'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_base
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/gpu_base

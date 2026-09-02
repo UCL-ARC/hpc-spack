@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   # make a compiler with ifort from the oneapi install. Compilers entry will need manual editing
   # as it expects an icc for an intel@=2021.13.1 compiler so will add this as another oneapi.
@@ -11,5 +16,5 @@ spack:
     - - '%oneapi@2024.2.1'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/intel
 

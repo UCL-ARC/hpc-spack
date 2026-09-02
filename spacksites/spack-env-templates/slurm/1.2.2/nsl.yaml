@@ -3,14 +3,19 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   - matrix:
     - - libnsl
       - xcb-util
       - xcb-util-cursor
       - libxcursor
-    - - '%gcc@12.3.0'
+    - - '%gcc@14.2.0'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/base
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/base
 

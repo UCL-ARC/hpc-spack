@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   - matrix:
     - - intel-oneapi-mpi@2021.14.0 # +external-libfabric
@@ -21,4 +26,4 @@ spack:
   #- intel-oneapi-compilers@2024.2.1
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/base
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/base

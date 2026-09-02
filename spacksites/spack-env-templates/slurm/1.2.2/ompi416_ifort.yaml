@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   # OpenMPI 4.1.6 with ifort for CRYSTAL (4.1.2 didn't build with icx but this does)
   specs:
   - matrix:
@@ -10,7 +15,7 @@ spack:
     - - '%intel@2021.13.1'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel_classic
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/intel
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/intel_classic
 
 

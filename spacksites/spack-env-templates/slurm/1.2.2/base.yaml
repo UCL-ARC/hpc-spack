@@ -29,6 +29,10 @@ spack:
     fftw-api:
       require: 'fftw'
 
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   - matrix:
     - - apr
@@ -83,15 +87,13 @@ spack:
       - openblas@0.3.28 threads=openmp
       - plumed@2.9.2
       - quantum-espresso@7.4 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
-    - - '%gcc@12.3.0'
-# I'm not sure why there was a gcc defined here, that should be done from second_compiler
-#  - gcc@12.3.0 +binutils
+    - - '%gcc@14.2.0'
 
   # Intel compilers built with gcc
   - matrix:
     - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
   #   - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-    - - '%gcc@12.3.0'
+    - - '%gcc@14.2.0'
 
   include_concrete:
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/second_compiler
+  - /apps/spack/1.2.2/deploy/2026-09/spack/var/spack/environments/second_compiler

@@ -3,6 +3,11 @@ spack:
     unify: when_possible
   view: false
 
+  packages:
+    all:
+      require:
+      - 'target=x86_64_v4'
+
   specs:
   - matrix:
     - - gcc@14.2.0 +binutils
