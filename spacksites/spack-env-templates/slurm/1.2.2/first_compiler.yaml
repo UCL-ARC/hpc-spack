@@ -1,3 +1,4 @@
+spack:
   packages:
     all:
       require:
