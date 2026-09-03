@@ -18,7 +18,7 @@ spack:
 
   specs:
   - matrix:
-    - - openmpi@4.1.2 fabrics=tcp schedulers=none +legacylaunchers
+    - - openmpi@4.1.2 fabrics=none schedulers=none
       - orca@5.0.4
     - - '%gcc@12.3.0'
   concretizer:

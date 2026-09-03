@@ -30,10 +30,10 @@ spack:
       - spec: +new_strategies
 
     # NB: new aristotles are RHEL9 VMs in an ssh-load-balanced cluster
-    # so their openmpi configuration uses tcp, no slurm, no pmix/fabric integration
+    # so their openmpi configuration has no slurm, no pmix/fabric integration
     openmpi:
       require:
-      - spec: 'fabrics=tcp schedulers=none +legacylaunchers'
+      - spec: 'fabrics=none schedulers=none'
       prefer:
       - '@4.1.6'
 
@@ -55,7 +55,7 @@ spack:
       - hdf5 +cxx +fortran -mpi +hl
       - hdf5 +fortran +mpi +hl
       - htslib@1.17
-      - openmpi@4.1.6 fabrics=tcp schedulers=none +legacylaunchers
+      - openmpi@4.1.6 fabrics=none schedulers=none
       - python@3.11.6
       - netcdf-c@4.9.2 -mpi
       - netcdf-fortran@4.6.1
@@ -72,7 +72,8 @@ spack:
       #- gromacs@2023.5 +double +plumed
       - lammps@20240829.1 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff
       - libxc@6.2.2
-      - namd@3.0.1 ^charmpp backend=ucx ^fftw -mpi
+      - namd@3.0.2 ^charmpp backend=multicore ^fftw -mpi
+      #- namd@3.0.1 ^charmpp backend=ucx ^fftw -mpi # needs pmix/pmi - not working on Condenser VMs
       #- namd@3.0.1 ^charmpp backend=verbs ^fftw -mpi # not working outside dev
       - netlib-scalapack@2.2.0
       - numactl@2.0.18
