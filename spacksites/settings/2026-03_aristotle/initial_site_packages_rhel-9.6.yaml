@@ -37,7 +37,7 @@ packages:
 
   openmpi:
     require:
-    - spec: 'fabrics=tcp schedulers=none +legacylaunchers'
+    - spec: 'fabrics=none schedulers=none'
     prefer:
     - '@4.1.6'
 
