@@ -5,7 +5,7 @@ spack:
 
   specs:
   - matrix:
-    - - egl@1.5
+    - - mesa +egl
     - - '%gcc@12.3.0'
 
   include_concrete:
