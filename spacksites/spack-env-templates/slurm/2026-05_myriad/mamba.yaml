@@ -5,7 +5,7 @@ spack:
 
   specs:
   - matrix:
-    - - mesa +egl
+    - - miniforge3@24.3.0
     - - '%gcc@12.3.0'
 
   include_concrete:
