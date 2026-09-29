@@ -5,7 +5,7 @@ spack:
 
   specs:
   - matrix:
-    - - miniforge3@24.3.0
+    - - miniforge3@24.3.0 +mamba
     - - '%gcc@12.3.0'
 
   include_concrete:
