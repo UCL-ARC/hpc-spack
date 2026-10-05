@@ -15,7 +15,8 @@ spack:
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/nsl
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_base
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_first
-  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_nvhpc
+  # - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_nvhpc
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_nvhpc_alt
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu-on-gpu
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_third
 

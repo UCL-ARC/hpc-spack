@@ -1,0 +1,19 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  packages:
+
+    openmpi:
+      require: ''
+
+  specs:
+  - matrix:
+    - - 'vasp@6.4.3 +openmp ~fftlib +cuda cuda_arch=70,80,90 +hdf5 ^[virtuals=blas,lapack] openblas%nvhpc ^fftw%nvhpc~mpi ^openmpi@5.0.10%nvhpc +cuda ^fftw ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
+      - 'vasp@6.5.1 +openmp ~fftlib +cuda cuda_arch=70,80,90 +hdf5 ^[virtuals=blas,lapack] openblas%nvhpc ^fftw%nvhpc~mpi ^openmpi@5.0.10%nvhpc +cuda ^fftw ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
+      - 'vasp@6.6.1 +openmp ~fftlib +cuda cuda_arch=70,80,90 +hdf5 ^[virtuals=blas,lapack] openblas%nvhpc ^fftw%nvhpc~mpi ^openmpi@5.0.10%nvhpc +cuda ^fftw ^nccl%gcc cuda_arch=70,80,90 ^cuda@12.9.1'
+    - - '%nvhpc@26.3'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_base
