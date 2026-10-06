@@ -21,12 +21,25 @@ modules:
         environment:
           set:
             SLURM_MPI_TYPE: 'pmi2'
-      openmpi:
+      openmpi@4:
         conflict:
           - 'mpi'
         environment:
           set:
             OMPI_MCA_btl: 'self,vader'
+      openmpi@5:
+        conflict:
+          - 'mpi'
+        environment:
+          set:
+            OMPI_MCA_btl: 'self,sm'
+            PMIX_MCA_psec: 'native'
+      nvhpc:
+        load:
+          - 'compilers/gcc/12.3.0/gcc-12.3.0' # required for QD and OpenMPI libraries
+        environment:
+          append_path:
+            LD_LIBRARY_PATH: '{prefix}/Linux_x86_64/{version}/compilers/extras/qd/lib'
       hdf5:
         environment:
           set:
