@@ -1,0 +1,15 @@
+spack:
+  concretizer:
+    unify: when_possible
+  view: false
+
+  specs:
+  - matrix:
+    - - tmux
+      - nano
+      - gedit
+    - - '%gcc@12.3.0'
+
+  include_concrete:
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/base
+
