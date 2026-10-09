@@ -3,16 +3,6 @@ spack:
     unify: when_possible
   view: false
 
-  packages:
-
-    openmpi:
-      require: ''
-
-  specs:
-  - matrix:
-    - - miniforge3@24.3.0+mamba
-    - - '%gcc@12.3.0'
-
   include_concrete:
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/base
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/intel
@@ -29,6 +19,7 @@ spack:
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_nvhpc_alt
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu-on-gpu
   - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/gpu_third
+  - /apps/spack/0.23/deploy/2026-07/spack/var/spack/environments/extras
 
   modules:
     default:
