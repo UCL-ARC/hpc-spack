@@ -7,7 +7,6 @@ spack:
   - matrix:
     - - tmux
       - nano
-      - gedit
     - - '%gcc@12.3.0'
 
   include_concrete:
