@@ -18,6 +18,7 @@ spack:
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_nvhpc
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu-on-gpu
   - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/gpu_third
+  - /apps/spack/0.23/deploy/2026-05/spack/var/spack/environments/editor
 
   modules:
     default:
