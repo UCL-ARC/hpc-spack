@@ -40,6 +40,9 @@ modules:
         environment:
           append_path:
             LD_LIBRARY_PATH: '{prefix}/Linux_x86_64/{version}/compilers/extras/qd/lib'
+      vmd:
+        load:
+          - 'libxcursor'
       hdf5:
         environment:
           set:
