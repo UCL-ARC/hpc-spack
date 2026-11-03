@@ -14,5 +14,3 @@ mirrors:
 
   pkgstore: 
     url: file:///apps/pkg-store/spack-mirror
-
-

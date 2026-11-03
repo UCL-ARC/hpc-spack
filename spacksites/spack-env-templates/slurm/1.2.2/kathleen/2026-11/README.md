@@ -1,1 +1,1 @@
-I've just copied over the last 0.23 yamls for Kathleen, so these will all need to be adjusted
+I've adjusted first and second compiler.  I'll be making changes to the remainder of the yamls as I'm building the environments.

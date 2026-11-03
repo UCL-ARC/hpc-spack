@@ -2,9 +2,29 @@ spack:
   concretizer:
     unify: when_possible
   view: false
-
   specs:
   - matrix:
-    - - gcc@12.3.0 +binutils
-    - - '%gcc@12.3.0'
-
+  - - gcc@14.2.0 +binutils
+    - autoconf@2.72
+    - bzip2@1.0.8
+    - gdbm@1.25
+    - libtool@2.4.7
+#    - ncurses@6.5
+    - texinfo@7.1
+    - autoconf-archive@2023.02.20
+    - diffutils@3.10
+    - gmp@6.3.0
+    - m4@1.4.20
+    - perl@5.40.0
+    - zlib@1.3.1
+    - automake@1.16.5
+    - gawk@5.3.1
+    - libiconv@1.18
+    - mpc@1.3.1
+    - pkgconf@2.3.0
+    - zstd@1.5.7
+    - berkeley-db@18.1.40
+    - libsigsegv@2.14
+    - mpfr@4.2.1
+    - readline@8.2
+  - - %gcc@14.2.0

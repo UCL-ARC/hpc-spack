@@ -14,6 +14,12 @@ packages:
       prefix: /usr
     buildable: false
 
+  ncurses:
+    externals:
+    - spec: ncurses@6.2
+      prefix: /usr
+    buildable: false
+
   ucx:
     externals:
     - spec: ucx@1.17.0
@@ -34,7 +40,7 @@ packages:
 
   slurm:
     externals: # 24.11.5 now
-    - spec: slurm@24 +hwloc +mariadb +pmix +restd
+    - spec: slurm@25 +hwloc +mariadb +pmix +restd
       prefix: /usr
     buildable: false
     #extra_attributes:
@@ -64,11 +70,6 @@ packages:
     prefer:
     - '@4.1.6'
 
-  # must build with make -j1
-  quantum-espresso:
-    package_attributes:
-      parallel: false
-
   # group restrictions
   castep:
     permissions:
@@ -83,7 +84,4 @@ packages:
     permissions:
       read: group
       group: ag-archpc-vasp65
-
-#  all:
-#    compiler: [gcc@14.2.0]
 
