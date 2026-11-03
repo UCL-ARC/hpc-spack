@@ -1,0 +1,62 @@
+modules:
+  default:
+    enable:
+      - tcl
+    roots:
+      tcl: $spack/../modules/$env
+    tcl:
+      hash_length: 0
+      hide_implicits: true
+      exclude: ['glibc', 'gcc-runtime']
+      all:
+        autoload: direct
+        # conflict with everything of same name
+        conflict:
+          - '{name}'
+      intel-oneapi-mpi:
+        conflict:
+          - 'mpi'
+        environment:
+          set:
+            SLURM_MPI_TYPE: 'pmi2'
+      openmpi:
+        conflict:
+          - 'mpi'
+        environment:
+          set:
+            OMPI_MCA_btl: 'self,vader'
+      hdf5:
+        environment:
+          set:
+            HDF5_USE_FILE_LOCKING: 'FALSE'
+
+      projections:
+        # Named packages where we have more than one installed so need different module names.
+        # First match is picked, so more specific need to be at top. 'all' can be anywhere.
+        # Add omp for openmp variants.
+        gcc: 'compilers/{name}/{version}/{compiler.name}-{compiler.version}'
+        intel-oneapi-compilers: 'compilers/intel-oneapi/{version}/{compiler.name}-{compiler.version}'
+        intel-oneapi-mpi: 'mpi/{name}/{version}/intel-oneapi-{compiler.version}'
+        openmpi: 'mpi/{name}/{version}/{compiler.name}-{compiler.version}'
+
+        fftw +openmp ^mpi: '{name}/{version}-{^mpi.name}-omp/{compiler.name}-{compiler.version}'
+        fftw +openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+        intel-oneapi-mkl ^mpi: '{name}/{version}-{^mpi.name}/intel-oneapi-{compiler.version}'
+        openblas threads=openmp: '{name}/{version}-omp/{compiler.name}-{compiler.version}'
+
+        gromacs +plumed ^mpi: '{name}/{version}-{^mpi.name}-plumed/{compiler.name}-{compiler.version}'
+        namd ^mpi ^charmpp backend=ofi: '{name}/{version}-{^mpi.name}-ofi/{compiler.name}-{compiler.version}'
+        namd ^mpi ^charmpp backend=ucx: '{name}/{version}-{^mpi.name}-ucx/{compiler.name}-{compiler.version}'
+        namd ^mpi ^charmpp backend=verbs: '{name}/{version}-{^mpi.name}-verbs/{compiler.name}-{compiler.version}'
+        namd ^charmpp backend=ofi: '{name}/{version}-ofi/{compiler.name}-{compiler.version}'
+        namd ^charmpp backend=ucx: '{name}/{version}-ucx/{compiler.name}-{compiler.version}'
+        namd ^charmpp backend=verbs: '{name}/{version}-verbs/{compiler.name}-{compiler.version}'
+
+        ^cuda ^mpi: '{name}/{version}-{^mpi.name}-cuda/{compiler.name}-{compiler.version}'
+        ^mpi: '{name}/{version}-{^mpi.name}/{compiler.name}-{compiler.version}'
+        ^cuda: '{name}/{version}-cuda/{compiler.name}-{compiler.version}'
+        all:  '{name}/{version}/{compiler.name}-{compiler.version}'
+
+  prefix_inspections:
+    lib: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]
+    lib64: ["LD_LIBRARY_PATH", "LIBRARY_PATH"]

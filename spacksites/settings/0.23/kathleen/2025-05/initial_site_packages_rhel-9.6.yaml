@@ -1,0 +1,47 @@
+packages:
+
+  # Slurm, hwloc, ucx and pmix are external. 
+  # All MPI things need to use the same hwloc, ucx and pmix as Slurm.
+  hwloc:
+    externals:
+    - spec: hwloc@2.4.1
+      prefix: /usr
+    buildable: false
+
+  libfabric:
+    externals:
+    - spec: libfabric@1.22.0 fabrics=psm2,opx,shm,sockets,tcp,udp
+      prefix: /usr
+    buildable: false
+
+  ucx:
+    externals:
+    - spec: ucx@1.17.0
+      prefix: /usr
+    buildable: false
+
+  pmix:
+    externals:
+    - spec: pmix@3.2.3
+      prefix: /usr
+    buildable: false
+
+  opa-psm2:
+    externals:
+    - spec: opa-psm2@12.0.1
+      prefix: /usr
+    buildable: false
+
+  slurm:
+    externals: # 24.11.5 now
+    - spec: slurm@24 +hwloc +mariadb +pmix +restd
+      prefix: /usr
+    buildable: false
+    #extra_attributes:
+    #  environment:
+    #    prepend_path:
+    #      CPATH: /usr/include/slurm
+
+  all:
+    compiler: [gcc@12.3.0]
+
