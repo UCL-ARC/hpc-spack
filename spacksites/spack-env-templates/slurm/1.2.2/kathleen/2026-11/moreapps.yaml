@@ -14,7 +14,12 @@ spack:
       - parallel@20240822
       - paraview@5.13.1 +python ^[virtuals=gl] osmesa ^llvm
       - vmd@2.0.0a8
+      - tmux
+      - screen
+      - emacs
+      - nano
     - - '%gcc@12.3.0'
+
   concretizer:
     unify: when_possible
   view: false

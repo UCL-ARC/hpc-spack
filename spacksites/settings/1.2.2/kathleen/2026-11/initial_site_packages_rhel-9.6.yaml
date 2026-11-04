@@ -68,7 +68,7 @@ packages:
     require:
     - spec: 'fabrics=psm2,ofi schedulers=slurm +legacylaunchers'
     prefer:
-    - '@4.1.6'
+    - '@5.0.8'
 
   # group restrictions
   castep:
