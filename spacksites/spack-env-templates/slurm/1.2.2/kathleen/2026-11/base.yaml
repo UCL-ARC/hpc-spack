@@ -55,10 +55,10 @@ spack:
     - - '%gcc@14.2.0'
 
   # Intel compilers built with gcc
-  - matrix:
-    - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
-      - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-    - - '%gcc@14.2.0'
+  #- matrix:
+  #  - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
+  #    - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+  #  - - '%gcc@14.2.0'
 
   concretizer:
     unify: when_possible
