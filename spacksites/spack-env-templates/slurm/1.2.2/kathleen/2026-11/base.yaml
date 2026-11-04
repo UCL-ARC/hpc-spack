@@ -61,5 +61,5 @@ spack:
   concretizer:
     unify: when_possible
   view: false
-  include_concrete:
-  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/second_compiler
+  include:
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/second_compiler/spack.lock
