@@ -3,14 +3,14 @@ spack:
     unify: when_possible
   view: false
   specs:
+  - autoconf@2.72
+  - autoconf-archive@2023.02.20
   - matrix:
     - - gcc@14.2.0 +binutils
-      - autoconf@2.72
       - bzip2@1.0.8
       - gdbm@1.25
       - libtool@2.4.7
       - texinfo@7.1
-      - autoconf-archive@2023.02.20
       - diffutils@3.10
       - gmp@6.3.0
       - m4@1.4.20
