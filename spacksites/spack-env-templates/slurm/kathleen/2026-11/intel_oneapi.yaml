@@ -8,10 +8,11 @@ spack:
     fortran:
       require: gcc@14.2.0
 
-  specs:
-  - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-
   concretizer:
     unify: when_possible
 
   view: false
+
+  specs:
+  - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
+
