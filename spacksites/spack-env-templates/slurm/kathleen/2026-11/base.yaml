@@ -61,12 +61,6 @@ spack:
   - lammps@20250722.3 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^python@3.11
   - lammps@20240829.4 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^python@3.11
 
-  # Intel compilers built with gcc
-  #- matrix:
-  #  - - intel-oneapi-compilers@2024.2.1 # there is 2025.1.0
-  #    - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-  #  - - '%gcc@14.2.0'
-
   concretizer:
     unify: when_possible
 
