@@ -1,5 +1,6 @@
 spack:
 
+  packages:
     c:
       require: gcc@14.2.0
     cxx:
