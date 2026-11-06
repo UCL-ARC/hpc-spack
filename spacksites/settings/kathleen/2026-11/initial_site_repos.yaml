@@ -1,3 +1,9 @@
 repos:
-  - $HPC_SPACK_ROOT/repos/ucl
-  - $HPC_SPACK_ROOT/repos/dev
+  ucl.arc.hpc: $HPC_SPACK_ROOT/repos/ucl
+
+  ucl.arc.hpc.dev: $HPC_SPACK_ROOT/repos/dev
+
+  builtin:
+    git: https://github.com/spack/spack-packages.git
+    branch: releases/v2026.10
+
