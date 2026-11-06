@@ -20,6 +20,12 @@ packages:
       prefix: /usr
     buildable: false
 
+  tar:
+    externals:
+    - spec: tar@1.34
+      prefix: /usr
+    buildable: false
+
   ucx:
     externals:
     - spec: ucx@1.17.0
