@@ -1,3 +1,0 @@
-repos:
-  - $HPC_SPACK_ROOT/repos/1.2.2/ucl
-  - $HPC_SPACK_ROOT/repos/1.2.2/dev
