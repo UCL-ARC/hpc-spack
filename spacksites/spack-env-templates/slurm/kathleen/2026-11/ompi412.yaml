@@ -1,28 +1,20 @@
 spack:
   packages:
-    castep:
-      permissions:
-        read: group
-        #group: lgcastep
-        group: ag-archpc-castep
-    orca:
-      permissions:
-        read: group
-        #group: legorca
-        group: ag-archpc-orca
-    vasp@6:
-      permissions:
-        read: group
-        #group: legvasp6
-        group: ag-archpc-vasp6
+    c:
+      require: gcc@14.2.0
+    cxx:
+      require: gcc@14.2.0
+    fortran:
+      require: gcc@14.2.0
 
-  specs:
-  - matrix:
-    - - openmpi@4.1.2 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
-      - orca@5.0.4
-    - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
+
   view: false
-  include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base
+
+  include:
+  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base/spack.lock
+
+  specs:
+  - openmpi@4.1.2 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+  - orca@5.0.4
