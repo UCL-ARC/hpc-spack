@@ -13,7 +13,7 @@ spack:
   view: false
 
   include:
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base/spack.lock
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
 
   specs:
   - openmpi@4.1.2 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
