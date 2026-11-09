@@ -48,6 +48,7 @@ class Vmd(Package):
     depends_on("libxi", type=("run", "link"))
     depends_on("libxinerama", type=("run", "link"))
     depends_on("gl@3:", type=("run", "link"))
+    depends_on("gmake", type="build")
     depends_on("patchelf", type="build")
 
     def setup_build_environment(self, env):
