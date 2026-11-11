@@ -15,6 +15,7 @@ spack:
       - miniconda3@25.5.1
       - mamba@2.3.0
       - salome-medcouplig@9.15.0
+      - gromacs@2026.1 -double
 
   specs:
     - matrix:
