@@ -14,8 +14,8 @@ spack:
     - package_specs:
       - miniconda3@25.5.1
     - package_specs_compiler:
-      - mamba@2.3.0
       - salome-medcoupling@9.15.0
+      - mamba@2.3.0
       - gromacs@2026.1 -double
 
   specs:

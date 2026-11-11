@@ -67,7 +67,7 @@ packages:
     require: 'zlib-ng'
 
   zlib-ng:
-    require:
+    prefer:
     - spec: +new_strategies
 
   openmpi:
