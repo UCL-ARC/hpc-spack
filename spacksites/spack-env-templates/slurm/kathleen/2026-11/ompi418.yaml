@@ -1,21 +1,23 @@
 spack:
-  packages:
-    c:
-      require: gcc@14.2.0
-    cxx:
-      require: gcc@14.2.0
-    fortran:
-      require: gcc@14.2.0
 
   concretizer:
     unify: when_possible
 
   view: false
 
-#  include:
-#  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+  include:
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.lock
+
+  definitions:
+    - compiler: ['%gcc@14.2.0']
+    - package_specs_compiler:
+      - openmpi@4.1.8 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - orca@avx2-6.1.1
 
   specs:
-  - openmpi@4.1.8 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
-  - orca@6.1.1
-  - orca@avx2-6.1.1
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]
+
+

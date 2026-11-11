@@ -1,29 +1,27 @@
 spack:
-  packages:
-    cc:
-      require: intel-oneapi-compilers@2026.0.0
-    cxx:
-      require: intel-oneapi-compilers@2026.0.0
-    f77:
-      require: intel-oneapi-compilers@2026.0.0
-    fc:
-      require: intel-oneapi-compilers@2026.0.0
 
   concretizer:
     unify: when_possible
 
   view: false
 
-  include_concrete:
+  include:
   - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.lock
+
+  definitions:
+    - compiler: ['%intel-oneapi-compilers@2024.2.1']
+    - package_specs_compiler:
+      - intel-oneapi-mpi@2021.14.0 +external-libfabric
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
+      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
+      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
+      - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
+      - hdf5 +fortran +mpi +hl
 
   specs:
-  - intel-oneapi-mpi@2021.14.0 +external-libfabric
-  # VASP is tested with 2023.2.0. +cluster gives scalapack
-  - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
-  - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%oneapi@2024.2.1
-  - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
-  - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
-  - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
-  - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
-  - hdf5 +fortran +mpi +hl
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]

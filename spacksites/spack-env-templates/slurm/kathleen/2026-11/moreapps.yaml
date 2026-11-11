@@ -1,30 +1,70 @@
 spack:
 
   packages:
-    fftw-api:
-      require: 'fftw'
+    quantum-espresso:
+      package_attributes:
+        parallel: false
 
-    c:
-      require: gcc@14.2.0
-    cxx:
-      require: gcc@14.2.0
-    fortran:
-      require: gcc@14.2.0
+    charmpp:
+      package_attributes:
+        parallel: false
+
+  concretizer:
+    unify: when_possible
+
+  view: false
+
+  definitions:
+    - compiler: ['%gcc@14.2.0']
+    - package_specs:
+      - beast2@2.7.7
+      - gatk@4.5.0.0
+      - picard@3.3.0
+    - package_specs_compiler:
+      - apr@1.7.5
+      - apr-util@1.6.3
+      - bcftools@1.23.1
+      - bedtools2@2.31.1
+      - bwa@0.7.19
+      - cmake@3.31.11
+      - curl@8.20.0 +libidn2
+      - fftw@3.3.11 -mpi -openmp
+      - gsl@2.8
+      - gzip@1.14
+      - hdf5@1.14.6 +cxx +fortran -mpi +hl
+      - hdf5@1.14.6 +fortran +mpi +hl
+      - htslib@1.23.1
+      - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
+      - python@3.11.15
+      - python@3.14.5
+      - netcdf-c@4.10.0 -mpi
+      - netcdf-fortran@4.6.2
+      - samtools@1.23.1
+      - subversion@1.14.5
+      # stop it picking an openblas with threads=openmp purely for package reuse
+      - castep@26.11 +libxc ^openblas threads=none
+      - castep@24.1 +libxc ^openblas threads=none
+      - castep@23.1 +libxc ^openblas threads=none
+      - cp2k@2024.3
+      - gromacs@2024.3 -double
+      - libxc@7.0.0
+      - namd@3.0.1 ^charmpp backend=ucx pmi=pmix ^fftw -mpi
+      - netlib-scalapack@2.2.3
+      - numactl@2.0.19
+      - openblas@0.3.33 threads=none
+      - openblas@0.3.33 threads=openmp
+      - plumed@2.10.0
+      - quantum-espresso@7.5 cflags='-O2' fflags='-O2' # ICE in gcc 12 and 13 vectorisation: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112404
+      - lammps@20250722.3 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^python@3.11
+      - lammps@20240829.4 +mpi +python +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +ml-uf3 +mofff +molecule +openmp +opt +orient +peri +phonon +plugin +qeq +reaction +reaxff +replica +rigid +rheo +shock +sph +spin +srd +tally +uef +voronoi +yaff ^python@3.11
 
   specs:
-  - cp2k@2025.2
-  - glpk@5.0 +gmp
-  - grace@5.1.25
-  - openbabel@3.2.0 +openmp
-  - openfoam@2512 +int64
-  - openfoam@2312 +int64
-  - parallel@20240822
-  - paraview@6.1.1 +python ^[virtuals=gl] osmesa ^llvm
-  - vmd@1.9.3
-  - tmux@3.6a
-  - screen@5.0.1
-  - emacs@30.2
-  - nano@8.7
+    - $package_specs
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]
+[ccspapp@login21 bin]$ cat /apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.yaml
+spack:
 
   concretizer:
     unify: when_possible
@@ -33,4 +73,29 @@ spack:
 
   include:
   - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+
+  definitions:
+    - compiler: ['%gcc@14.2.0']
+    - package_specs:
+      - parallel@20240822
+      - vmd@2.0.0a8
+    - package_specs_compiler:
+      - cp2k@2025.2
+      - glpk@5.0 +gmp
+      - grace@5.1.25 cflags=-std=gnu89 ^fftw -mpi -openmp
+      - openbabel@3.2.0 +openmp
+      - openfoam@2512 +int64
+      - openfoam@2312 +int64
+      - paraview@6.1.1 +python ^[virtuals=gl] osmesa ^llvm
+      - tmux@3.6a
+      - screen@5.0.1
+      - emacs@30.2 gui=x11
+      - nano@8.7
+
+  specs:
+    - $package_specs
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]
+
 

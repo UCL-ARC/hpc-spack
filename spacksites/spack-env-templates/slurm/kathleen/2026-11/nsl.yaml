@@ -1,14 +1,24 @@
 spack:
-  specs:
-  - matrix:
-    - - libnsl
-      - xcb-util
-      - xcb-util-cursor
-      - libxcursor
-    - - '%gcc@12.3.0'
+
   concretizer:
     unify: when_possible
+
   view: false
-  include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base
+
+  include:
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.lock
+
+  definitions:
+    - compiler: ['%gcc@14.2.0']
+    - package_specs_compiler:
+      - libnsl@2.0.1
+      - xcb-util@0.4.1
+      - xcb-util-cursor@0.1.6
+      - libxcursor@1.2.3
+
+  specs:
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]
 

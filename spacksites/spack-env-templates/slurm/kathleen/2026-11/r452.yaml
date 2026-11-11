@@ -4,35 +4,42 @@ spack:
     netcdf-c:
       require: -mpi
 
-  # R itself and non-R dependencies we need for packages
-  specs:
-  - matrix:
-#    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=11 # newer java needed for some packages
-    - - r@4.5.2 +X +rmath ^openjdk@21 ^icu4c@74.2 cxxstd=17 # newer java needed for some packages
-      - bzip2
-      - cmdstan
-      - gdal +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
-      - geos
-      - ghostscript
-      - gmt ^gdal +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
-      - graphicsmagick
-      - imagemagick
-      - jags
-      - jq
-      - mysql +client_only ^icu4c@74.2
-      - libwebp +libwebpdecoder +libwebpdemux +libwebpextras +libwebpmux +gif +jpeg +png +tiff
-      - pcre2
-      - plink@1.9-beta6.27
-      - plink2
-      - proj
-      - texlive ^icu4c@74.2 cxxstd=17
-      - xz
-      - udunits
-    - - '%gcc@12.3.0'
   concretizer:
     unify: when_possible
-  view: false
-  include_concrete:
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base
-  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/moreapps
 
+  view: false
+
+  include:
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
+  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.lock
+
+  definitions:
+    - compiler: ['%gcc@14.2.0']
+    - package_specs_compiler:
+      - r@4.5.3 +X +rmath ^openjdk@25.0.2_10 ^icu4c@76.1 cxxstd=17
+      - bzip2@1.0.8
+      - cmdstan@2.30.1
+      - gdal@3.13.1 +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
+      - geos@3.14.1
+      - ghostscript@10.06.0
+      - gmt@6.4.0 ^gdal +hdf5 +netcdf +geos +python +libxml2 ^hdf5 -mpi ^openblas threads=none
+      - graphicsmagick@1.3.43
+      - icu4c@76.1 cxxstd=17
+      - imagemagick@7.1.1-39
+      - jags@4.3.2
+      - jq@1.8.1
+      - libwebp +libwebpdecoder +libwebpdemux +libwebpextras +libwebpmux +gif +jpeg +png +tiff
+      - mysql@8.0.35 +client_only ^icu4c@76.1
+      - openjdk@25.0.2_10
+      - pcre2@10.44
+      - plink@1.9-beta7.7
+      - plink2@2.0.0-a.6.9
+      - proj@9.7.0
+      - texlive@20260301 ^icu4c@76.1 cxxstd=17
+      - xz@5.8.3
+      - udunits@2.2.28
+
+  specs:
+    - matrix:
+      - [$package_specs_compiler]
+      - [$compiler]
