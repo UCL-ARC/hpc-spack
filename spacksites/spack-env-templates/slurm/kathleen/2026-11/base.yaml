@@ -29,6 +29,7 @@ spack:
       - cmake@3.31.11
       - curl@8.20.0 +libidn2
       - fftw@3.3.11 -mpi -openmp
+      - git@2.53.0 +tcltk
       - gsl@2.8
       - gzip@1.14
       - hdf5@1.14.6 +cxx +fortran -mpi +hl
