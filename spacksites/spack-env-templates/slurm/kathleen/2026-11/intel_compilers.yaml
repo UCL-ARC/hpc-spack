@@ -6,6 +6,6 @@ spack:
   view: false
 
   specs:
-    - intel-oneapi-compilers@2026.0.0 %gcc@14.2.0
+    - intel-oneapi-compilers@2025.3.2 %gcc@14.2.0
     - intel-oneapi-compilers@2024.2.1 %gcc@14.2.0
     - intel-oneapi-compilers-classic@2021.13.1 %intel-oneapi-compilers@2024.2.1
