@@ -6,7 +6,6 @@ spack:
   view: false
 
   include:
-  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/intel_classic/spack.lock
   - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/intel/spack.lock
 
   # OpenMPI 4.1.6 with ifort for CRYSTAL (4.1.2 didn't build with icx but this does)
