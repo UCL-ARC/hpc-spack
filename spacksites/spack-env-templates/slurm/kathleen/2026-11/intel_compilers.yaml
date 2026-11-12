@@ -5,13 +5,6 @@ spack:
 
   view: false
 
-  definitions:
-    - compiler: ['%gcc@14.2.0']
-    - package_specs_compiler:
-      - intel-oneapi-compilers@2024.2.1
-      - intel-oneapi-compilers@2023.2.4 # last icc/icpc version
-
   specs:
-    - matrix:
-      - [$package_specs_compiler]
-      - [$compiler]
+    - intel-oneapi-compilers@2024.2.1 %gcc@14.2.0
+    - intel-oneapi-compilers-classic@2021.13.1 %intel-oneapi-compilers@2024.2.1
