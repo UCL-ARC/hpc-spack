@@ -11,11 +11,13 @@ spack:
 
   definitions:
     - compiler: ['%gcc@14.2.0']
+    - package_specs:
+      - orca@avx2-6.1.1
     - package_specs_compiler:
       - openmpi@4.1.8 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
-      - orca@avx2-6.1.1
 
   specs:
+    - $package_specs
     - matrix:
       - [$package_specs_compiler]
       - [$compiler]
