@@ -5,23 +5,20 @@ spack:
 
   view: false
 
-  include:
-  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/base/spack.lock
-  - /lustre/apps/spack/1.2.2/deploy/2026-11/spack/var/spack/environments/moreapps/spack.lock
-
   definitions:
     - compiler: ['%intel-oneapi-compilers@2025.3.2']
     - package_specs_compiler:
-      - intel-oneapi-mpi@2021.14.0 +external-libfabric
-      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=mpich ^intel-oneapi-mpi
-      - intel-oneapi-mkl@2023.2.0 +cluster mpi_family=openmpi ^openmpi%intel-oneapi-compilers@2025.3.2
+      - intel-oneapi-mpi@2021.18.0 +external-libfabric
+      - intel-oneapi-mkl@2025.3.1 +cluster mpi_family=mpich ^intel-oneapi-mpi
+      - intel-oneapi-mkl@2025.3.1 +cluster mpi_family=openmpi ^openmpi%intel-oneapi-compilers@2025.3.2
       - openmpi@4.1.6 fabrics=psm2,ofi schedulers=slurm +legacylaunchers
-      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi
-      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi
+      - vasp@6.5.1 +hdf5 ^intel-oneapi-mpi ^hdf5 +fortran +mpi +hl ^intel-oneapi-mpi
+      - vasp@6.4.3 +hdf5 ^intel-oneapi-mpi ^hdf5 +fortran +mpi +hl ^intel-oneapi-mpi
       - vasp@=5.4.4 +scalapack ^intel-oneapi-mpi
-      - hdf5 +fortran +mpi +hl
+      - hdf5 +fortran +mpi +hl ^intel-oneapi-mpi
 
   specs:
     - matrix:
       - [$package_specs_compiler]
       - [$compiler]
+
