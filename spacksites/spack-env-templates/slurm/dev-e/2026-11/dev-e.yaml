@@ -1,0 +1,17 @@
+spack:
+
+  concretizer:
+    unify: when_possible
+  view: false
+
+  include_concrete:
+  - /lustre/apps/spack/0.23/deploy/2026-03/spack/var/spack/environments/base
+
+  modules:
+    default:
+      roots:
+        tcl: $spack/../modules
+        openmpi:
+          environment:
+            set:
+              OMPI_MCA_btl: 'self,vader'
